@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Eventos</title>
+</head>
+<body>
+    <h1>Eventos Disponibles</h1>
+    <ul>
+        {% for evento in eventos %}
+            <li>{{ evento.descripcion }} - ${{ evento.valor_referencial }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

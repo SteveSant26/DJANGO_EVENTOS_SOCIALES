@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Basica"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li class="active"><a href="{% url 'about_us' %}">Nosotros</a></li>
+				<li><a href="{% url 'services' %}">Servicios</a></li>
+				<li><a href="{% url 'portfolio' %}">Portafolio</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="icon-angle-down"></i></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Dropdown Menu 1</a></li>
+						<li><a href="#">Dropdown Menu 2</a></li>
+						<li><a href="#">Dropdown Menu 3</a></li>
+						<li><a href="#">Dropdown Menu 4</a></li>
+						<li><a href="#">Dropdown Menu 5</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Politica de privacidad</a></li>
+						<li><a href="#">Terminos de uso</a></li>
+					</ul>
+				</li>
+				<li><a href="{% url 'blog' %}">Blog</a></li> 
+				<li><a href="{% url 'contact_us' %}">Contactanos</a></li>
+			</ul>
+		</div>
+	</div>
+</header><!--/header-->
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>About Us</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="section">
+	    	<div class="container">
+				<div class="row">
+				<div class="col-sm-4">
+				<img class="img-responsive" src="{% static 'img/about-us.jpg' %}" alt="About Us">
+				</div>
+				<div class="col-sm-8">
+						<h2>We are a Graphic Design company</h2>
+						<h3>Specializing in Wordpress Theme Development</h3>
+						<p>
+							Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id. Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id.
+						</p>
+						<p>
+							Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id.
+						</p>						
+						<h3>Wide range of services</h3>
+						<p>
+							Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam condimentum laoreet sagittis. Duis quis ullamcorper leo. Suspendisse potenti.
+							Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam condimentum laoreet sagittis. Duis quis ullamcorper leo. Suspendisse potenti.
+						</p>
+						
+						
+						
+				<div class="clients-logo-wrapper text-center row">
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-1.jpg' %}" alt="Client Name"></a></div>
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-2.jpg' %}" alt="Client Name"></a></div>
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-3.jpg' %}" alt="Client Name"></a></div>
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-4.jpg' %}" alt="Client Name"></a></div>
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-5.jpg' %}" alt="Client Name"></a></div>
+					<div class="col-lg-2 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{% static 'img/logos/logo-6.jpg' %}" alt="Client Name"></a></div>
+				</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+
+<hr>		
+
+        <div class="section">
+	    	<div class="container">
+				<div class="row">
+					<!-- Team Member -->
+					<div class="col-md-4 col-sm-6">
+						<div class="team-member">
+							<!-- Team Member Photo -->
+							<div class="team-member-image"><img src="{% static 'img/team/1.jpg' %}" alt="Name Surname"></div>
+							<div class="team-member-info">
+								<ul>
+									<!-- Team Member Info & Social Links -->
+									<li class="team-member-name">
+										Nicolas Freeman
+										<!-- Team Member Social Links -->
+										<span class="team-member-social">
+											<a href="#"><i class="icon-facebook"></i></a>
+											<a href="#"><i class="icon-github"></i></a>
+											<a href="#"><i class="icon-tumblr"></i></a>
+										</span>
+									</li>
+									<li>Web Developer</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- End Team Member -->
+					<div class="col-md-4 col-sm-6">
+						<div class="team-member">
+							<div class="team-member-image"><img src="{% static 'img/team/2.jpg' %}" alt="Name Surname"></div>
+							<div class="team-member-info">
+								<ul>
+									<li class="team-member-name">
+										Sarah Tipton
+										<span class="team-member-social">
+											<a href="#"><i class="icon-facebook"></i></a>
+											<a href="#"><i class="icon-dribbble"></i></a>
+											<a href="#"><i class="icon-tumblr"></i></a>
+										</span>
+									</li>
+									<li>Web Designer</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<div class="team-member">
+							<div class="team-member-image"><img src="{% static 'img/team/3.jpg' %}" alt="Name Surname"></div>
+							<div class="team-member-info">
+								<ul>
+									<li class="team-member-name">
+										Luca Grammont
+										<span class="team-member-social">
+											<a href="#"><i class="icon-facebook"></i></a>
+											<a href="#"><i class="icon-dribbble"></i></a>
+											<a href="#"><i class="icon-tumblr"></i></a>
+										</span>
+									</li>
+									<li>Project Manager</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<hr>
+
+        <div class="section">
+	        <div class="container">
+	        	<div class="row">
+	        		<!-- Featured News -->
+	        		<div class="col-sm-6 featured-news">
+	        			<h2>Latest Blog Posts</h2>
+	        			<div class="row">
+	        				<div class="col-xs-4"><a href="{% url 'blog_post' %}"><img src="{% static 'img/blog/1.jpg' %}" alt="Post Title"></a></div>
+	        				<div class="col-xs-8">
+	        					<div class="caption"><a href="{% url 'blog_post' %}">Lorem ipsum dolor sit amet</a></div>
+	        					<div class="date">14 August 2014 </div>
+	        					<div class="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. <a href="{% url 'blog_post' %}">Read more...</a></div>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-xs-4"><a href="{% url 'blog_post' %}"><img src="{% static 'img/blog/2.jpg' %}" alt="Post Title"></a></div>
+	        				<div class="col-xs-8">
+	        					<div class="caption"><a href="{% url 'blog_post' %}">Sed ut perspiciatis unde omnis</a></div>
+	        					<div class="date">23 June 2014 </div>
+	        					<div class="intro">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a href="{% url 'blog_post' %}">Read more...</a></div>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-xs-4"><a href="{% url 'blog_post' %}"><img src="{% static 'img/blog/3.jpg' %}" alt="Post Title"></a></div>
+	        				<div class="col-xs-8">
+	        					<div class="caption"><a href="{% url 'blog_post' %}"> Neque porro quisquam est</a></div>
+	        					<div class="date">21 April 2014 </div>
+	        					<div class="intro">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <a href="{% url 'blog_post' %}">Read more...</a></div>
+	        				</div>
+	        			</div>
+	        		</div>
+	        		<!-- End Featured News -->
+	        		<!-- Latest News -->
+	        		<div class="col-sm-6 latest-news">
+	        			<h2>Latest News</h2>
+	        			<div class="row">
+	        				<div class="col-sm-12">
+	        					<div class="caption"><a href="{% url 'full_width' %}">Donec elementum mi vitae enim fermentum lobortis.</a></div>
+	        					<div class="date">16 May 2013 </div>
+	        					<div class="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. <a href="{% url 'full_width' %}">Read more...</a></div>
+	        				</div>
+	        			</div>
+	        			<div class="row">
+	        				<div class="col-sm-12">
+	        					<div class="caption"><a href="{% url 'full_width' %}">In hac habitasse platea dictumst.</a></div>
+	        					<div class="date">14 May 2013 </div>
+	        					<div class="intro">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a href="{% url 'full_width' %}">Read more...</a></div>
+	        				</div>
+	        			</div>	
+	        			<div class="row">
+	        				<div class="col-sm-12">
+	        					<div class="caption"><a href="{% url 'full_width' %}"> Nam condimentum laoreet sagittis.</a></div>
+	        					<div class="date">14 May 2013 </div>
+	        					<div class="intro">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a href="{% url 'full_width' %}">Read more...</a></div>
+	        				</div>
+	        			</div>					
+	        		</div>
+	        		<!-- End Featured News -->
+	        	</div>
+	        </div>
+	    </div>
+
+		
+
+	    {% include 'footer.html' %}
+        		{% endblock %}

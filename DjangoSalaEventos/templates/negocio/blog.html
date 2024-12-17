@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Basica"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li><a href="{% url 'about_us' %}">Nosotros</a></li>
+				<li><a href="{% url 'services' %}">Servicios</a></li>
+				<li><a href="{% url 'portfolio' %}">Portafolio</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="icon-angle-down"></i></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Dropdown Menu 1</a></li>
+						<li><a href="#">Dropdown Menu 2</a></li>
+						<li><a href="#">Dropdown Menu 3</a></li>
+						<li><a href="#">Dropdown Menu 4</a></li>
+						<li><a href="#">Dropdown Menu 5</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Politica de privacidad</a></li>
+						<li><a href="#">Terminos de uso</a></li>
+					</ul>
+				</li>
+				<li class="active"><a href="{% url 'blog' %}">Blog</a></li> 
+				<li><a href="{% url 'contact_us' %}">Contactanos</a></li>
+			</ul>
+		</div>
+	</div>
+</header><!--/header-->
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Our Blog</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="section">
+	    	<div class="container">
+				<div class="row">
+					<!-- Blog Post Excerpt -->
+					<div class="col-sm-6">
+						<div class="blog-post blog-single-post">
+							<div class="single-post-title">
+								<h2>Exerci Tation Ullamcorper</h2>
+							</div>
+
+							<div class="single-post-image">
+								<img src="{% static 'img/blog/2.jpg' %}" alt="Post Title">
+							</div>
+							
+							<div class="single-post-info">
+								<i class="glyphicon glyphicon-time"></i>15 OCT, 2014 <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>11</a>
+							</div>
+							
+							<div class="single-post-content">
+								<p>
+									Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.
+								</p>
+							<a href="{% url 'blog_post' %}" class="btn">Read more</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Blog Post Excerpt -->
+					
+
+					<!-- Blog Post Excerpt -->
+					<div class="col-sm-6">
+						<div class="blog-post blog-single-post">
+							<div class="single-post-title">
+								<h2>Exerci Tation Ullamcorper</h2>
+							</div>
+
+							<div class="single-post-image">
+								<img src="{% static 'img/blog/1.jpg' %}" alt="Post Title">
+							</div>
+							
+							<div class="single-post-info">
+								<i class="glyphicon glyphicon-time"></i>15 OCT, 2014 <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>11</a>
+							</div>
+							
+							<div class="single-post-content">
+								<p>
+									Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.
+								</p>
+							<a href="{% url 'blog_post' %}" class="btn">Read more</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Blog Post Excerpt -->
+
+					<!-- Blog Post Excerpt -->
+					<div class="col-sm-6">
+						<div class="blog-post blog-single-post">
+							<div class="single-post-title">
+								<h2>Exerci Tation Ullamcorper</h2>
+							</div>
+
+							<div class="single-post-image">
+								<img src="{% static 'img/blog/3.jpg' %}" alt="Post Title">
+							</div>
+							
+							<div class="single-post-info">
+								<i class="glyphicon glyphicon-time"></i>15 OCT, 2014 <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>11</a>
+							</div>
+							
+							<div class="single-post-content">
+								<p>
+									Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.
+								</p>
+							<a href="{% url 'blog_post' %}" class="btn">Read more</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Blog Post Excerpt -->
+
+					<!-- Blog Post Excerpt -->
+					<div class="col-sm-6">
+						<div class="blog-post blog-single-post">
+							<div class="single-post-title">
+								<h2>Exerci Tation Ullamcorper</h2>
+							</div>
+
+							<div class="single-post-image">
+								<img src="{% static 'img/blog/4.jpg' %}" alt="Post Title">
+							</div>
+							
+							<div class="single-post-info">
+								<i class="glyphicon glyphicon-time"></i>15 OCT, 2014 <a href="#" title="Show Comments"><i class="glyphicon glyphicon-comment"></i>11</a>
+							</div>
+							
+							<div class="single-post-content">
+								<p>
+									Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.
+								</p>
+							<a href="{% url 'blog_post' %}" class="btn">Read more</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Blog Post Excerpt -->	
+
+								<!-- Pagination -->
+								<div class="pagination-wrapper ">
+									<ul class="pagination pagination-sm">
+										<li class="disabled"><a href="#">Previous</a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+										<li><a href="#">Next</a></li>
+									</ul>
+								</div>				
+
+				</div>
+			</div>
+	    </div>
+
+		{% include 'footer.html' %}
+		{% endblock %}

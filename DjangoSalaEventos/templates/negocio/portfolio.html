@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Basica"></a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li><a href="{% url 'about_us' %}">Nosotros</a></li>
+				<li><a href="{% url 'services' %}">Servicios</a></li>
+				<li class="active"><a href="{% url 'portfolio' %}">Portafolio</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="icon-angle-down"></i></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Dropdown Menu 1</a></li>
+						<li><a href="#">Dropdown Menu 2</a></li>
+						<li><a href="#">Dropdown Menu 3</a></li>
+						<li><a href="#">Dropdown Menu 4</a></li>
+						<li><a href="#">Dropdown Menu 5</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Politica de privacidad</a></li>
+						<li><a href="#">Terminos de uso</a></li>
+					</ul>
+				</li>
+				<li><a href="{% url 'blog' %}">Blog</a></li> 
+				<li><a href="{% url 'contact_us' %}">Contactanos</a></li>
+			</ul>
+		</div>
+	</div>
+</header><!--/header-->
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Our Portfolio</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+        <div class="section">
+	    	<div class="container">
+				<div class="row">
+				<div class="col-sm-12">
+						<h2>We are a leading company</h2>
+						<h3>Specializing in Wordpress Theme Development</h3>
+						<p>
+							Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id. Donec elementum mi vitae enim fermentum lobortis. 
+						</p>
+					
+					</div>
+				</div>
+			</div>
+		</div>		
+		
+        <div class="section">
+	    	<div class="container">
+				<div class="row">
+			
+			<ul class="grid cs-style-2">
+	        	<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/4.jpg' %}" alt="img04">
+						<figcaption>
+							<h3>Settings</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+	        	</div>	
+				<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/1.jpg' %}" alt="img01">
+						<figcaption>
+							<h3>Camera</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/2.jpg' %}" alt="img02">
+						<figcaption>
+							<h3>Music</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/5.jpg' %}" alt="img05">
+						<figcaption>
+							<h3>Safari</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/3.jpg' %}" alt="img03">
+						<figcaption>
+							<h3>Phone</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<figure>
+						<img src="{% static 'img/portfolio/6.jpg' %}" alt="img06">
+						<figcaption>
+							<h3>Game Center</h3>
+							<span>Jacob Cummings</span>
+							<a href="{% url 'portfolio' %}">Take a look</a>
+						</figcaption>
+					</figure>
+				</div>
+			</ul>
+
+				
+				</div>
+				
+				<ul class="pager">
+				  <li><a href="#">Previous</a></li>
+				  <li><a href="#">Next</a></li>
+				</ul>
+				
+			</div>
+		</div>
+
+	
+		{% include 'footer.html' %}
+		<!-- Portfolio Thumbnail Hover Effect JavaScript -->
+		<script type="text/javascript" src="{% static 'js/jquery.hoverdir.js' %}"></script>	
+		<script type="text/javascript">
+			$(function() {
+			
+				$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
+
+			});
+		</script>
+
+		
+
+        		{% endblock %}
