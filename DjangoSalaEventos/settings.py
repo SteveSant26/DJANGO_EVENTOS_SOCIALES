@@ -38,6 +38,9 @@ ALLOWED_HOSTS = entorno.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
     # Django apps
+    "semantic_admin",
+    "semantic_forms",
+    "import_export",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "cloudinary",
     "cloudinary_storage",
+    "django_filters",
     # Custom apps
     "negocio",
     "clientes",
@@ -71,7 +75,7 @@ ROOT_URLCONF = "DjangoSalaEventos.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "DjangoSalaEventos/templates"],
+        "DIRS": [BASE_DIR / "/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -85,6 +89,7 @@ TEMPLATES = [
 ]
 
 
+
 WSGI_APPLICATION = "DjangoSalaEventos.wsgi.application"
 
 
@@ -96,15 +101,14 @@ cloudinary.config(
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
-
-#Configuracion de email
+# Configuracion de email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST=entorno("EMAIL_HOST")
-EMAIL_PORT=entorno("EMAIL_PORT")
-EMAIL_USE_TLS=entorno("EMAIL_USE_TLS")
-EMAIL_HOST_USER=entorno("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD=entorno("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL=entorno("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = entorno("EMAIL_HOST")
+EMAIL_PORT = entorno("EMAIL_PORT")
+EMAIL_USE_TLS = entorno("EMAIL_USE_TLS")
+EMAIL_HOST_USER = entorno("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = entorno("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = entorno("DEFAULT_FROM_EMAIL")
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

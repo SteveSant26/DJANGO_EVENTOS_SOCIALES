@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 from utils.abstract_model import BaseModel
 
 
@@ -6,9 +7,10 @@ class TipoEvento(BaseModel):
     class Meta:
         verbose_name = "Tipo de evento"
         verbose_name_plural = "Tipos de eventos"
-    nombre = models.CharField(
-        max_length=100, 
-        verbose_name="Nombre del tipo de evento"
+
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del tipo de evento")
+    descripcion = models.TextField(
+        verbose_name="Descripción del tipo de evento", blank=True, null=True
     )
 
     def __str__(self):
@@ -16,48 +18,42 @@ class TipoEvento(BaseModel):
 
 
 class Evento(BaseModel):
-    verbose_name = "Evento"
-    verbose_name_plural = "Eventos"
-    descripcion = models.TextField(
-        verbose_name="Descripción del evento"
-    )
+    class Meta:
+        verbose_name = "Evento"
+        verbose_name_plural = "Eventos"
+
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del evento")
+    descripcion = models.TextField(verbose_name="Descripción del evento")
     valor_referencial = models.DecimalField(
-        max_digits=10, 
-        decimal_places=2, 
-        verbose_name="Valor referencial"
+        max_digits=10, decimal_places=2, verbose_name="Valor referencial"
     )
     numero_horas_permitidas = models.IntegerField(
         verbose_name="Número de horas permitidas"
     )
     valor_extra_hora = models.DecimalField(
-        max_digits=10, 
-        decimal_places=2, 
-        verbose_name="Valor extra por hora"
+        max_digits=10, decimal_places=2, verbose_name="Valor extra por hora"
     )
     tipo_evento = models.ForeignKey(
-        TipoEvento, 
-        on_delete=models.CASCADE, 
-        verbose_name="Tipo de evento"
+        TipoEvento, on_delete=models.CASCADE, verbose_name="Tipo de evento"
     )
 
     def __str__(self):
-        return f"{self.descripcion} ({self.tipo_evento.nombre})"
-
+        return f"{self.nombre}"
 
 
 class Servicio(BaseModel):
     class Meta:
         verbose_name = "Servicio"
         verbose_name_plural = "Servicios"
+
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del servicio")
     descripcion = models.CharField(
-        max_length=200, 
-        verbose_name="Descripción del servicio"
+        max_length=200, verbose_name="Descripción del servicio"
     )
     valor_por_unidad = models.DecimalField(
-        max_digits=10, 
-        decimal_places=2, 
-        verbose_name="Valor por unidad"
+        max_digits=10, decimal_places=2, verbose_name="Valor por unidad"
     )
+    estado = models.BooleanField(default=True, verbose_name="Estado del servicio")
 
     def __str__(self):
         return self.descripcion
@@ -67,15 +63,16 @@ class FotoEvento(BaseModel):
     class Meta:
         verbose_name = "Foto de evento"
         verbose_name_plural = "Fotos de eventos"
-    imagen = models.ImageField(
-        upload_to="eventos/imagenes/", 
-        verbose_name="Imagen del evento"
+
+    imagen = CloudinaryField(
+        "imagen",
     )
-    evento = models.ForeignKey(
-        Evento, 
-        on_delete=models.CASCADE, 
-        verbose_name="Evento"
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, verbose_name="Evento")
+    descripcion = models.TextField(
+        verbose_name="Descripción de la foto", blank=True, null=True
     )
+    numero_likes = models.IntegerField(default=0, verbose_name="Número de likes")
+
 
     def __str__(self):
         return f"Foto de Evento {self.evento.descripcion}"
@@ -85,15 +82,17 @@ class FotoServicio(BaseModel):
     class Meta:
         verbose_name = "Foto de servicio"
         verbose_name_plural = "Fotos de servicios"
-    imagen = models.ImageField(
-        upload_to="servicios/imagenes/", 
-        verbose_name="Imagen del servicio"
+
+    imagen = CloudinaryField(
+        "imagen",
     )
     servicio = models.ForeignKey(
-        Servicio, 
-        on_delete=models.CASCADE, 
-        verbose_name="Servicio"
+        Servicio, on_delete=models.CASCADE, verbose_name="Servicio"
     )
+    descripcion = models.TextField(
+        verbose_name="Descripción de la foto", blank=True, null=True
+    )
+    numero_likes = models.IntegerField(default=0, verbose_name="Número de likes")
 
     def __str__(self):
         return f"Foto de Servicio {self.servicio.descripcion}"
