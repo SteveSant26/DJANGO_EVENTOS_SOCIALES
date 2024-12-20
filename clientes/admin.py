@@ -11,3 +11,4 @@ class InformacionClienteAdmin(SemanticModelAdmin):
     search_fields = ("cliente__username", "apellidos", "telefono", "correo", "numero_identificacion", "fecha_registro")
     list_filter = ("fecha_registro", "genero", "verificado")
     ordering = ("fecha_registro",)
+    list_per_page = 10  
