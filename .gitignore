@@ -9,7 +9,6 @@ migrations/
 
 # Environments
 .env
-*.env
 *.venv
 
 # VS Code
