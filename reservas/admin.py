@@ -75,6 +75,7 @@ class ReservaEventoAdmin(SemanticModelAdmin):
     list_filter = ("hora_inicio_reserva_evento", "hora_fin_real_reserva_evento")
     search_fields = (
         "cliente__username",
+        "evento__nombre",
         "hora_inicio_reserva_evento",
         "hora_fin_real_reserva_evento",
     )

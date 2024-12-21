@@ -2,6 +2,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from utils.abstract_model import BaseModel
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 
@@ -64,7 +65,7 @@ class FotoEvento(BaseModel):
 
 
 
-class ResenasEvento(BaseModel):
+class ResenaEvento(BaseModel):
     class Meta:
         verbose_name = "Reseña de evento"
         verbose_name_plural = "Reseñas de eventos"
@@ -73,6 +74,15 @@ class ResenasEvento(BaseModel):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
     calificacion = models.IntegerField(verbose_name="Calificación")
     comentario = models.TextField(verbose_name="Comentario", blank=True, null=True)
+    
+    def clean(self):
+        if self.calificacion < 1 or self.calificacion > 5:
+            raise ValidationError("La calificación debe estar entre 1 y 5")
+        return super().clean()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Reseña de evento {self.evento.descripcion}"
@@ -118,7 +128,7 @@ class FotoServicio(BaseModel):
     def __str__(self):
         return f"Foto de Servicio {self.servicio.descripcion}"
 
-class ResenasServicio(BaseModel):
+class ResenaServicio(BaseModel):
     class Meta:
         verbose_name = "Reseña de servicio"
         verbose_name_plural = "Reseñas de servicios"

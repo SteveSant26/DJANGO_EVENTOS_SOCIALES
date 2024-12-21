@@ -7,8 +7,8 @@ from .models import (
     Servicio,
     FotoEvento,
     FotoServicio,
-    ResenasEvento,
-    ResenasServicio,
+    ResenaEvento,
+    ResenaServicio,
 )
 
 
@@ -46,16 +46,16 @@ class FotoEventoInline(SemanticTabularInline, PrevisualizacionImagen):
 
 
 class ResenasEventoInline(SemanticTabularInline):
-    model = ResenasEvento
+    model = ResenaEvento
     extra = 1
 
 
-@admin.register(ResenasEvento)
-class ResenasEventoAdmin(SemanticModelAdmin):
+@admin.register(ResenaEvento)
+class ResenaEventoAdmin(SemanticModelAdmin):
     list_display = ("evento", "autor", "comentario", "calificacion")
     search_fields = (
         "evento__nombre",
-        "autor",
+        "autor__username",
         "comentario",
     )
     ordering = ("evento", "autor", "calificacion")
@@ -99,17 +99,17 @@ class FotoServicioInline(SemanticTabularInline, PrevisualizacionImagen):
     readonly_fields = ["previsualizacion_imagen"]
 
 
-class ResenasServicioInline(SemanticTabularInline):
-    model = ResenasServicio
+class ResenaServicioInline(SemanticTabularInline):
+    model = ResenaServicio
     extra = 1
 
 
-@admin.register(ResenasServicio)
-class ResenasServicioAdmin(SemanticModelAdmin):
+@admin.register(ResenaServicio)
+class ResenaServicioAdmin(SemanticModelAdmin):
     list_display = ("servicio", "autor", "comentario", "calificacion")
     search_fields = (
         "servicio__nombre",
-        "autor",
+        "autor__username",
         "comentario",
     )
     ordering = ("servicio", "autor", "calificacion")
@@ -121,7 +121,7 @@ class ServicioAdmin(SemanticModelAdmin):
     search_fields = ("nombre", "descripcion")
     list_filter = ("estado", "valor_por_unidad")
     ordering = ("nombre", "valor_por_unidad")
-    inlines = [FotoServicioInline, ResenasServicioInline]
+    inlines = [FotoServicioInline, ResenaServicioInline]
     list_per_page = 10
 
 
