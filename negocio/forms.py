@@ -1,12 +1,40 @@
-# from django import forms
-# from .models import (
-#     TipoEvento,
-#     Evento,
-#     Servicio,
-#     FotoEvento,
-#     FotoServicio,
-# )
+from django import forms
+from .models import (
+    TipoEvento,
+    Evento,
+    Servicio,
+    FotoEvento,
+    FotoServicio,
+    ResenaEvento,
+    ResenaServicio
+)
 
+
+
+
+class ResenaEventoForm(forms.ModelForm):
+    class Meta:
+        model = ResenaEvento
+        fields = ["calificacion", "comentario"]
+        labels = {
+            "calificacion": "Calificación",
+            "comentario": "Comentario",
+        }
+        widgets = {
+            "comentario": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+        }
+        
+class ResenaServicioForm(forms.ModelForm):
+    class Meta:
+        model = ResenaServicio
+        fields = ["calificacion", "comentario"]
+        labels = {
+            "calificacion": "Calificación",
+            "comentario": "Comentario",
+        }
+        widgets = {
+            "comentario": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+        }
 
 # class TipoEventoForm(forms.ModelForm):
 #     class Meta:
