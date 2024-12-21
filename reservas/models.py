@@ -115,6 +115,16 @@ class ReservaServicio(BaseModel):
     )
     cantidad = models.IntegerField(verbose_name="Cantidad")
 
+    def clean(self):
+        if self.cantidad <= 0:
+            raise ValidationError("La cantidad debe ser mayor a 0")
+        if ReservaServicio.objects.filter(reserva=self.reserva, servicio=self.servicio).exists():
+            raise ValidationError("El servicio ya ha sido reservado")
+        
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Servicio {self.servicio.descripcion} para Alquiler {self.reserva.pk}"
 
@@ -133,7 +143,7 @@ class Promocion(BaseModel):
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio")
     fecha_fin = models.DateField(verbose_name="Fecha de fin")
 
-    def __str__(self):
+    def __str__(self):  
         return f"{self.nombre}"
 
 

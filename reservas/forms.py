@@ -47,39 +47,39 @@ class ReservaServicioForm(forms.ModelForm):
         }
 
 
-class PromocionForm(forms.ModelForm):
-    class Meta:
-        model = Promocion
-        fields = [
-            "descripcion",
-            "porcentaje_descuento",
-            "fecha_inicio",
-            "fecha_fin",
-            "alquiler",
-        ]
-        labels = {
-            "descripcion": "Descripción de la promoción",
-            "porcentaje_descuento": "Porcentaje de descuento",
-            "fecha_inicio": "Fecha de inicio",
-            "fecha_fin": "Fecha de fin",
-            "alquiler": "Reserva del evento",
-        }
-        widgets = {
-            "fecha_inicio": forms.DateInput(attrs={"type": "date"}),
-            "fecha_fin": forms.DateInput(attrs={"type": "date"}),
-        }
+# class PromocionForm(forms.ModelForm):
+#     class Meta:
+#         model = Promocion
+#         fields = [
+#             "descripcion",
+#             "porcentaje_descuento",
+#             "fecha_inicio",
+#             "fecha_fin",
+#             "alquiler",
+#         ]
+#         labels = {
+#             "descripcion": "Descripción de la promoción",
+#             "porcentaje_descuento": "Porcentaje de descuento",
+#             "fecha_inicio": "Fecha de inicio",
+#             "fecha_fin": "Fecha de fin",
+#             "alquiler": "Reserva del evento",
+#         }
+#         widgets = {
+#             "fecha_inicio": forms.DateInput(attrs={"type": "date"}),
+#             "fecha_fin": forms.DateInput(attrs={"type": "date"}),
+#         }
 
 
-class EventualidadForm(forms.ModelForm):
-    class Meta:
-        model = Eventualidad
-        fields = ["descripcion", "fecha_eventualidad", "alquiler"]
-        labels = {
-            "descripcion": "Descripción de la eventualidad",
-            "fecha_eventualidad": "Fecha de la eventualidad",
-            "alquiler": "Reserva del evento",
-        }
-        widgets = {
-            "fecha_eventualidad": forms.DateInput(attrs={"type": "date"}),
-            "descripcion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        }
+# class EventualidadForm(forms.ModelForm):
+#     class Meta:
+#         model = Eventualidad
+#         fields = ["descripcion", "fecha_eventualidad", "alquiler"]
+#         labels = {
+#             "descripcion": "Descripción de la eventualidad",
+#             "fecha_eventualidad": "Fecha de la eventualidad",
+#             "alquiler": "Reserva del evento",
+#         }
+#         widgets = {
+#             "fecha_eventualidad": forms.DateInput(attrs={"type": "date"}),
+#             "descripcion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+#         }

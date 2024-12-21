@@ -1,8 +1,11 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from utils.abstract_model import BaseModel
+from django.contrib.auth.models import User
 
 
+
+## EVENTOS
 class TipoEvento(BaseModel):
     class Meta:
         verbose_name = "Tipo de evento"
@@ -38,25 +41,7 @@ class Evento(BaseModel):
     )
 
     def __str__(self):
-        return f"{self.nombre}"
-
-
-class Servicio(BaseModel):
-    class Meta:
-        verbose_name = "Servicio"
-        verbose_name_plural = "Servicios"
-
-    nombre = models.CharField(max_length=100, verbose_name="Nombre del servicio")
-    descripcion = models.CharField(
-        max_length=200, verbose_name="Descripción del servicio"
-    )
-    valor_por_unidad = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Valor por unidad"
-    )
-    estado = models.BooleanField(default=True, verbose_name="Estado del servicio")
-
-    def __str__(self):
-        return self.descripcion
+        return self.nombre
 
 
 class FotoEvento(BaseModel):
@@ -78,6 +63,42 @@ class FotoEvento(BaseModel):
         return f"Foto de Evento {self.evento.descripcion}"
 
 
+
+class ResenasEvento(BaseModel):
+    class Meta:
+        verbose_name = "Reseña de evento"
+        verbose_name_plural = "Reseñas de eventos"
+
+    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, verbose_name="Evento")
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
+    calificacion = models.IntegerField(verbose_name="Calificación")
+    comentario = models.TextField(verbose_name="Comentario", blank=True, null=True)
+
+    def __str__(self):
+        return f"Reseña de evento {self.evento.descripcion}"
+    
+    
+## SERVICIOS
+
+class Servicio(BaseModel):
+    class Meta:
+        verbose_name = "Servicio"
+        verbose_name_plural = "Servicios"
+
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del servicio")
+    descripcion = models.CharField(
+        max_length=200, verbose_name="Descripción del servicio"
+    )
+    valor_por_unidad = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Valor por unidad"
+    )
+    estado = models.BooleanField(default=True, verbose_name="Estado del servicio")
+
+    def __str__(self):
+        return self.nombre
+
+
+
 class FotoServicio(BaseModel):
     class Meta:
         verbose_name = "Foto de servicio"
@@ -96,3 +117,16 @@ class FotoServicio(BaseModel):
 
     def __str__(self):
         return f"Foto de Servicio {self.servicio.descripcion}"
+
+class ResenasServicio(BaseModel):
+    class Meta:
+        verbose_name = "Reseña de servicio"
+        verbose_name_plural = "Reseñas de servicios"
+
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, verbose_name="Servicio")
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
+    calificacion = models.IntegerField(verbose_name="Calificación")
+    comentario = models.TextField(verbose_name="Comentario", blank=True, null=True)
+
+    def __str__(self):
+        return f"Reseña de servicio {self.servicio.descripcion}"

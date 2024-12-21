@@ -1,9 +1,18 @@
 from django.contrib import admin
 from semantic_admin.admin import SemanticModelAdmin, SemanticTabularInline
 from django.utils.safestring import mark_safe
-from .models import TipoEvento, Evento, Servicio, FotoEvento, FotoServicio
+from .models import (
+    TipoEvento,
+    Evento,
+    Servicio,
+    FotoEvento,
+    FotoServicio,
+    ResenasEvento,
+    ResenasServicio,
+)
 
 
+#IMAGEN
 class PrevisualizacionImagen:
     readonly_fields = ("previsualizacion_imagen",)
 
@@ -20,6 +29,7 @@ class PrevisualizacionImagen:
     previsualizacion_imagen.short_description = "Imagen"
 
 
+#EVENTO
 @admin.register(TipoEvento)
 class TipoEventoAdmin(SemanticModelAdmin):
     list_display = ("nombre", "descripcion")
@@ -33,6 +43,22 @@ class FotoEventoInline(SemanticTabularInline, PrevisualizacionImagen):
     extra = 1
     fields = ["imagen", "previsualizacion_imagen"]
     readonly_fields = ["previsualizacion_imagen"]
+
+
+class ResenasEventoInline(SemanticTabularInline):
+    model = ResenasEvento
+    extra = 1
+
+
+@admin.register(ResenasEvento)
+class ResenasEventoAdmin(SemanticModelAdmin):
+    list_display = ("evento", "autor", "comentario", "calificacion")
+    search_fields = (
+        "evento__nombre",
+        "autor",
+        "comentario",
+    )
+    ordering = ("evento", "autor", "calificacion")
 
 
 @admin.register(FotoEvento)
@@ -61,15 +87,32 @@ class EventoAdmin(SemanticModelAdmin):
     )
     list_filter = ("tipo_evento", "valor_extra_hora", "numero_horas_permitidas")
     ordering = ("nombre",)
-    inlines = [FotoEventoInline]
+    inlines = [FotoEventoInline, ResenasEventoInline]
     list_per_page = 10
 
 
+##SERVICIO
 class FotoServicioInline(SemanticTabularInline, PrevisualizacionImagen):
     model = FotoServicio
     extra = 1
     fields = ["imagen", "previsualizacion_imagen"]
     readonly_fields = ["previsualizacion_imagen"]
+
+
+class ResenasServicioInline(SemanticTabularInline):
+    model = ResenasServicio
+    extra = 1
+
+
+@admin.register(ResenasServicio)
+class ResenasServicioAdmin(SemanticModelAdmin):
+    list_display = ("servicio", "autor", "comentario", "calificacion")
+    search_fields = (
+        "servicio__nombre",
+        "autor",
+        "comentario",
+    )
+    ordering = ("servicio", "autor", "calificacion")
 
 
 @admin.register(Servicio)
@@ -78,7 +121,7 @@ class ServicioAdmin(SemanticModelAdmin):
     search_fields = ("nombre", "descripcion")
     list_filter = ("estado", "valor_por_unidad")
     ordering = ("nombre", "valor_por_unidad")
-    inlines = [FotoServicioInline]
+    inlines = [FotoServicioInline, ResenasServicioInline]
     list_per_page = 10
 
 

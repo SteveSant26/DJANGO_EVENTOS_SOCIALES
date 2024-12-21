@@ -1,18 +1,18 @@
 # negocio/urls.py
 from django.urls import path
-from . import views
+from .views import servicios
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about-us/', views.about_us, name='about_us'),
-    path('blog-post/', views.blog_post, name='blog_post'),
-    path('blog/', views.blog, name='blog'),
-    path('contact-us/', views.contact_us, name='contact_us'),
-    path('full-width/', views.full_width, name='full_width'),
-    path('portfolio-item/', views.portfolio_item, name='portfolio_item'),
-    path('portfolio/', views.portfolio, name='portfolio'),
-    path('services/', views.services, name='services'),
-    path('eventos/', views.lista_eventos, name='lista_eventos'),
+    path('', servicios.index, name='index'),
+    path('about-us/', servicios.about_us, name='about_us'),
+    path('blog-post/', servicios.blog_post, name='blog_post'),
+    path('blog/', servicios.blog, name='blog'),
+    path('contact-us/', servicios.contact_us, name='contact_us'),
+    path('full-width/', servicios.full_width, name='full_width'),
+    path('portfolio-item/', servicios.portfolio_item, name='portfolio_item'),
+    path('portfolio/', servicios.portfolio, name='portfolio'),
+    path('services/', servicios.services, name='services'),
+    path('eventos/', servicios.lista_eventos, name='lista_eventos'),
 ]
 
 
