@@ -1,18 +1,36 @@
 # negocio/urls.py
 from django.urls import path
-from .views import servicios
+from . import vistas
 
 urlpatterns = [
-    path('', servicios.index, name='index'),
-    path('about-us/', servicios.about_us, name='about_us'),
-    path('blog-post/', servicios.blog_post, name='blog_post'),
-    path('blog/', servicios.blog, name='blog'),
-    path('contact-us/', servicios.contact_us, name='contact_us'),
-    path('full-width/', servicios.full_width, name='full_width'),
-    path('portfolio-item/', servicios.portfolio_item, name='portfolio_item'),
-    path('portfolio/', servicios.portfolio, name='portfolio'),
-    path('services/', servicios.services, name='services'),
-    path('eventos/', servicios.lista_eventos, name='lista_eventos'),
+    path("eventos/", vistas.eventos.listar_eventos, name="listar_eventos"),
+    path(
+        "eventos/<int:evento_id>/", vistas.eventos.obtener_evento, name="obtener_evento"
+    ),
+    path(
+        "eventos/<int:evento_id>/calificacion/",
+        vistas.eventos.obtener_dar_calificacion,
+        name="obtener_dar_calificacion",
+    ),
+    path(
+        "eventos/<int:evento_id>/fotos/",
+        vistas.eventos.listar_fotos_evento,
+        name="listar_fotos_evento",
+    ),
+    path("servicios/", vistas.servicios.listar_servicios, name="listar_servicios"),
+    path(
+        "servicios/<int:servicio_id>/",
+        vistas.servicios.obtener_servicio,
+        name="obtener_servicio",
+    ),
+    path(
+        "servicios/<int:servicio_id>/calificacion/",
+        vistas.servicios.obtener_dar_calificacion,
+        name="obtener_dar_calificacion_servicio",
+    ),
+    path(
+        "servicios/<int:servicio_id>/fotos/",
+        vistas.servicios.listar_fotos_servicio,
+        name="listar_fotos_servicio",
+    ),
 ]
-
-

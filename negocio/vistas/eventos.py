@@ -36,3 +36,5 @@ def listar_fotos_evento(request, evento_id):
     evento = Evento.objects.get(pk=evento_id)
     fotos = FotoEvento.objects.filter(evento=evento)
     return render(request, 'negocio/listar_fotos_evento.html', {'fotos': fotos})
+
+
