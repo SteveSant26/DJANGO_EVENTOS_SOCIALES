@@ -10,7 +10,12 @@ from ..forms import *
 
 def listar_eventos(request):
     eventos = Evento.objects.all()
-    return render(request, "negocio/lista_eventos.html", {"eventos": eventos})
+
+    datos = []
+    for evento in eventos:
+        datos.append({"evento": evento, "fotos": FotoEvento.objects.filter(evento=evento)})
+    print(datos)
+    return render(request, "negocio/eventos/index.html", {"eventos": datos})
 
 
 def obtener_evento(request, evento_id):

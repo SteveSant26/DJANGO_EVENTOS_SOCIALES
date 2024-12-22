@@ -1,0 +1,15 @@
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
+
+{% include 'main/componentes/ui/title.html' with titulo="Eventos" %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            {% for evento in eventos %}
+                {% include 'main/componentes/ui/card.html' with titulo=evento.nombre texto=evento.descripcion imagen_url=evento.imagen.url %}
+            {% endfor %}
+        </div>
+</section>
+{% endblock %}

@@ -9,7 +9,11 @@ from ..forms import ResenaServicioForm
 
 def listar_servicios(request):
     servicios = Servicio.objects.all()
-    return render(request, "negocio/lista_servicios.html", {"servicios": servicios})
+
+    datos = []
+    for servicio in servicios:
+        datos.append({"servicio": servicio, "fotos": FotoServicio.objects.filter(servicio=servicio)})
+    return render(request, "negocio/servicios/index.html", {"servicios": servicios})
 
 
 def obtener_servicio(request, servicio_id):

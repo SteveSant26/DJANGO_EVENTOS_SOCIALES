@@ -1,0 +1,15 @@
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
+
+{% include 'main/componentes/ui/title.html' with titulo="Servicios" %}
+
+<section>
+    <div class="container">
+        <div class="row">
+            {% for servicio in servicios %}
+                {% include 'main/componentes/ui/card.html' with titulo=servicio.nombre texto=servicio.descripcion  %}
+            {% endfor %}
+        </div>
+</section>
+{% endblock %}
