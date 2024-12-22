@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'main/componentes/base/head.html' %}
+<body>
+    {% include 'main/componentes/base/header.html' %}
+
+    <main style="min-height: 50vh;">
+        {% block content %}
+    {% endblock %}
+    </main>
+    {% include 'main/componentes/base/footer.html' %}
+</body>
+</html>

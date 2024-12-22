@@ -1,100 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Basica"></a>
-		</div>
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="{% url 'index' %}">Home</a></li>
-				<li><a href="{% url 'about_us' %}">Nosotros</a></li>
-				<li><a href="{% url 'services' %}">Servicios</a></li>
-				<li><a href="{% url 'portfolio' %}">Portafolio</a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="icon-angle-down"></i></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Dropdown Menu 1</a></li>
-						<li><a href="#">Dropdown Menu 2</a></li>
-						<li><a href="#">Dropdown Menu 3</a></li>
-						<li><a href="#">Dropdown Menu 4</a></li>
-						<li><a href="#">Dropdown Menu 5</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Politica de privacidad</a></li>
-						<li><a href="#">Terminos de uso</a></li>
-					</ul>
-				</li>
-				<li><a href="{% url 'blog' %}">Blog</a></li> 
-				<li><a href="{% url 'contact_us' %}">Contactanos</a></li>
-			</ul>
-		</div>
-	</div>
-</header><!--/header-->
-    <section id="main-slider" class="no-margin">
-        <div class="carousel slide">
-            <ol class="carousel-indicators">
-                <li data-target="#main-slider" data-slide-to="0" class="active"></li>
-                <li data-target="#main-slider" data-slide-to="1"></li>
-                <li data-target="#main-slider" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="item active" style="background-image: url(static/img/slides/1.jpg)">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="carousel-content centered">
-                                    <h2 class="animation animated-item-1">Welcome to BASICA! A Bootstrap3 Template</h2>
-                                    <p class="animation animated-item-2">Sed mattis enim in nulla blandit tincidunt. Phasellus vel sem convallis, mattis est id, interdum augue. Integer luctus massa in arcu euismod venenatis. </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.item-->
-                <div class="item" style="background-image: url(static/img/slides/2.jpg)">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="carousel-content center centered">
-                                    <h2 class="animation animated-item-1">Powerful and Responsive HTML Template</h2>
-                                    <p class="animation animated-item-2">Phasellus adipiscing felis a dictum dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at ligula risus. </p>
-                                    <br>
-                                    <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.item-->
-                <div class="item" style="background-image: url(static/img/slides/3.jpg)">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="carousel-content centered">
-                                    <h2 class="animation animated-item-1">Works Seamlessly Well on All Devices</h2>
-                                    <p class="animation animated-item-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae euismod lacus. Maecenas in tempor lectus. Nam mattis, odio ut dapibus ornare, libero. </p>
-                                    <br>
-									<a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.item-->
-            </div><!--/.carousel-inner-->
-        </div><!--/.carousel-->
-        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
-            <i class="icon-angle-left"></i>
-        </a>
-        <a class="next hidden-xs" href="#main-slider" data-slide="next">
-            <i class="icon-angle-right"></i>
-        </a>
-    </section><!--/#main-slider-->
 
+
+    
 	
 <!-- Call to Action Bar -->
 <div class="section section-dark">
@@ -112,36 +21,7 @@
 
 
 <!-- Services -->
-<div class="section section-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="service-wrapper">
-                    <i class="icon-home"></i>
-                    <h3>Aliquam in adipiscing</h3>
-                    <p>Praesent rhoncus mauris ac sollicitudin vehicula. Nam fringilla turpis turpis, at posuere turpis aliquet sit amet condimentum</p>
-                    <a href="#" class="btn">Read more</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="service-wrapper">
-                    <i class="icon-briefcase"></i>
-                    <h3>Curabitur mollis</h3>
-                    <p>Suspendisse eget libero mi. Fusce ligula orci, vulputate nec elit ultrices, ornare faucibus orci. Aenean lectus sapien, vehicula</p>
-                    <a href="#" class="btn">Read more</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="service-wrapper">
-                    <i class="icon-calendar"></i>
-                    <h3>Vivamus mattis</h3>
-                    <p>Phasellus posuere et nisl ac commodo. Nulla facilisi. Sed tincidunt bibendum cursus. Aenean vulputate aliquam risus rutrum scelerisque</p>
-                    <a href="#" class="btn">Read more</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- End Services -->
 
 

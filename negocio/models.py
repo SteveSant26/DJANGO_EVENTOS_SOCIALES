@@ -4,8 +4,6 @@ from utils.abstract_model import BaseModel
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-
-
 ## EVENTOS
 class TipoEvento(BaseModel):
     class Meta:
