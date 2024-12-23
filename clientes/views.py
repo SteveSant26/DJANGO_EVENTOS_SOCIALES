@@ -8,7 +8,6 @@ from .models import InformacionCliente
 
 
 def signup_view(request):
-
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
         return redirect("clientes:profile")
@@ -17,7 +16,23 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            
+            # Usar `get_or_create` para manejar duplicados de forma segura
+            info_cliente, created = InformacionCliente.objects.get_or_create(
+                cliente=user,
+                defaults={
+                    'correo': form.cleaned_data['email'],
+                    'nombres': form.cleaned_data.get('first_name', ''),
+                    'apellidos': form.cleaned_data.get('last_name', '')
+                }
+            )
+            
+            if created:
+                info_cliente.generar_codigo_verificacion()
+
+            # Iniciar sesión automáticamente después del registro
             login(request, user)
+            
             messages.success(
                 request,
                 "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.",
@@ -30,6 +45,7 @@ def signup_view(request):
             )
     else:
         form = SignUpForm()
+
 
     return render(request, "clientes/signup.html", {"form": form})
 
