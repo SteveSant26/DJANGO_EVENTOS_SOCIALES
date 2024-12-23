@@ -4,12 +4,30 @@
 
 {% include 'main/componentes/ui/title.html' with titulo="Eventos" %}
 
-<section>
+
+<div class="section section-white">
     <div class="container">
+        {% include 'main/componentes/ui/tituloSeccion.html' with titulo="Eventos" %}
         <div class="row">
-            {% for evento in eventos %}
-                {% include 'main/componentes/ui/card.html' with titulo=evento.nombre texto=evento.descripcion imagen_url=evento.imagen.url %}
-            {% endfor %}
+            <ul class="grid cs-style-3">
+                
+                {% if eventos %}
+                    {% for evento in eventos %}
+                        {% include 'main/componentes/ui/tarjetaCategoria.html' with item=evento link="obtener_evento" imagen_url=evento.imagen.url %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">No hay eventos</h4>
+                            <p>No hay eventos disponibles en este momento.</p>
+                        </div>
+                    </div>
+                {% endif %}
+                
+            </ul>
         </div>
-</section>
+    </div>
+</div> 
+
+
 {% endblock %}
