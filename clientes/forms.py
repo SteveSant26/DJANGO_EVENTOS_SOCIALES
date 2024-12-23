@@ -145,7 +145,7 @@ class UpdateProfileForm(forms.ModelForm):
         }
         widgets = {
             "nacionalidad": forms.TextInput(attrs={"required": "required"}),
-            "descripcion": forms.Textarea(attrs={"required": "required"}),
+            "descripcion": forms.TextInput(attrs={"required": "required"}),
             "telefono": forms.TextInput(attrs={"required": "required"}),
             "nombres": forms.TextInput(attrs={"required": "required"}),
             "apellidos": forms.TextInput(attrs={"required": "required"}),
