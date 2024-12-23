@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from utils.email_service import EmailService
 from .models import InformacionCliente
 
 STYLE = "inputs"
@@ -64,19 +63,20 @@ class LoginForm(AuthenticationForm):
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        # Verifica si el nombre de usuario existe en la base de datos
-        if not User.objects.filter(username=username).exists():
-            raise forms.ValidationError(
-                "El usuario no existe.", code="username_not_found"
-            )
+        user = User.objects.filter(username=username).first()
+        if not user:
+            raise forms.ValidationError("El usuario no existe.", code="username_not_found")
+        elif not user.is_active:
+            raise forms.ValidationError("Esta cuenta está inactiva.", code="inactive")
         return username
-
+    
     def clean_password(self):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
         
-        # Solo verifica la contraseña si el nombre de usuario es válido
         user = User.objects.filter(username=username).first()
+        print(user)
+        print(password)
         if user and not user.check_password(password):
             raise forms.ValidationError(
                 "La contraseña es incorrecta.", code="invalid_password"

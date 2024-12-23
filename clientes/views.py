@@ -18,18 +18,6 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
 
-            info_cliente, created = InformacionCliente.objects.get_or_create(
-                cliente=user,
-                defaults={
-                    "correo": form.cleaned_data["email"],
-                    "nombres": form.cleaned_data.get("first_name", ""),
-                    "apellidos": form.cleaned_data.get("last_name", ""),
-                },
-            )
-
-            if created:
-                info_cliente.generar_codigo_verificacion()
-
             login(request, user)
 
             messages.success(
@@ -54,15 +42,14 @@ def login_view(request):
         return redirect("clientes:profile")
 
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             messages.success(request, f"¡Bienvenido/a, {user.username}!")
             return redirect("main:home")
         else:
-            print(form.errors.as_data()) 
-            messages.error(request, "Usuario o contraseña incorrectos.")
+            messages.error(request, form.error_messages)
 
     else:
         form = LoginForm()
@@ -94,14 +81,20 @@ def profile_view(request):
     return render(
         request,
         "clientes/profile.html",
-        {"cliente_info": cliente_info, "update_form": form, "verificar_correo_form": verificar_correo_form},
+        {
+            "cliente_info": cliente_info,
+            "update_form": form,
+            "verificar_correo_form": verificar_correo_form,
+        },
     )
 
 
 @login_required
 def verificar_correo(request):
     if request.method == "POST":
-        form = VerificarCorreoForm(request.POST, user=request.user)  # Pasa el usuario al formulario
+        form = VerificarCorreoForm(
+            request.POST, user=request.user
+        )  # Pasa el usuario al formulario
         if form.is_valid():
             try:
                 perfil = get_object_or_404(InformacionCliente, cliente=request.user)
@@ -116,7 +109,6 @@ def verificar_correo(request):
         form = VerificarCorreoForm(user=request.user)  # Pasa el usuario al formulario
 
     return render(request, "clientes/update.html", {"form": form})
-
 
 
 @login_required
