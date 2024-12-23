@@ -39,15 +39,11 @@ class CrearClienteForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-        cliente_data = {
-            "cliente": user,
-            "correo": self.cleaned_data.get("email"),
-        }
-        cliente = InformacionCliente.objects.create(**cliente_data)
-        cliente.generar_codigo_verificacion()
-        EmailService.enviar_codigo_verificacion(cliente)
+        InformacionCliente.objects.create(
+            cliente=user,
+            correo=self.cleaned_data.get("email"),
+        )
         return user
-
 
 class LoginForm(AuthenticationForm):
     class Meta:
