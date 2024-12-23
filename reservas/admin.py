@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 # Register your models here.
 from .models import (
-    ReservaServicio,
+    ReservaEventoServicio,
     ReservaEvento,
     Promocion,
     Eventualidad,
@@ -44,7 +44,7 @@ class EventualidadInline(admin.TabularInline):
 
 # ReservaServicio Inline
 class ReservaServicioInline(admin.TabularInline):
-    model = ReservaServicio
+    model = ReservaEventoServicio
     extra = 1
     fields = ['servicio', 'cantidad']
 
@@ -59,7 +59,7 @@ class FotoReservaEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
 
 
 # ReservaServicio Admin
-@admin.register(ReservaServicio)
+@admin.register(ReservaEventoServicio)
 class ReservaServicioAdmin(admin.ModelAdmin):
     list_display = ("id", "reserva", "servicio", "cantidad")
     list_filter = ("reserva", "servicio")

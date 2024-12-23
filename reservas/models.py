@@ -22,13 +22,13 @@ class ReservaEvento(BaseModel):
 
     cliente = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Cliente")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, verbose_name="Evento")
-    
+
     prmociones = models.ManyToManyField(
         "Promocion",
         blank=True,
         verbose_name="Promociones",
     )
-    
+
     fechalquiler = models.DateField(verbose_name="Fecha de alquiler")
     hora_inicio_reserva_evento = models.TimeField(
         verbose_name="Hora de inicio de la reserva"
@@ -91,7 +91,10 @@ class FotoReservaEvento(BaseModel):
         "imagen",
     )
     reserva_evento = models.ForeignKey(
-        ReservaEvento, on_delete=models.CASCADE, verbose_name="Reserva del evento"
+        ReservaEvento,
+        on_delete=models.CASCADE,
+        verbose_name="Reserva del evento",
+        related_name="fotos",
     )
     descripcion = models.TextField(
         verbose_name="Descripción de la foto", blank=True, null=True
@@ -102,25 +105,33 @@ class FotoReservaEvento(BaseModel):
         return f"Foto de Evento {self.reserva_evento}"
 
 
-class ReservaServicio(BaseModel):
+class ReservaEventoServicio(BaseModel):
     class Meta:
         verbose_name = "Reserva de servicio"
         verbose_name_plural = "Reservas de servicios"
 
     reserva = models.ForeignKey(
-        ReservaEvento, on_delete=models.CASCADE, verbose_name="Reserva del evento"
+        ReservaEvento,
+        on_delete=models.CASCADE,
+        verbose_name="Reserva del evento",
+        related_name="reservas_servicios",
     )
     servicio = models.ForeignKey(
-        Servicio, on_delete=models.CASCADE, verbose_name="Servicio"
+        Servicio,
+        on_delete=models.CASCADE,
+        verbose_name="Servicio",
+        related_name="reservas_servicios",
     )
     cantidad = models.IntegerField(verbose_name="Cantidad")
 
     def clean(self):
         if self.cantidad <= 0:
             raise ValidationError("La cantidad debe ser mayor a 0")
-        if ReservaServicio.objects.filter(reserva=self.reserva, servicio=self.servicio).exists():
+        if ReservaEventoServicio.objects.filter(
+            reserva=self.reserva, servicio=self.servicio
+        ).exists():
             raise ValidationError("El servicio ya ha sido reservado")
-        
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
@@ -133,6 +144,7 @@ class Promocion(BaseModel):
     class Meta:
         verbose_name = "Promoción"
         verbose_name_plural = "Promociones"
+
     nombre = models.CharField(max_length=100, verbose_name="Nombre de la promoción")
     descripcion = models.CharField(
         max_length=200, verbose_name="Descripción de la promoción"
@@ -143,7 +155,7 @@ class Promocion(BaseModel):
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio")
     fecha_fin = models.DateField(verbose_name="Fecha de fin")
 
-    def __str__(self):  
+    def __str__(self):
         return f"{self.nombre}"
 
 
@@ -153,7 +165,9 @@ class Eventualidad(BaseModel):
         verbose_name_plural = "Eventualidades"
 
     descripcion = models.TextField(verbose_name="Descripción de la eventualidad")
-    fecha_eventualidad = models.DateField(verbose_name="Fecha de la eventualidad", )
+    fecha_eventualidad = models.DateField(
+        verbose_name="Fecha de la eventualidad",
+    )
     alquiler = models.ForeignKey(
         ReservaEvento, on_delete=models.CASCADE, verbose_name="Reserva del evento"
     )

@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import JsonResponse
 from .forms import SignUpForm, VerificarCorreoForm, UpdateProfileForm, LoginForm
 from .models import InformacionCliente
 
@@ -16,8 +16,7 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            
-            # Usar `get_or_create` para manejar duplicados de forma segura
+
             info_cliente, created = InformacionCliente.objects.get_or_create(
                 cliente=user,
                 defaults={
@@ -30,9 +29,8 @@ def signup_view(request):
             if created:
                 info_cliente.generar_codigo_verificacion()
 
-            # Iniciar sesión automáticamente después del registro
             login(request, user)
-            
+
             messages.success(
                 request,
                 "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.",
@@ -46,7 +44,6 @@ def signup_view(request):
     else:
         form = SignUpForm()
 
-
     return render(request, "clientes/signup.html", {"form": form})
 
 
@@ -54,8 +51,9 @@ def login_view(request):
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
         return redirect("clientes:profile")
+    
     if request.method == "POST":
-        form = LoginForm(data=request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -79,7 +77,8 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    cliente_info, created = InformacionCliente.objects.get_or_create(cliente=request.user)
+    cliente_info = get_object_or_404(InformacionCliente, cliente=request.user)
+
     if request.method == "POST":
         form = UpdateProfileForm(request.POST, instance=cliente_info)
         if form.is_valid():
@@ -97,12 +96,13 @@ def profile_view(request):
     )
 
 
+@login_required
 def verificar_correo(request):
     if request.method == "POST":
         form = VerificarCorreoForm(request.POST)
         if form.is_valid():
             try:
-                perfil = InformacionCliente.objects.get(cliente=request.user)
+                perfil = get_object_or_404(InformacionCliente, cliente=request.user)
                 perfil.verificado = True
                 perfil.save()
                 messages.success(request, "Correo electrónico verificado con éxito.")
@@ -114,3 +114,17 @@ def verificar_correo(request):
         form = VerificarCorreoForm()
 
     return render(request, "clientes/update.html", {"form": form})
+
+
+@login_required
+def reenvio_correo_validacion(request):
+    perfil_usuario = get_object_or_404(InformacionCliente, cliente=request.user)
+
+    perfil_usuario.generar_codigo_verificacion()
+    perfil_usuario.save()
+
+    InformacionCliente.enviar_codigo_validar_email(perfil_usuario)
+
+    return JsonResponse(
+        {"success": True, "message": "Correo de validación enviado nuevamente."}
+    )

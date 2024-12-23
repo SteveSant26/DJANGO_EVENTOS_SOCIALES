@@ -1,5 +1,5 @@
 from django import forms
-from .models import ReservaEvento, Evento, Eventualidad, Promocion,ReservaServicio
+from .models import ReservaEvento, Evento, Eventualidad, Promocion,ReservaEventoServicio
 
 class ReservaEventoForm(forms.ModelForm):
     class Meta:
@@ -34,11 +34,20 @@ class ReservaEventoForm(forms.ModelForm):
             "observacion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
         }
+        
+    def save(self, commit=True):
+        reserva = super().save(commit=False)
+        if commit:
+            reserva.save()
+        from utils.email_service import EmailService
+        EmailService.enviar_codigo_confirmacion(reserva)
+        return reserva
 
 
-class ReservaServicioForm(forms.ModelForm):
+
+class ReservaEventoServicioForm(forms.ModelForm):
     class Meta:
-        model = ReservaServicio
+        model = ReservaEventoServicio
         fields = ["alquiler", "servicio", "cantidad"]
         labels = {
             "alquiler": "Reserva del evento",
@@ -47,39 +56,10 @@ class ReservaServicioForm(forms.ModelForm):
         }
 
 
-# class PromocionForm(forms.ModelForm):
-#     class Meta:
-#         model = Promocion
-#         fields = [
-#             "descripcion",
-#             "porcentaje_descuento",
-#             "fecha_inicio",
-#             "fecha_fin",
-#             "alquiler",
-#         ]
-#         labels = {
-#             "descripcion": "Descripción de la promoción",
-#             "porcentaje_descuento": "Porcentaje de descuento",
-#             "fecha_inicio": "Fecha de inicio",
-#             "fecha_fin": "Fecha de fin",
-#             "alquiler": "Reserva del evento",
-#         }
-#         widgets = {
-#             "fecha_inicio": forms.DateInput(attrs={"type": "date"}),
-#             "fecha_fin": forms.DateInput(attrs={"type": "date"}),
-#         }
-
-
-# class EventualidadForm(forms.ModelForm):
-#     class Meta:
-#         model = Eventualidad
-#         fields = ["descripcion", "fecha_eventualidad", "alquiler"]
-#         labels = {
-#             "descripcion": "Descripción de la eventualidad",
-#             "fecha_eventualidad": "Fecha de la eventualidad",
-#             "alquiler": "Reserva del evento",
-#         }
-#         widgets = {
-#             "fecha_eventualidad": forms.DateInput(attrs={"type": "date"}),
-#             "descripcion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-#         }
+class ReservaEventoConfirmForm(forms.ModelForm):
+    class Meta:
+        model = ReservaEvento
+        fields = ["codigo_confirmacion_reserva"]
+        labels = {
+            "codigo_confirmacion_reserva": "Código de Confirmación",
+        }
