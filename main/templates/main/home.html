@@ -1,6 +1,7 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 
 {% include 'main/componentes/ui/banner.html' %}
 {% include 'main/componentes/ui/title.html' with titulo="Nuestros Eventos" %}
@@ -10,11 +11,17 @@
             {% for tipo in tipoEventos %}
                 {% include 'main/componentes/ui/tarjetaCategoria.html' with item=tipo link="obtener_evento" imagen_url=tipo.imagen.url %}
             {% endfor %}
+=======
+    {% include 'main/componentes/ui/banner.html' %}
+    {% include 'main/componentes/ui/title.html' with titulo="Nuestros Eventos" %}
+    <div class="section section-white">
+        <div class="container">
+            <div class="row">
+                {% for evento in eventos_mas_populares %}
+                    {% include 'main/componentes/ui/card.html' with titulo=evento.nombre texto=evento.descripcion imagen_url="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop" %}
+                {% endfor %}
+            </div>
+>>>>>>> efe6633859bc3e8e6b75074cde5c429080a64af0
         </div>
     </div>
-</div>
-
-
-
-
 {% endblock %}

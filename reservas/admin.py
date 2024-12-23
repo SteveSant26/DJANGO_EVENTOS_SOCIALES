@@ -1,5 +1,4 @@
 from django.contrib import admin
-from semantic_admin.admin import SemanticModelAdmin, SemanticTabularInline
 from django.utils.safestring import mark_safe
 
 # Register your models here.
@@ -11,7 +10,7 @@ from .models import (
     FotoReservaEvento,
 )
 
-
+# Previsualización de la imagen
 class PrevisualizacionImagen:
     readonly_fields = ("previsualizacion_imagen",)
 
@@ -28,42 +27,49 @@ class PrevisualizacionImagen:
     previsualizacion_imagen.short_description = "Imagen"
 
 
-class FotoReservaEventoInline(SemanticTabularInline, PrevisualizacionImagen):
+# FotoReservaEvento Inline
+class FotoReservaEventoInline(admin.TabularInline, PrevisualizacionImagen):
     model = FotoReservaEvento
     extra = 1
-    fields = ['imagen', 'previsualizacion_imagen']  
+    fields = ['imagen', 'previsualizacion_imagen']
     readonly_fields = ['previsualizacion_imagen']
 
 
-class EventualidadInline(SemanticTabularInline):
+# Eventualidad Inline
+class EventualidadInline(admin.TabularInline):
     model = Eventualidad
     extra = 1
-    fields = ['descripcion', 'fecha_eventualidad', 'alquiler']  
+    fields = ['descripcion', 'fecha_eventualidad', 'alquiler']
 
 
-class ReservaServicioInline(SemanticTabularInline):
+# ReservaServicio Inline
+class ReservaServicioInline(admin.TabularInline):
     model = ReservaServicio
     extra = 1
     fields = ['servicio', 'cantidad']
 
+
+# FotoReservaEvento Admin
 @admin.register(FotoReservaEvento)
-class FotoReservaEventoAdmin(SemanticModelAdmin, PrevisualizacionImagen):
+class FotoReservaEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
     list_display = ("reserva_evento", "descripcion", "numero_likes", "previsualizacion_imagen")
     search_fields = ("reserva_evento__id",)
     ordering = ("reserva_evento",)
     list_per_page = 10
 
+
+# ReservaServicio Admin
 @admin.register(ReservaServicio)
-class ReservaServicioAdmin(SemanticModelAdmin):
+class ReservaServicioAdmin(admin.ModelAdmin):
     list_display = ("id", "reserva", "servicio", "cantidad")
     list_filter = ("reserva", "servicio")
     search_fields = ("reserva__cliente__username", "servicio__nombre")
-    list_per_page = 10  
+    list_per_page = 10
 
 
-
+# ReservaEvento Admin
 @admin.register(ReservaEvento)
-class ReservaEventoAdmin(SemanticModelAdmin):
+class ReservaEventoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "cliente",
@@ -83,8 +89,9 @@ class ReservaEventoAdmin(SemanticModelAdmin):
     inlines = [FotoReservaEventoInline, EventualidadInline, ReservaServicioInline]
 
 
+# Promocion Admin
 @admin.register(Promocion)
-class PromocionAdmin(SemanticModelAdmin):
+class PromocionAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "nombre",
@@ -98,8 +105,9 @@ class PromocionAdmin(SemanticModelAdmin):
     search_fields = ("descripcion", "porcentaje_descuento")
 
 
+# Eventualidad Admin
 @admin.register(Eventualidad)
-class EventualidadAdmin(SemanticModelAdmin):
+class EventualidadAdmin(admin.ModelAdmin):
     list_display = ("id", "descripcion", "fecha_eventualidad", "alquiler")
     list_filter = ("fecha_eventualidad",)
     search_fields = ("descripcion", "fecha_eventualidad", "alquiler__evento__nombre")

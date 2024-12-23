@@ -1,5 +1,4 @@
 from django.contrib import admin
-from semantic_admin.admin import SemanticModelAdmin, SemanticTabularInline
 from django.utils.safestring import mark_safe
 from .models import (
     TipoEvento,
@@ -11,8 +10,7 @@ from .models import (
     ResenaServicio,
 )
 
-
-#IMAGEN
+# Previsualización de la imagen
 class PrevisualizacionImagen:
     readonly_fields = ("previsualizacion_imagen",)
 
@@ -29,29 +27,29 @@ class PrevisualizacionImagen:
     previsualizacion_imagen.short_description = "Imagen"
 
 
-#EVENTO
+# Evento
 @admin.register(TipoEvento)
-class TipoEventoAdmin(SemanticModelAdmin):
+class TipoEventoAdmin(admin.ModelAdmin):
     list_display = ("nombre", "descripcion")
     search_fields = ("nombre", "descripcion")
     ordering = ("nombre",)
     list_per_page = 10
 
 
-class FotoEventoInline(SemanticTabularInline, PrevisualizacionImagen):
+class FotoEventoInline(admin.TabularInline, PrevisualizacionImagen):
     model = FotoEvento
     extra = 1
     fields = ["imagen", "previsualizacion_imagen"]
     readonly_fields = ["previsualizacion_imagen"]
 
 
-class ResenasEventoInline(SemanticTabularInline):
+class ResenasEventoInline(admin.TabularInline):
     model = ResenaEvento
     extra = 1
 
 
 @admin.register(ResenaEvento)
-class ResenaEventoAdmin(SemanticModelAdmin):
+class ResenaEventoAdmin(admin.ModelAdmin):
     list_display = ("evento", "autor", "comentario", "calificacion")
     search_fields = (
         "evento__nombre",
@@ -62,7 +60,7 @@ class ResenaEventoAdmin(SemanticModelAdmin):
 
 
 @admin.register(FotoEvento)
-class FotoEventoAdmin(SemanticModelAdmin, PrevisualizacionImagen):
+class FotoEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
     list_display = ("evento", "descripcion", "numero_likes", "previsualizacion_imagen")
     search_fields = ("evento__nombre",)
     ordering = ("evento",)
@@ -70,7 +68,7 @@ class FotoEventoAdmin(SemanticModelAdmin, PrevisualizacionImagen):
 
 
 @admin.register(Evento)
-class EventoAdmin(SemanticModelAdmin):
+class EventoAdmin(admin.ModelAdmin):
     list_display = (
         "nombre",
         "tipo_evento",
@@ -91,21 +89,21 @@ class EventoAdmin(SemanticModelAdmin):
     list_per_page = 10
 
 
-##SERVICIO
-class FotoServicioInline(SemanticTabularInline, PrevisualizacionImagen):
+## Servicio
+class FotoServicioInline(admin.TabularInline, PrevisualizacionImagen):
     model = FotoServicio
     extra = 1
     fields = ["imagen", "previsualizacion_imagen"]
     readonly_fields = ["previsualizacion_imagen"]
 
 
-class ResenaServicioInline(SemanticTabularInline):
+class ResenaServicioInline(admin.TabularInline):
     model = ResenaServicio
     extra = 1
 
 
 @admin.register(ResenaServicio)
-class ResenaServicioAdmin(SemanticModelAdmin):
+class ResenaServicioAdmin(admin.ModelAdmin):
     list_display = ("servicio", "autor", "comentario", "calificacion")
     search_fields = (
         "servicio__nombre",
@@ -116,7 +114,7 @@ class ResenaServicioAdmin(SemanticModelAdmin):
 
 
 @admin.register(Servicio)
-class ServicioAdmin(SemanticModelAdmin):
+class ServicioAdmin(admin.ModelAdmin):
     list_display = ("nombre", "descripcion", "valor_por_unidad", "estado")
     search_fields = ("nombre", "descripcion")
     list_filter = ("estado", "valor_por_unidad")
@@ -126,7 +124,7 @@ class ServicioAdmin(SemanticModelAdmin):
 
 
 @admin.register(FotoServicio)
-class FotoServicioAdmin(SemanticModelAdmin, PrevisualizacionImagen):
+class FotoServicioAdmin(admin.ModelAdmin, PrevisualizacionImagen):
     list_display = (
         "servicio",
         "descripcion",
