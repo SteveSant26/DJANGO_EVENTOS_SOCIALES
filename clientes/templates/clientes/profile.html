@@ -1,0 +1,150 @@
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+        .about-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #444, #222);
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 50%;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 20px;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .about-list .media {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .about-list .media label {
+            font-weight: 600;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .about-list .media p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .counter .count-data {
+            margin: 15px 0;
+        }
+
+        .count-data h6 {
+            font-size: 2rem;
+            color: #222;
+        }
+
+        .count-data p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+    {% include 'main/componentes/ui/title.html' with titulo="Actualizar cliente" %}
+    <section class="section about-section gray-bg" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 text-center">
+                    <div class="about-avatar" id="avatar-container"></div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-text">
+                        <h6 class="dark-color theme-color lead">Información personal</h6>
+                        <p>
+                            {% if not cliente_info.descripcion %}
+                                <span class="text-muted">No tienes ninguna descripción aún.</span>
+                            {% else %}
+                                {{ cliente_info.descripcion }}
+                            {% endif %}
+                        </p>
+                        <div class="row about-list">
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <label>Nombre de usuario:</label>
+                                    <p>{{ cliente_info.cliente.username }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Nombre:</label>
+                                    <p>{{ cliente_info.nombres|default:"No disponible" }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Apellidos:</label>
+                                    <p>{{ cliente_info.apellidos|default:"No disponible" }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Teléfono:</label>
+                                    <p>{{ cliente_info.telefono|default:"No disponible" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="media">
+                                    <label>Dirección:</label>
+                                    <p>{{ cliente_info.direccion|default:"No disponible" }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Correo:</label>
+                                    <p>{{ cliente_info.correo|default:"No especificada" }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Fecha nacimiento:</label>
+                                    <p>{{ cliente_info.fecha_nacimiento|default:"No disponible" }}</p>
+                                </div>
+                                <div class="media">
+                                    <label>Esta verificado:</label>
+                                    {% if cliente_info.verificado %}
+                                        <p class="text-success">Sí</p>
+                                    {% else %}
+                                        <p class="text-danger">No</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const user = {
+            firstName: "{{ cliente_info.nombres|default:'' }}", 
+            lastName: "{{ cliente_info.apellidos|default:'' }}",  
+            username: "{{ cliente_info.cliente.username|default:'' }}"
+        };
+
+        function generateAvatar() {
+            const avatarContainer = document.getElementById("avatar-container");
+            let initials = "";
+
+            if (user.firstName && user.lastName) {
+                initials = user.firstName[0] + user.lastName[0];
+            } else {
+                initials = user.username[0];
+            }
+
+            avatarContainer.textContent = initials;
+        }
+
+        generateAvatar();
+    </script>
+{% endblock %}

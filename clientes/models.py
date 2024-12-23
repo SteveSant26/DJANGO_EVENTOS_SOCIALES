@@ -12,7 +12,8 @@ class InformacionClienteManager(models.Manager):
             return self.create(**params), True
 
 class InformacionCliente(models.Model):
-    cliente = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    cliente = models.OneToOneField(User, on_delete=models.CASCADE)
+    descripcion = models.TextField(blank=True, null=True)
     numero_identificacion = models.CharField(max_length=50, unique=True, blank=True, null=True)
     nacionalidad = models.CharField(max_length=50, blank=True, null=True)
     fecha_registro = models.DateField(auto_now_add=True)
@@ -27,9 +28,11 @@ class InformacionCliente(models.Model):
     )
     codigo_verificacion = models.CharField(max_length=6, blank=True, null=True)
     verificado = models.BooleanField(default=False)
-
+    
     objects = InformacionClienteManager()
-
+    
+    
+    
     def generar_codigo_verificacion(self):
         self.codigo_verificacion = get_random_string(length=6, allowed_chars="1234567890")
         return self.codigo_verificacion
