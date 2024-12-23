@@ -3,14 +3,12 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .forms import SignUpForm, VerificarCorreoForm, ActualizarClienteForm, LoginForm
+from .forms import SignUpForm, VerificarCorreoForm, UpdateProfileForm, LoginForm
 from .models import InformacionCliente
 
 
-
-
 def signup_view(request):
-    
+
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
         return redirect("clientes:profile")
@@ -21,14 +19,14 @@ def signup_view(request):
             user = form.save()
             login(request, user)
             messages.success(
-                request, 
-                "Cuenta creada con éxito. Por favor, verifica tu correo electrónico."
+                request,
+                "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.",
             )
             return redirect("clientes:verificar_correo")
         else:
             messages.error(
-                request, 
-                "Hubo errores en el formulario. Por favor, corrígelos e intenta nuevamente."
+                request,
+                "Hubo errores en el formulario. Por favor, corrígelos e intenta nuevamente.",
             )
     else:
         form = SignUpForm()
@@ -46,7 +44,7 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, f"¡Bienvenido/a, {user.username}!")
-            return redirect("main:home")  
+            return redirect("main:home")
         else:
             messages.error(request, "Usuario o contraseña incorrectos.")
 
@@ -55,6 +53,7 @@ def login_view(request):
 
     return render(request, "clientes/login.html", {"form": form})
 
+
 @login_required
 def logout_view(request):
     messages.success(request, "¡Hasta luego!")
@@ -62,13 +61,24 @@ def logout_view(request):
     return redirect("main:home")
 
 
-
-
 @login_required
 def profile_view(request):
-    cliente_info = InformacionCliente.objects.get_or_create(cliente=request.user)
+    cliente_info, created = InformacionCliente.objects.get_or_create(cliente=request.user)
+    if request.method == "POST":
+        form = UpdateProfileForm(request.POST, instance=cliente_info)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Información del cliente actualizada con éxito.")
+            return redirect("clientes:profile")
 
-    return render(request, "clientes/profile.html", {"cliente_info": cliente_info})
+    else:
+        form = UpdateProfileForm(instance=cliente_info)
+
+    return render(
+        request,
+        "clientes/profile.html",
+        {"cliente_info": cliente_info, "update_form": form},
+    )
 
 
 def verificar_correo(request):
@@ -80,7 +90,7 @@ def verificar_correo(request):
                 perfil.verificado = True
                 perfil.save()
                 messages.success(request, "Correo electrónico verificado con éxito.")
-                return redirect("clientes:profile")  
+                return redirect("clientes:profile")
             except InformacionCliente.DoesNotExist:
                 messages.error(request, "No se encontró información del cliente.")
                 return redirect("clientes:signup")
@@ -88,24 +98,3 @@ def verificar_correo(request):
         form = VerificarCorreoForm()
 
     return render(request, "clientes/update.html", {"form": form})
-
-
-@login_required
-def update_client(request):
-    try:
-        cliente_info = InformacionCliente.objects.get(cliente=request.user)
-    except InformacionCliente.DoesNotExist:
-        messages.error(request, "No se encontraron datos de cliente asociados a tu cuenta.")
-        return redirect("clientes:signup")
-
-    if request.method == "POST":
-        form = ActualizarClienteForm(request.POST, instance=cliente_info)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Información del cliente actualizada con éxito.")
-            return redirect("clientes:profile") 
-    else:
-        form = ActualizarClienteForm(instance=cliente_info)
-
-    return render(request, "clientes/update.html", {"form": form})
-

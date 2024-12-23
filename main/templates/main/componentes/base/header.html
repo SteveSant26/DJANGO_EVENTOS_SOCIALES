@@ -62,7 +62,7 @@
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="{% if request.path == '/mis_datos/' %}active{% endif %}">
-                    <a href="{% url 'clientes:mis_datos' %}">Mis datos</a>
+                    <a href="{% url 'clientes:profile' %}">Mis datos</a>
                 </li>
                 <li>
                     <a href="{% url 'clientes:logout' %}">Cerrar sesión</a>
