@@ -55,6 +55,7 @@ JAZZMIN_SETTINGS = {
     "search_model": "auth.User",
     "topmenu_links": [
         {"name": "Inicio", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Home", "url": "main:home", "permissions": ["auth.view_user"]},
         {"name": "Salir", "url": "admin:logout", "permissions": ["auth.view_user"]},
     ],
     "show_sidebar": True,
@@ -69,7 +70,6 @@ JAZZMIN_SETTINGS = {
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
     "related_modal_active": True,
-
 }
 
 JAZZMIN_UI_TWEAKS = {

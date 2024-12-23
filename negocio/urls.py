@@ -2,6 +2,9 @@
 from django.urls import path
 from . import vistas
 
+
+app_name = "negocio"
+
 urlpatterns = [
     path("eventos/", vistas.eventos.listar_eventos, name="listar_eventos"),
     path(

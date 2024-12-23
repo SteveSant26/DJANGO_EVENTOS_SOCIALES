@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 {% for evento in eventos_mas_populares %}
-                    {% include 'main/componentes/ui/tarjetaCategoria.html' with item=evento.evento link="obtener_evento" imagen_url=evento.foto.imagen.url %}
+                    {% include 'main/componentes/ui/tarjetaCategoria.html' with item=evento.evento link="negocio:obtener_evento" imagen_url=evento.foto.imagen.url %}
                 {% endfor %}
             </div>
         </div>
