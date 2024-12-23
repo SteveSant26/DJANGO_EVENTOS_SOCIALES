@@ -159,7 +159,7 @@
                     </div>
 
                     <div id="verificar-correo" class=" hidden">
-                        <form class="form-register" method="post">
+                        <form class="form-register" method="post" action="{% url 'clientes:verificar_correo' %}">
                             {% csrf_token %}
                             {% if verificar_correo_form.non_field_errors %}
                             <div class="alert alert-danger">
@@ -168,13 +168,18 @@
                             {% endif %}
                             <div class="row">
                                 {% for field in verificar_correo_form %}
-                                <div class="input-field col-md-4" style="margin: 2em;">
+                                <div class="input-field" style="margin: 2em;">
                                     {{ field }}
                                     {{ field.label_tag }}
                                 </div>
                                 {% endfor %}
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Verificar</button>
+
+                            <button type="button" class="btn btn-primary" id="btn-reenviar-correo"
+                                style="width: 100%; margin-top: 1em;">
+                                Reenviar correo de verificación
+                            </button>
                         </form>
                     </div>
 
@@ -247,6 +252,19 @@
 
     // Inicialización para reflejar el estado inicial
     statusVerificarToggle();
+
+    const btnReenviarCorreo = document.querySelector("#btn-reenviar-correo");
+    const reenviarCorreoFuncion = async () => {
+        const response = await fetch("{% url 'clientes:reenvio_correo' %}");
+        const data = await response.json();
+        if (data.success) {
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+
+    };
+    btnReenviarCorreo.addEventListener("click", reenviarCorreoFuncion);
 
 </script>
 {% endblock %}

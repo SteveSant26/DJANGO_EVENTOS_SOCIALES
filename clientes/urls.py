@@ -9,4 +9,5 @@ urlpatterns = [
     path("logout/", vistas.logout_view, name="logout"),
     path("profile/", vistas.profile_view, name="profile"),
     path("verificar-correo/", vistas.verificar_correo, name="verificar_correo"),
+    path("reenviar-correo/", vistas.reenvio_correo_validacion, name="reenvio_correo"),
 ]

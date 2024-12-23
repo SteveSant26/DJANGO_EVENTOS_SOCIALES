@@ -6,7 +6,6 @@ from .models import InformacionCliente
 
 STYLE = "inputs"
 
-
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
@@ -88,13 +87,15 @@ class LoginForm(AuthenticationForm):
 class VerificarCorreoForm(forms.Form):
     codigo_verificacion = forms.CharField(
         label="Código de verificación",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Ingrese el código de verificación"}
-        ),
+        widget=forms.TextInput(),
     )
 
     class Meta:
         fields = ("codigo_verificacion",)
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Toma el usuario de los parámetros
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -120,7 +121,6 @@ class VerificarCorreoForm(forms.Form):
         perfil.verificado = True
         perfil.save()
         return perfil
-
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
