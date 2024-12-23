@@ -1,2 +1,46 @@
-reservas/templates/reservas/reservas.html
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
 
+{% include 'main/componentes/ui/title.html' with titulo="Reservas" %}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Haz tu reservas</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="form-register">
+                            {% csrf_token %}
+                            {% if formNewReserva.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in formNewReserva.non_field_errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-field">
+                                {{ formNewReserva.evento }}
+                                {{ formNewReserva.evento.label_tag }}
+                            </div>
+                            <div class="input-field">
+                                {{ formNewReserva.cliente }}
+                                {{ formNewReserva.cliente.label_tag }}
+                            </div>
+                            <div class="input-field">
+                                {{ formNewReserva.servicios }}
+                                {{ formNewReserva.servicios.label_tag }}
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Crear reserva</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
