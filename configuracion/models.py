@@ -10,6 +10,9 @@ class NegocioManager(models.Manager):
             return Negocio.objects.create(**kwargs)
         
 
+
+
+
 class Negocio(models.Model):
 
     nombre_negocio = models.CharField(max_length=100, verbose_name="Nombre del Negocio")
