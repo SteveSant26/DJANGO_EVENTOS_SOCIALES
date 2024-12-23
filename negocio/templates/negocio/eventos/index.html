@@ -7,14 +7,11 @@
 
 <div class="section section-white">
     <div class="container">
-        {% include 'main/componentes/ui/tituloSeccion.html' with titulo="Eventos" %}
         <div class="row">
             <ul class="grid cs-style-3">
 
                 {% if eventos %}
                 {% for evento in eventos %}
-
-
                 <div class="col-md-4 col-sm-6">
                     <figure>
                         <img src="{{ evento.foto.imagen.url }}" alt="img04">

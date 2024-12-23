@@ -18,29 +18,27 @@
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
-                              {% for foto in fotos %}
-                              <div class="item active">
-                                <img src="{{ foto.imagen.url }}" alt="First slide">
-        
-                              </div>
-                              {% endfor %}
-                              ...
+                                {% for foto in fotos %}
+                                <div class="item active">
+                                    <img src="{{ foto.imagen.url }}" alt="First slide">
+
+                                </div>
+                                {% endfor %}
+                                ...
                             </div>
-                          
+
                             <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                              <span class="sr-only">Previous</span>
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                                data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
                             </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                              <span class="sr-only">Next</span>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                                data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
                             </a>
-                          </div>
-
-
-
-        
+                        </div>
                     </div>
                     <div class="single-post-content">
                         <h3>Descripción del evento</h3>
