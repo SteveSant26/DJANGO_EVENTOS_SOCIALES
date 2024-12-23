@@ -92,23 +92,28 @@ def profile_view(request):
 
 @login_required
 def verificar_correo(request):
+    
     if request.method == "POST":
+        print(request.POST.dict())
         user = request.user
         info_cliente = InformacionCliente.objects.get(cliente=user)
-        if not info_cliente.verificado:
+
+        if info_cliente.verificado:
             messages.warning(request, "Ya te has validado")
             return redirect("clientes:profile")
 
-        form = VerificarCorreoForm(data=request.POST)
-        form.user = user
+        form = VerificarCorreoForm(request.POST, user=user)  # Pasar user al formulario
         if form.is_valid():
             form.save()
             return JsonResponse(
                 {"success": True, "message": "Correo electrónico verificado con éxito."}
             )
         else:
+            messages.warning(request, form.errors)
             return JsonResponse({"success": False, "message": "Formulario inválido."})
+
     return JsonResponse({"success": False, "message": "Método no permitido."})
+
 
 
 @login_required

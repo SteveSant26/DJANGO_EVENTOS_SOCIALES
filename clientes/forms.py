@@ -84,25 +84,31 @@ class LoginForm(AuthenticationForm):
 
 
 class VerificarCorreoForm(forms.Form):
-    codigo_verificacion = forms.CharField(
+    codigo_verificacion_correo = forms.CharField(
         label="Código de verificación",
         widget=forms.TextInput(),
     )
 
     class Meta:
-        fields = ("codigo_verificacion",)
+        fields = ("codigo_verificacion_correo",)
 
-
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Obtener el usuario pasado al formulario
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
-        print(cleaned_data)
-        codigo_verificacion = cleaned_data.get("codigo_verificacion")
-        print(codigo_verificacion)
-        user = self.user
-        print(user)
-        perfil = InformacionCliente.objects.filter(cliente=user).first()  
-
+        codigo_verificacion = cleaned_data.get("codigo_verificacion_correo")
+        
+        # Depuración para verificar que los datos se estén recibiendo correctamente
+        print(f"Cleaned Data: {cleaned_data}")
+        print(f"Codigo Verificacion: {codigo_verificacion}")
+        print(self.user)
+        if not codigo_verificacion:
+            raise forms.ValidationError("El código de verificación no puede estar vacío.")
+        
+        user = self.user  # Acceder al usuario pasado al formulario
+        perfil = InformacionCliente.objects.filter(cliente=user).first()
 
         if not perfil:
             raise forms.ValidationError(
@@ -110,18 +116,16 @@ class VerificarCorreoForm(forms.Form):
             )
 
         if perfil.codigo_verificacion != codigo_verificacion:
-            raise forms.ValidationError("El código de verificación es incorrecto.")
-
-        if perfil.verificado:
-            raise forms.ValidationError("Este correo ya ha sido verificado.")
+            raise forms.ValidationError("El código de verificación no es válido.")
 
         return cleaned_data
 
     def save(self):
-        perfil = InformacionCliente.objects.get(usuario=self.user)
+        perfil = InformacionCliente.objects.get(cliente=self.user)
         perfil.verificado = True
         perfil.save()
         return perfil
+
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
