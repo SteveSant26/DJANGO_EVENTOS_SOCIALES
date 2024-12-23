@@ -1,6 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% include 'main/componentes/base/head.html' %}
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    
+        <title>BASICA! A Free Bootstrap3 HTML5 CSS3 Template by Vactual Art</title>
+    
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+        
+        <script src="//use.edgefonts.net/bebas-neue.js"></script>
+    
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/icomoon-social.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+        
+        <script src="{% static 'js/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+    
+    </head>
 <body>
     {% include 'main/componentes/base/header.html' %}
 
