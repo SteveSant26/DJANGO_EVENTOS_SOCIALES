@@ -36,7 +36,7 @@ def signup_view(request):
                 request,
                 "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.",
             )
-            return redirect("clientes:verificar_correo")
+            return redirect("clientes:profile")
         else:
             messages.error(
                 request,
@@ -100,7 +100,7 @@ def profile_view(request):
 @login_required
 def verificar_correo(request):
     if request.method == "POST":
-        form = VerificarCorreoForm(request.POST)
+        form = VerificarCorreoForm(request.POST, user=request.user)  # Pasa el usuario al formulario
         if form.is_valid():
             try:
                 perfil = get_object_or_404(InformacionCliente, cliente=request.user)
@@ -112,20 +112,24 @@ def verificar_correo(request):
                 messages.error(request, "No se encontró información del cliente.")
                 return redirect("clientes:signup")
     else:
-        form = VerificarCorreoForm()
+        form = VerificarCorreoForm(user=request.user)  # Pasa el usuario al formulario
 
     return render(request, "clientes/update.html", {"form": form})
 
 
+
 @login_required
 def reenvio_correo_validacion(request):
-    perfil_usuario = get_object_or_404(InformacionCliente, cliente=request.user)
+    try:
+        perfil_usuario = get_object_or_404(InformacionCliente, cliente=request.user)
 
-    perfil_usuario.generar_codigo_verificacion()
-    perfil_usuario.save()
+        perfil_usuario.generar_codigo_verificacion()
+        perfil_usuario.save()
 
-    EmailService.enviar_codigo_verificacion()
+        EmailService.enviar_codigo_verificacion(perfil=perfil_usuario)
 
-    return JsonResponse(
-        {"success": True, "message": "Correo de validación enviado nuevamente."}
-    )
+        return JsonResponse(
+            {"success": True, "message": "Correo de validación enviado nuevamente."}
+        )
+    except Exception as e:
+        return JsonResponse({"success": False, "message": str(e)})

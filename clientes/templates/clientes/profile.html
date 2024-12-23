@@ -175,6 +175,11 @@
                                 {% endfor %}
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Verificar</button>
+
+                            <button type="button" class="btn btn-primary" id="btn-reenviar-correo"
+                                style="width: 100%; margin-top: 1em;">
+                                Reenviar correo de verificación
+                            </button>
                         </form>
                     </div>
 
@@ -247,6 +252,19 @@
 
     // Inicialización para reflejar el estado inicial
     statusVerificarToggle();
+
+    const btnReenviarCorreo = document.querySelector("#btn-reenviar-correo");
+    const reenviarCorreoFuncion = async () => {
+        const response = await fetch("{% url 'clientes:reenvio_correo' %}");
+        const data = await response.json();
+        if (data.success) {
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+
+    };
+    btnReenviarCorreo.addEventListener("click", reenviarCorreoFuncion);
 
 </script>
 {% endblock %}
