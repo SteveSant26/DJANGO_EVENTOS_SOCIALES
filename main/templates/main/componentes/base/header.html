@@ -1,22 +1,22 @@
 {% load static %}
-<header class="navbar navbar-inverse"
-        style="position: sticky;
+<header class="navbar navbar-inverse" style="position: sticky;
                top: 0;
                z-index: 1000;
                margin-bottom: 0">
     <div class="container">
         <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{% url 'main:home' %}">
+                {% if configuracion.logo_negocio %}
                 <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="Basica">
+                {% else %}
+                <p class="m-0" style="color: aliceblue; font-size: 2em;">{% if configuracion.nombre_negocio %}{{configuracion.nombre_negocio }}{% else %}negocio{% endif %}</p>
+                {% endif %}
             </a>
         </div>
         <div class="collapse navbar-collapse">
@@ -61,19 +61,19 @@
                     <a href="">Blog</a>
                 </li>
                 {% if request.user.is_authenticated %}
-                    <li class="{% if request.path == '/mis_datos/' %}active{% endif %}">
-                        <a href="{% url 'clientes:mis_datos' %}">Mis datos</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'clientes:logout' %}">Cerrar sesión</a>
-                    </li>
+                <li class="{% if request.path == '/mis_datos/' %}active{% endif %}">
+                    <a href="{% url 'clientes:mis_datos' %}">Mis datos</a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes:logout' %}">Cerrar sesión</a>
+                </li>
                 {% else %}
-                    <li class="{% if request.path == '/signup/' %}active{% endif %}">
-                        <a href="{% url 'clientes:signup' %}">Crea tu cuenta</a>
-                    </li>
-                    <li class="{% if request.path == '/login/' %}active{% endif %}">
-                        <a href="{% url 'clientes:login' %}">Inicia sesión</a>
-                    </li>
+                <li>
+                    <a href="{% url 'clientes:signup' %}">Crea tu cuenta</a>
+                </li>
+                <li class="active">
+                    <a href="{% url 'clientes:login' %}">Inicia sesión</a>
+                </li>
                 {% endif %}
             </ul>
         </div>

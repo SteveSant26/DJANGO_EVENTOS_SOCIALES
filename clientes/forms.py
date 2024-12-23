@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from utils.email_service import EmailService
 from .models import InformacionCliente
 
+STYLE = "inputs"
 
 class CrearClienteForm(UserCreationForm):
     class Meta:
@@ -16,32 +17,26 @@ class CrearClienteForm(UserCreationForm):
             "password2": "Confirmar Contraseña",
         }
         widgets = {
-            "username": forms.TextInput(
-                attrs={
-                    "placeholder": "Escribe tu nombre de usuario",
-                    "class": "input-field",
-                }
-            ),
-            "email": forms.EmailInput(
-                attrs={
-                    "placeholder": "Introduce tu correo electrónico",
-                    "class": "input-field",
-                }
-            ),
-            "password1": forms.PasswordInput(
-                attrs={
-                    "placeholder": "Crea una contraseña",
-                    "class": "input-field",
-                }
-            ),
-            "password2": forms.PasswordInput(
-                attrs={
-                    "placeholder": "Confirma tu contraseña",
-                    "class": "input-field",
-                }
-            ),
+            "username": forms.TextInput(attrs={ "class": STYLE}),
+            "email": forms.EmailInput(attrs={ "class": STYLE}),
+            "password1": forms.PasswordInput(attrs={"class": STYLE}),
+            "password2": forms.PasswordInput(attrs={ "class": STYLE}),
         }
-    
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if not username.isalnum():
+            raise forms.ValidationError("El nombre de usuario solo puede contener letras y números.")
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("El nombre de usuario ya está en uso.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("El correo electrónico ya está en uso.")
+        return email
+
     def save(self, commit=True):
         user = super().save(commit=commit)
         InformacionCliente.objects.create(
