@@ -3,8 +3,9 @@
         {% if imagen_url %}
         <img width="100%" style="border-radius: 20px;" src="{{ imagen_url }}" alt="Imagen">
         {% endif %}
-        <h3>{{ titulo }}</h3>
-        <p>{{ texto }}</p>
-        <a href="#" class="btn">Read more</a>
+        <h3>{{ item.nombre }}</h3>
+        <p>{{ item.descripcion }}</p>
+        <a href="{% url link 1 %}" class="btn">Read more</a>
     </div>
 </div>
+

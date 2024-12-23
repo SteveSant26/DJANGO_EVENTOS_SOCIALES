@@ -7,10 +7,9 @@
 <div class="section section-white">
     <div class="container">
         <div class="row">
-            {% include 'main/componentes/ui/card.html' with titulo="Aliquam in adipiscing" texto="Praesent rhoncus mauris ac sollicitudin vehicula. Nam fringilla turpis turpis, at posuere turpis aliquet sit amet condimentum" imagen_url="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop" %}
-            {% include 'main/componentes/ui/card.html' with titulo="Curabitur mollis" texto="Suspendisse eget libero mi. Fusce ligula orci, vulputate nec elit ultrices, ornare faucibus orci. Aenean lectus sapien, vehicula" imagen_url="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop" %}
-            {% include 'main/componentes/ui/card.html' with titulo="Vivamus mattis" texto="Phasellus posuere et nisl ac commodo. Nulla facilisi. Sed tincidunt bibendum cursus. Aenean vulputate aliquam risus rutrum scelerisque" imagen_url="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop" %}
-            
+            {% for tipo in tipoEventos %}
+                {% include 'main/componentes/ui/tarjetaCategoria.html' with item=tipo link="obtener_evento" imagen_url=tipo.imagen.url %}
+            {% endfor %}
         </div>
     </div>
 </div>
