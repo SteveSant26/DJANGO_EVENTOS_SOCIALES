@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from utils.email_service import EmailService
 from .models import InformacionCliente
 
+STYLE = "inputs"
 
 class CrearClienteForm(UserCreationForm):
     class Meta:
@@ -16,10 +17,10 @@ class CrearClienteForm(UserCreationForm):
             "password2": "Confirmar Contraseña",
         }
         widgets = {
-            "username": forms.TextInput(attrs={"placeholder": "Escribe tu nombre de usuario"}),
-            "email": forms.EmailInput(attrs={"placeholder": "Introduce tu correo electrónico"}),
-            "password1": forms.PasswordInput(attrs={"placeholder": "Crea una contraseña"}),
-            "password2": forms.PasswordInput(attrs={"placeholder": "Confirma tu contraseña"}),
+            "username": forms.TextInput(attrs={ "class": STYLE}),
+            "email": forms.EmailInput(attrs={ "class": STYLE}),
+            "password1": forms.PasswordInput(attrs={"class": STYLE}),
+            "password2": forms.PasswordInput(attrs={ "class": STYLE}),
         }
 
     def clean_username(self):
