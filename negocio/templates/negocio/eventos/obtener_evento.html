@@ -92,6 +92,7 @@
                     <li><strong>Valor extra:</strong> {{ evento.valor_extra_hora }}</li>
                     <li> <strong>Tipo de evento:</strong> {{ evento.tipo_evento }}</li>
                 </ul>
+                <a class="btn btn-primary" href="{% url 'reservas:reserva_new' evento.id %}">Reservar</a>
             </div>
             <!-- End Sidebar -->
         </div>

@@ -270,7 +270,9 @@
         e.preventDefault();
 
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Obtener el token CSRF desde el formulario
-
+        console.log(JSON.stringify({
+            codigo_verificacion: document.querySelector("#id_codigo_verificacion").value,
+        }));
         const response = await fetch("{% url 'clientes:verificar_correo' %}", {
             method: "POST",
             headers: {
