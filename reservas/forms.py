@@ -48,9 +48,9 @@ class ReservaEventoForm(forms.ModelForm):
 class ReservaEventoServicioForm(forms.ModelForm):
     class Meta:
         model = ReservaEventoServicio
-        fields = ["alquiler", "servicio", "cantidad"]
+        fields = ["reserva", "servicio", "cantidad"]
         labels = {
-            "alquiler": "Reserva del evento",
+            "reserva": "Reserva del evento",
             "servicio": "Servicio",
             "cantidad": "Cantidad",
         }

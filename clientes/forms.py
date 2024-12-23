@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from utils.email_service import EmailService
 from .models import InformacionCliente
 
 STYLE = "inputs"
@@ -59,28 +58,29 @@ class LoginForm(AuthenticationForm):
         }
         widgets = {
             "username": forms.TextInput(attrs={"placeholder": "Ingrese su usuario"}),
-            "password": forms.PasswordInput(
-                attrs={"placeholder": "Ingrese su contraseña"}
-            ),
+            "password": forms.PasswordInput(attrs={"placeholder": "Ingrese su contraseña"}),
         }
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        if not User.objects.filter(username=username).exists():
-            raise forms.ValidationError(
-                "El usuario no existe.", code="username_not_found"
-            )
+        user = User.objects.filter(username=username).first()
+        if not user:
+            raise forms.ValidationError("El usuario no existe.", code="username_not_found")
+        elif not user.is_active:
+            raise forms.ValidationError("Esta cuenta está inactiva.", code="inactive")
         return username
-
+    
     def clean_password(self):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
-        if User.objects.filter(username=username).exists():
-            user = User.objects.get(username=username)
-            if not user.check_password(password):
-                raise forms.ValidationError(
-                    "La contraseña es incorrecta.", code="invalid_password"
-                )
+        
+        user = User.objects.filter(username=username).first()
+        print(user)
+        print(password)
+        if user and not user.check_password(password):
+            raise forms.ValidationError(
+                "La contraseña es incorrecta.", code="invalid_password"
+            )
         return password
 
 
@@ -94,7 +94,7 @@ class VerificarCorreoForm(forms.Form):
         fields = ("codigo_verificacion",)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Toma el usuario de los parámetros
+        self.user = kwargs.pop('user', None) 
         super().__init__(*args, **kwargs)
 
     def clean(self):
