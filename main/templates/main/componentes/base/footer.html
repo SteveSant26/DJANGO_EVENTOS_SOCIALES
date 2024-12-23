@@ -4,22 +4,31 @@
     <div class="container">
         <div class="row">
             <div class="col-footer col-md-4 col-xs-6">
-                <h3>Contact Us</h3>
+                <h3>Contacto</h3>
                 <p class="contact-us-details">
-                    <b>Address:</b> 123 Downtown Avenue, Manhattan, New York, United States of America<br/>
-                    <b>Phone:</b> +1 123 45678910<br/>
-                    <b>Fax:</b> +1 123 45678910<br/>
-                    <b>Email:</b> <a href="mailto:info@yourcompanydomain.com">info@yourcompanydomain.com</a>
+                    <b>Address:</b> {{ configuracion.direccion_negocio }}<br/>
+                    <b>Teléfono:</b> {{ configuracion.telefono_negocio }}<br/>
+                    <b>Fax:</b> {{ configuracion.telefono_negocio }}<br/>
+                    <b>Correo electrónico:</b> <a href="mailto:{{ configuracion.correo_negocio }}">{{ configuracion.correo_negocio }}</a>
+            
                 </p>
             </div>              
             <div class="col-footer col-md-4 col-xs-6">
-                <h3>Our Social Networks</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam.</p>
+                <h3>Redes sociales</h3>
+                <p>Siga a nuestra página en redes sociales para obtener más información.</p>
                 <div>
-                    <img src="{% static 'img/icons/facebook.png' %}" width="32" alt="Facebook">
-                    <img src="{% static 'img/icons/twitter.png' %}" width="32" alt="Twitter">
-                    <img src="{% static 'img/icons/linkedin.png' %}" width="32" alt="LinkedIn">
-                    <img src="{% static 'img/icons/rss.png' %}" width="32" alt="RSS Feed">
+                    <a href="{{ configuracion.red_social_facebook_negocio }}" target="_blank">
+                        <img src="{% static 'img/icons/facebook.png' %}" width="32" alt="Facebook">
+                    </a>
+                    <a href="{{ configuracion.red_social_x_negocio }}" target="_blank">
+                        <img src="{% static 'img/icons/twitter.png' %}" width="32" alt="Twitter">
+                    </a>
+                    <a href="{{ configuracion.red_social_instagram_negocio }}" target="_blank">
+                        <img src="{% static 'img/icons/linkedin.png' %}" width="32" alt="LinkedIn">
+                    </a>
+                    <a href="{{ configuracion.pagina_web_negocio }}" target="_blank">
+                        <img src="{% static 'img/icons/rss.png' %}" width="32" alt="RSS Feed">
+                    </a>
                 </div>
             </div>
             <div class="col-footer col-md-4 col-xs-6">
@@ -36,7 +45,7 @@
 </div>
         <!-- Javascripts -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="static/js/jquery-1.9.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write(`<script src="{% static 'js/jquery-1.9.1.min.js' %}"><\/script>`)</script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
 		
 <!-- Scrolling Nav JavaScript -->

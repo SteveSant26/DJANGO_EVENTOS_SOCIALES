@@ -1,9 +1,70 @@
 {% extends "main/base/base.html" %}
-{% load static %}
 {% block content %}
+{% load static %}
 
 {% include 'main/componentes/ui/title.html' with titulo="Evento" %}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Post -->
+            <div class="col-sm-8">
+                <div class="blog-post blog-single-post">
+                    <div class="single-post-title">
+                        <h2>{{ evento.nombre }}</h2>
+                    </div>
+
+                    <div class="single-post-image">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                              {% for foto in fotos %}
+                              <div class="item active">
+                                <img src="{{ foto.imagen.url }}" alt="First slide">
+        
+                              </div>
+                              {% endfor %}
+                              ...
+                            </div>
+                          
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </div>
 
 
+
+        
+                    </div>
+                    <div class="single-post-content">
+                        <h3>Descripción del evento</h3>
+                        <p>
+                            {{ evento.descripcion }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Blog Post -->
+            <!-- Sidebar -->
+            <div class="col-sm-4 blog-sidebar">
+
+                <h4>Recent Posts</h4>
+                <ul class="recent-posts">
+                    <li><strong>Valor de referencia:</strong> {{ evento.valor_referencial }}</li>
+                    <li><strong>Horas permitidas:</strong> {{ evento.numero_horas_permitidas }}</li>
+                    <li><strong>Valor extra:</strong> {{ evento.valor_extra_hora }}</li>
+                    <li> <strong>Tipo de evento:</strong> {{ evento.tipo_evento }}</li>
+                </ul>
+            </div>
+            <!-- End Sidebar -->
+        </div>
+    </div>
+</div>
 
 {% endblock %}

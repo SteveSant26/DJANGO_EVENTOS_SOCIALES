@@ -10,24 +10,35 @@
         {% include 'main/componentes/ui/tituloSeccion.html' with titulo="Eventos" %}
         <div class="row">
             <ul class="grid cs-style-3">
-                
+
                 {% if eventos %}
-                    {% for evento in eventos %}
-                        {% include 'main/componentes/ui/tarjetaCategoria.html' with item=evento link="obtener_evento" imagen_url=evento.imagen.url %}
-                    {% endfor %}
+                {% for evento in eventos %}
+
+
+                <div class="col-md-4 col-sm-6">
+                    <figure>
+                        <img src="{{ evento.foto.imagen.url }}" alt="img04">
+                        <figcaption>
+                            <h3>{{ evento.evento.nombre }}</h3>
+                            <span>{{ evento.evento.descripcion }}</span>
+                            <a href="{% url 'negocio:obtener_evento' evento.evento.id %}">ver más</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <div class="col-md-12">
-                        <div class="alert alert-info" role="alert">
-                            <h4 class="alert-heading">No hay eventos</h4>
-                            <p>No hay eventos disponibles en este momento.</p>
-                        </div>
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">No hay eventos</h4>
+                        <p>No hay eventos disponibles en este momento.</p>
                     </div>
+                </div>
                 {% endif %}
-                
+
             </ul>
         </div>
     </div>
-</div> 
+</div>
 
 
 {% endblock %}

@@ -13,7 +13,7 @@ def listar_eventos(request):
 
     datos = []
     for evento in eventos:
-        datos.append({"evento": evento, "fotos": FotoEvento.objects.filter(evento=evento)})
+        datos.append({"evento": evento, "foto": FotoEvento.objects.filter(evento=evento).first()})
     return render(request, "negocio/eventos/index.html", {"eventos": datos})
 
 
@@ -21,9 +21,10 @@ def obtener_evento(request, evento_id):
     evento = Evento.objects.get(pk=evento_id)
     try:
         evento = Evento.objects.get(pk=evento_id)
+        fotos = FotoEvento.objects.filter(evento=evento)
     except Evento.DoesNotExist:
         raise Http404("El evento no existe")
-    return render(request, "negocio/eventos/obtener_evento.html", {"evento": evento})
+    return render(request, "negocio/eventos/obtener_evento.html", {"evento": evento, "fotos": fotos})
 
 
 def obtener_dar_calificacion(request, evento_id):

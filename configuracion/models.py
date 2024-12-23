@@ -38,9 +38,6 @@ class Negocio(models.Model):
     red_social_instagram_negocio = models.URLField(
         blank=True, null=True, verbose_name="Instagram del Negocio"
     )
-    red_social_twitter_negocio = models.URLField(
-        blank=True, null=True, verbose_name="Twitter del Negocio"
-    )
     nombre_banco = models.CharField(max_length=100, verbose_name="Nombre del Banco")
     numero_cuenta_banco = models.CharField(
         max_length=100, verbose_name="Número de Cuenta del Banco"

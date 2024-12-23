@@ -17,5 +17,5 @@ def home_view(request):
         })
 
     return render(
-        request, "main/home.html", {"eventos_mas_populares": eventos_mas_populares}
+        request, "main/home.html", {"eventos_mas_populares": queryset}
     )
