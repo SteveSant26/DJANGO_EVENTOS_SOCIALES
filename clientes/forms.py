@@ -88,9 +88,7 @@ class LoginForm(AuthenticationForm):
 class VerificarCorreoForm(forms.Form):
     codigo_verificacion = forms.CharField(
         label="Código de verificación",
-        widget=forms.TextInput(
-            attrs={"placeholder": "Ingrese el código de verificación"}
-        ),
+        widget=forms.TextInput(),
     )
 
     class Meta:

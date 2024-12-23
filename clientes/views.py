@@ -89,11 +89,11 @@ def profile_view(request):
 
     else:
         form = UpdateProfileForm(instance=cliente_info)
-
+        verificar_correo_form = VerificarCorreoForm()
     return render(
         request,
         "clientes/profile.html",
-        {"cliente_info": cliente_info, "update_form": form},
+        {"cliente_info": cliente_info, "update_form": form, "verificar_correo_form": verificar_correo_form},
     )
 
 
