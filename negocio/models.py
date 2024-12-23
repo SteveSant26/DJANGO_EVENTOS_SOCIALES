@@ -4,6 +4,7 @@ from utils.abstract_model import BaseModel
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+
 ## EVENTOS
 class TipoEvento(BaseModel):
     class Meta:
@@ -57,10 +58,8 @@ class FotoEvento(BaseModel):
     )
     numero_likes = models.IntegerField(default=0, verbose_name="Número de likes")
 
-
     def __str__(self):
         return f"Foto de Evento {self.evento.descripcion}"
-
 
 
 class ResenaEvento(BaseModel):
@@ -68,11 +67,21 @@ class ResenaEvento(BaseModel):
         verbose_name = "Reseña de evento"
         verbose_name_plural = "Reseñas de eventos"
 
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE, verbose_name="Evento")
-    autor = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
+    evento = models.ForeignKey(
+        Evento,
+        on_delete=models.CASCADE,
+        verbose_name="Evento",
+        related_name="resenas_evento",
+    )
+    autor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Autor",
+        related_name="resenas_evento",
+    )
     calificacion = models.IntegerField(verbose_name="Calificación")
     comentario = models.TextField(verbose_name="Comentario", blank=True, null=True)
-    
+
     def clean(self):
         if self.calificacion < 1 or self.calificacion > 5:
             raise ValidationError("La calificación debe estar entre 1 y 5")
@@ -84,9 +93,10 @@ class ResenaEvento(BaseModel):
 
     def __str__(self):
         return f"Reseña de evento {self.evento.descripcion}"
-    
-    
+
+
 ## SERVICIOS
+
 
 class Servicio(BaseModel):
     class Meta:
@@ -104,7 +114,6 @@ class Servicio(BaseModel):
 
     def __str__(self):
         return self.nombre
-
 
 
 class FotoServicio(BaseModel):
@@ -126,12 +135,15 @@ class FotoServicio(BaseModel):
     def __str__(self):
         return f"Foto de Servicio {self.servicio.descripcion}"
 
+
 class ResenaServicio(BaseModel):
     class Meta:
         verbose_name = "Reseña de servicio"
         verbose_name_plural = "Reseñas de servicios"
 
-    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, verbose_name="Servicio")
+    servicio = models.ForeignKey(
+        Servicio, on_delete=models.CASCADE, verbose_name="Servicio"
+    )
     autor = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
     calificacion = models.IntegerField(verbose_name="Calificación")
     comentario = models.TextField(verbose_name="Comentario", blank=True, null=True)

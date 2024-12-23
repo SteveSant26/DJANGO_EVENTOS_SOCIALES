@@ -1,5 +1,4 @@
 from django.contrib import admin
-from semantic_admin.admin import SemanticModelAdmin
 from django.utils.safestring import mark_safe
 
 # Register your models here.
@@ -7,7 +6,7 @@ from .models import Negocio
 
 
 @admin.register(Negocio)
-class NegocioAdmin(SemanticModelAdmin):
+class NegocioAdmin(admin.ModelAdmin):
     list_display = (
         "nombre_negocio",
         "logo_negocio",
