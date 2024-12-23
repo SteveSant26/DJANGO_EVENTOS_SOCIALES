@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .forms import CrearClienteForm, VerificarCorreoForm, ActualizarClienteForm, LoginForm
+from .forms import SignUpForm, VerificarCorreoForm, ActualizarClienteForm, LoginForm
 from .models import InformacionCliente
 
 
@@ -16,7 +16,7 @@ def signup_view(request):
         return redirect("clientes:profile")
 
     if request.method == "POST":
-        form = CrearClienteForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -31,9 +31,11 @@ def signup_view(request):
                 "Hubo errores en el formulario. Por favor, corrígelos e intenta nuevamente."
             )
     else:
-        form = CrearClienteForm()
+        form = SignUpForm()
 
     return render(request, "clientes/signup.html", {"form": form})
+
+
 def login_view(request):
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")

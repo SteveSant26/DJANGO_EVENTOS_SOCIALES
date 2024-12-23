@@ -6,7 +6,7 @@ from .models import InformacionCliente
 
 STYLE = "inputs"
 
-class CrearClienteForm(UserCreationForm):
+class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
@@ -39,10 +39,11 @@ class CrearClienteForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-        InformacionCliente.objects.create(
+        perfil = InformacionCliente.objects.create(
             cliente=user,
             correo=self.cleaned_data.get("email"),
         )
+        perfil.save()
         return user
 
 class LoginForm(AuthenticationForm):
@@ -72,6 +73,8 @@ class LoginForm(AuthenticationForm):
             if not user.check_password(password):
                 raise forms.ValidationError("La contraseña es incorrecta.", code="invalid_password")
         return password
+
+
 
 class VerificarCorreoForm(forms.Form):
     codigo_verificacion = forms.CharField(

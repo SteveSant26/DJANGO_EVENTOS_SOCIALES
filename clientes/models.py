@@ -29,14 +29,13 @@ class InformacionCliente(models.Model):
     
     def generar_codigo_verificacion(self):
         self.codigo_verificacion = get_random_string(length=6, allowed_chars="1234567890")
-        self.save()
         return self.codigo_verificacion
 
     def save(self, *args, **kwargs):
         from utils.email_service import EmailService
         
         if not self.codigo_verificacion:
-            self.codigo_verificacion = self.generar_codigo_verificacion()
+            self.generar_codigo_verificacion()
         EmailService.enviar_codigo_verificacion(self)
 
         super().save( *args, **kwargs)
