@@ -19,7 +19,6 @@ def signup_view(request):
             user = form.save()
 
             login(request, user)
-
             messages.success(
                 request,
                 "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.",
