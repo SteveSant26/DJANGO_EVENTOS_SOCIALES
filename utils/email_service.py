@@ -14,11 +14,10 @@ class EmailService:
 
     @staticmethod
     def enviar_codigo_verificacion(perfil: InformacionCliente):
-        codigo = perfil.generar_codigo_verificacion()
         subject = "Código de verificación"
         message = (
             f"Hola {perfil.cliente.username},\n\n"
-            f"Gracias por registrarte. Tu código de verificación es: {codigo}\n\n"
+            f"Gracias por registrarte. Tu código de verificación es: {perfil.codigo_verificacion}\n\n"
             "Por favor, utiliza este código para verificar tu cuenta."
         )
         recipient_list = [perfil.correo]

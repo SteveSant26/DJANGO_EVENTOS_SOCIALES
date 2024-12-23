@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from utils.email_service import EmailService
+
 from .forms import SignUpForm, VerificarCorreoForm, UpdateProfileForm, LoginForm
 from .models import InformacionCliente
 
@@ -87,22 +88,28 @@ def profile_view(request):
             "verificar_correo_form": verificar_correo_form,
         },
     )
+
+
 @login_required
 def verificar_correo(request):
     if request.method == "POST":
-        form = VerificarCorreoForm(request.POST, user=request.user)  # Pasa el usuario al formulario
+        user = request.user
+        info_cliente = InformacionCliente.objects.get(cliente=user)
+        if not info_cliente.verificado:
+            messages.warning(request, "Ya te has validado")
+            return redirect("clientes:profile")
+
+        form = VerificarCorreoForm(data=request.POST)
+        form.user = user
         if form.is_valid():
-            try:
-                perfil = get_object_or_404(InformacionCliente, cliente=request.user)
-                perfil.verificado = True
-                perfil.save()
-                return JsonResponse({"success": True, "message": "Correo electrónico verificado con éxito."})
-            except InformacionCliente.DoesNotExist:
-                return JsonResponse({"success": False, "message": "No se encontró información del cliente."})
+            form.save()
+            return JsonResponse(
+                {"success": True, "message": "Correo electrónico verificado con éxito."}
+            )
         else:
-            # Agregar manejo de errores de formulario
             return JsonResponse({"success": False, "message": "Formulario inválido."})
     return JsonResponse({"success": False, "message": "Método no permitido."})
+
 
 @login_required
 def reenvio_correo_validacion(request):

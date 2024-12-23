@@ -75,8 +75,7 @@ class LoginForm(AuthenticationForm):
         password = self.cleaned_data.get("password")
         
         user = User.objects.filter(username=username).first()
-        print(user)
-        print(password)
+
         if user and not user.check_password(password):
             raise forms.ValidationError(
                 "La contraseña es incorrecta.", code="invalid_password"
@@ -93,15 +92,16 @@ class VerificarCorreoForm(forms.Form):
     class Meta:
         fields = ("codigo_verificacion",)
 
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None) 
-        super().__init__(*args, **kwargs)
+
 
     def clean(self):
         cleaned_data = super().clean()
+        print(cleaned_data)
         codigo_verificacion = cleaned_data.get("codigo_verificacion")
+        print(codigo_verificacion)
         user = self.user
-        perfil = InformacionCliente.objects.filter(cliente=user).first()  # Asumiendo que 'cliente' es la clave foránea
+        print(user)
+        perfil = InformacionCliente.objects.filter(cliente=user).first()  
 
 
         if not perfil:
