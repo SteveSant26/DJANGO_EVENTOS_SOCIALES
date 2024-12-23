@@ -14,7 +14,7 @@
                 {% for evento in eventos %}
                 <div class="col-md-4 col-sm-6">
                     <figure>
-                        <img src="{{ evento.foto.imagen.url }}" alt="img04">
+                        <img src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}" alt="img04">
                         <figcaption>
                             <h3>{{ evento.evento.nombre }}</h3>
                             <span>{{ evento.evento.descripcion }}</span>

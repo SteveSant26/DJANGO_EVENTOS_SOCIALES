@@ -12,8 +12,8 @@ def listar_servicios(request):
 
     datos = []
     for servicio in servicios:
-        datos.append({"servicio": servicio, "fotos": FotoServicio.objects.filter(servicio=servicio)})
-    return render(request, "negocio/servicios/index.html", {"servicios": servicios})
+        datos.append({"servicio": servicio, "foto": FotoServicio.objects.filter(servicio=servicio).first()})
+    return render(request, "negocio/servicios/index.html", {"servicios": datos})
 
 
 def obtener_servicio(request, servicio_id):
