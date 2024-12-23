@@ -2,7 +2,16 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 
+class NegocioManager(models.Manager):
+    def get_or_create(self, defaults = ..., **kwargs):
+        if Negocio.objects.exists():
+            return Negocio.objects.first()
+        else:
+            return Negocio.objects.create(**kwargs)
+        
+
 class Negocio(models.Model):
+
     nombre_negocio = models.CharField(max_length=100, verbose_name="Nombre del Negocio")
     logo_negocio = CloudinaryField(
         "Logo del Negocio", blank=True, null=True, 
@@ -36,11 +45,13 @@ class Negocio(models.Model):
     nombre_propietario_cuenta = models.CharField(
         max_length=100, verbose_name="Nombre del Propietario de la Cuenta"
     )
+    
+    objects = NegocioManager()
 
     def clean(self):
         if Negocio.objects.exists() and not self.pk:
             raise ValidationError("Solo se puede crear una configuración de negocio.")
-        
+
     
     def save(self, *args, **kwargs):
         if not self.pk and Negocio.objects.exists():
