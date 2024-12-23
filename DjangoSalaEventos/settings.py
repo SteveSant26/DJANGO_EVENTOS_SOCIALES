@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third party apps
-    "crispy_forms",
-    "crispy_bootstrap5",
     "cloudinary",
     "cloudinary_storage",
     "django_filters",

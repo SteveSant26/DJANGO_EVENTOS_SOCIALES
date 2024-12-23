@@ -94,7 +94,7 @@ class VerificarCorreoForm(forms.Form):
         fields = ("codigo_verificacion",)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Toma el usuario de los parámetros
+        self.user = kwargs.pop('user', None) 
         super().__init__(*args, **kwargs)
 
     def clean(self):
