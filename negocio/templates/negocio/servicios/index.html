@@ -18,7 +18,7 @@
                         <figcaption>
                             <h3>{{ servicio.servicio.nombre }}</h3>
                             <span>{{ servicio.servicio.descripcion }}</span>
-                            <a href="">ver más</a>
+                            <a href="{% url 'negocio:obtener_servicio' servicio.servicio.id %}">ver más</a>
                         </figcaption>
                     </figure>
                 </div>

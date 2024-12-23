@@ -1,0 +1,54 @@
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
+
+{% include 'main/componentes/ui/title.html' with titulo="Registro de cliente" %}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registro de cliente</h3>
+                    </div>
+                    <div class="card-body">
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                <br>
+                                {% for error in field.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -8,7 +8,8 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{% url 'main:home' %}"><img width="100" src="{{ configuracion.logo_negocio.url }}" alt="Basica"></a>
+			<a class="navbar-brand" href="{% url 'main:home' %}"><img width="100"
+					src="{{ configuracion.logo_negocio.url }}" alt="Basica"></a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
@@ -28,8 +29,20 @@
 						<li><a href="#">Terminos de uso</a></li>
 					</ul>
 				</li>
-				<li><a href="">Blog</a></li> 
-				<li><a href="">Contactanos</a></li>
+				<li><a href="">Blog</a></li>
+					{% if request.user.is_authenticated %}
+					<li>
+						<a href="{% url 'clientes:mis_datos' %}">Mis datos</a>
+					</li>
+					{% else %}
+					<li>
+						<a href="{% url 'clientes:registro' %}">Crea tu cuenta</a>
+					</li>
+					<li class="active">
+
+						<a href="{% url 'clientes:login' %}">Inicia sesión</a>
+					</li>
+					{% endif %}
 			</ul>
 		</div>
 	</div>

@@ -12,6 +12,8 @@ class InformacionCliente(models.Model):
     nombres = models.CharField(max_length=100,blank=True, null=True)
     apellidos = models.CharField(max_length=100,blank=True, null=True)
     correo = models.EmailField()
+    fecha_nacimiento = models.DateField(blank=True, null=True)
+
     genero = models.CharField(
         max_length=10,
         choices=[("Masculino", "Masculino"), ("Femenino", "Femenino"), ("Otro", "Otro")],

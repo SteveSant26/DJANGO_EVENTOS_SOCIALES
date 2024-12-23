@@ -10,7 +10,7 @@
             <div class="col-sm-8">
                 <div class="blog-post blog-single-post">
                     <div class="single-post-title">
-                        <h2>{{ evento.nombre }}</h2>
+                        <h2>{{ servicio.nombre }}</h2>
                     </div>
 
                     <div class="single-post-image">
@@ -20,7 +20,7 @@
                             <div class="carousel-inner" role="listbox">
                                 {% if fotos %}
                                 {% for foto in fotos %}
-                                <div class="item {% if forloop.first %}active{% endif %}">
+                                <div class="item active">
                                     <img src="{{ foto.imagen.url }}" alt="First slide">
 
                                 </div>
@@ -31,6 +31,7 @@
 
                                 </div>
                                 {% endif %}
+                                
                             </div>
 
                             <!-- Controls -->
@@ -49,7 +50,7 @@
                     <div class="single-post-content">
                         <h3>Descripción del evento</h3>
                         <p>
-                            {{ evento.descripcion }}
+                            {{ servicio.descripcion }}
                         </p>
                     </div>
                 </div>
@@ -60,10 +61,8 @@
 
                 <h4>Recent Posts</h4>
                 <ul class="recent-posts">
-                    <li><strong>Valor de referencia:</strong> {{ evento.valor_referencial }}</li>
-                    <li><strong>Horas permitidas:</strong> {{ evento.numero_horas_permitidas }}</li>
-                    <li><strong>Valor extra:</strong> {{ evento.valor_extra_hora }}</li>
-                    <li> <strong>Tipo de evento:</strong> {{ evento.tipo_evento }}</li>
+                    <li><strong>Valor por unidad:</strong> {{ servicio.valor_por_unidad }}</li>
+                    <li><strong>Estado:</strong> {% if servicio.estado %} Activo {% else %} Inactivo {% endif %}</li>
                 </ul>
             </div>
             <!-- End Sidebar -->

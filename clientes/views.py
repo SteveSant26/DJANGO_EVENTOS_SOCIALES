@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .forms import CrearClienteForm, VerificarCorreoForm, ActualizarClienteForm
+from .forms import CrearClienteForm, VerificarCorreoForm, ActualizarClienteForm, LoginForm
 from .models import InformacionCliente
 
 
@@ -13,13 +13,37 @@ def crear_cliente(request):
     if request.method == "POST":
         form = CrearClienteForm(request.POST)
         if form.is_valid():
+            # Crear usuario
             user = form.save()
+            login(request, user)
             messages.success(request, "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.")
-            return redirect("verificar_correo")  
+            return redirect("verificar_correo")  # Ajusta según la lógica de tu proyecto
+        else:
+            messages.error(request, "Hubo errores en el formulario. Por favor, corrígelos.")
     else:
         form = CrearClienteForm()
 
     return render(request, "clientes/crear_cliente.html", {"form": form})
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(data=request.POST)  # Usa el formulario incorporado de Django
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"¡Bienvenido/a, {user.username}!")
+                return redirect("home")  # Ajusta según tu lógica
+            else:
+                messages.error(request, "Usuario o contraseña incorrectos.")
+        else:
+            messages.error(request, "Por favor, corrige los errores del formulario.")
+    else:
+        form = LoginForm()
+
+    return render(request, "clientes/login.html", {"form": form})
 
 
 def verificar_correo(request):

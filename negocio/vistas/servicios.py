@@ -18,11 +18,8 @@ def listar_servicios(request):
 
 def obtener_servicio(request, servicio_id):
     servicio = Servicio.objects.get(pk=servicio_id)
-    try:
-        servicio = servicio.objects.get(pk=servicio_id)
-    except Servicio.DoesNotExist:
-        raise Http404("El servicio no existe")
-    return render(request, "negocio/obtener_servicio.html", {"servicio": servicio})
+    fotos = FotoServicio.objects.filter(servicio=servicio)
+    return render(request, "negocio/servicios/obtener_servicio.html", {"servicio": servicio, "fotos": fotos})
 
 
 def obtener_dar_calificacion(request, servicio_id):
