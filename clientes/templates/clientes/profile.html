@@ -159,7 +159,7 @@
                     </div>
 
                     <div id="verificar-correo" class=" hidden">
-                        <form class="form-register" method="post" action="{% url 'clientes:verificar_correo' %}">
+                        <form id="form-verificar-correo" class="form-register" method="post">
                             {% csrf_token %}
                             {% if verificar_correo_form.non_field_errors %}
                             <div class="alert alert-danger">
@@ -176,10 +176,9 @@
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Verificar</button>
 
-                            <button type="button" class="btn btn-primary" id="btn-reenviar-correo"
-                                style="width: 100%; margin-top: 1em;">
+                            <p class="btn btn-primary" id="btn-reenviar-correo" style="width: 100%; margin-top: 1em;">
                                 Reenviar correo de verificación
-                            </button>
+                            </p>
                         </form>
                     </div>
 
@@ -265,6 +264,39 @@
 
     };
     btnReenviarCorreo.addEventListener("click", reenviarCorreoFuncion);
+
+    const formVerificarCorreo = document.querySelector("#form-verificar-correo");
+    formVerificarCorreo.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Obtener el token CSRF desde el formulario
+
+        const response = await fetch("{% url 'clientes:verificar_correo' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrfToken,  // Incluir el token CSRF en la cabecera
+            },
+            body: JSON.stringify({
+                codigo_verificacion: document.querySelector("#id_codigo_verificacion").value,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Error en la respuesta:", errorText);
+            return;
+        }
+
+        const data = await response.json();
+        if (data.success) {
+            location.reload();
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    });
+
+
 
 </script>
 {% endblock %}

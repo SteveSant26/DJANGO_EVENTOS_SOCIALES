@@ -80,6 +80,10 @@ def logout_view(request):
 def profile_view(request):
     cliente_info = get_object_or_404(InformacionCliente, cliente=request.user)
 
+    # Inicialización de formularios
+    form = UpdateProfileForm(instance=cliente_info)
+    verificar_correo_form = VerificarCorreoForm()  # Inicializa siempre este formulario
+
     if request.method == "POST":
         form = UpdateProfileForm(request.POST, instance=cliente_info)
         if form.is_valid():
@@ -87,16 +91,11 @@ def profile_view(request):
             messages.success(request, "Información del cliente actualizada con éxito.")
             return redirect("clientes:profile")
 
-    else:
-        form = UpdateProfileForm(instance=cliente_info)
-        verificar_correo_form = VerificarCorreoForm()
     return render(
         request,
         "clientes/profile.html",
         {"cliente_info": cliente_info, "update_form": form, "verificar_correo_form": verificar_correo_form},
     )
-
-
 @login_required
 def verificar_correo(request):
     if request.method == "POST":
@@ -106,17 +105,13 @@ def verificar_correo(request):
                 perfil = get_object_or_404(InformacionCliente, cliente=request.user)
                 perfil.verificado = True
                 perfil.save()
-                messages.success(request, "Correo electrónico verificado con éxito.")
-                return redirect("clientes:profile")
+                return JsonResponse({"success": True, "message": "Correo electrónico verificado con éxito."})
             except InformacionCliente.DoesNotExist:
-                messages.error(request, "No se encontró información del cliente.")
-                return redirect("clientes:signup")
-    else:
-        form = VerificarCorreoForm(user=request.user)  # Pasa el usuario al formulario
-
-    return render(request, "clientes/update.html", {"form": form})
-
-
+                return JsonResponse({"success": False, "message": "No se encontró información del cliente."})
+        else:
+            # Agregar manejo de errores de formulario
+            return JsonResponse({"success": False, "message": "Formulario inválido."})
+    return JsonResponse({"success": False, "message": "Método no permitido."})
 
 @login_required
 def reenvio_correo_validacion(request):

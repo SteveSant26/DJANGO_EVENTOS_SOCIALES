@@ -101,7 +101,8 @@ class VerificarCorreoForm(forms.Form):
         cleaned_data = super().clean()
         codigo_verificacion = cleaned_data.get("codigo_verificacion")
         user = self.user
-        perfil = InformacionCliente.objects.filter(usuario=user).first()
+        perfil = InformacionCliente.objects.filter(cliente=user).first()  # Asumiendo que 'cliente' es la clave foránea
+
 
         if not perfil:
             raise forms.ValidationError(
