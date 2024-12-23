@@ -10,6 +10,7 @@ from .models import InformacionCliente
 
 
 def signup_view(request):
+    
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
         return redirect("clientes:profile")
@@ -19,15 +20,20 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, "Cuenta creada con éxito. Por favor, verifica tu correo electrónico.")
-            return redirect("clientes:verificar_correo") 
+            messages.success(
+                request, 
+                "Cuenta creada con éxito. Por favor, verifica tu correo electrónico."
+            )
+            return redirect("clientes:verificar_correo")
         else:
-            messages.error(request, "Hubo errores en el formulario. Por favor, corrígelos.")
+            messages.error(
+                request, 
+                "Hubo errores en el formulario. Por favor, corrígelos e intenta nuevamente."
+            )
     else:
         form = CrearClienteForm()
 
     return render(request, "clientes/signup.html", {"form": form})
-
 def login_view(request):
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
@@ -79,11 +85,11 @@ def verificar_correo(request):
     else:
         form = VerificarCorreoForm()
 
-    return render(request, "clientes/verificar_correo.html", {"form": form})
+    return render(request, "clientes/update.html", {"form": form})
 
 
 @login_required
-def actualizar_cliente(request):
+def update_client(request):
     try:
         cliente_info = InformacionCliente.objects.get(cliente=request.user)
     except InformacionCliente.DoesNotExist:
@@ -99,5 +105,5 @@ def actualizar_cliente(request):
     else:
         form = ActualizarClienteForm(instance=cliente_info)
 
-    return render(request, "clientes/actualizar_cliente.html", {"form": form})
+    return render(request, "clientes/update.html", {"form": form})
 

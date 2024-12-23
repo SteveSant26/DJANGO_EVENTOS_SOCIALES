@@ -68,10 +68,10 @@
                         <a href="{% url 'clientes:logout' %}">Cerrar sesión</a>
                     </li>
                 {% else %}
-                    <li>
+                    <li class="{% if request.path == '/signup/' %}active{% endif %}">
                         <a href="{% url 'clientes:signup' %}">Crea tu cuenta</a>
                     </li>
-                    <li class="active">
+                    <li class="{% if request.path == '/login/' %}active{% endif %}">
                         <a href="{% url 'clientes:login' %}">Inicia sesión</a>
                     </li>
                 {% endif %}

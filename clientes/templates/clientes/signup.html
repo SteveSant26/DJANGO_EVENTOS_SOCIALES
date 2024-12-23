@@ -12,10 +12,25 @@
                             <h3 class="card-title">Sign Up</h3>
                         </div>
                         <div class="card-body">
-                            <form method="post">
+                            <form method="post" novalidate>
                                 {% csrf_token %}
-                                {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
-                                {{ form|crispy }}
+                                
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                                {% endif %}
+
+                                {% for field in form %}
+                                    <div class="input-field">
+                                        {{ field }}
+                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {% if field.errors %}
+                                            <div class="alert alert-danger">
+                                                {{ field.errors|join:" " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                
                                 <button type="submit" class="btn btn-primary">Registrar</button>
                             </form>
                         </div>

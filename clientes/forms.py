@@ -16,37 +16,39 @@ class CrearClienteForm(UserCreationForm):
             "password2": "Confirmar Contraseña",
         }
         widgets = {
-            "username": forms.TextInput(attrs={"placeholder": "Escribe tu nombre de usuario"}),
-            "email": forms.EmailInput(attrs={"placeholder": "Introduce tu correo electrónico"}),
-            "password1": forms.PasswordInput(attrs={"placeholder": "Crea una contraseña"}),
-            "password2": forms.PasswordInput(attrs={"placeholder": "Confirma tu contraseña"}),
+            "username": forms.TextInput(
+                attrs={
+                    "placeholder": "Escribe tu nombre de usuario",
+                    "class": "input-field",
+                }
+            ),
+            "email": forms.EmailInput(
+                attrs={
+                    "placeholder": "Introduce tu correo electrónico",
+                    "class": "input-field",
+                }
+            ),
+            "password1": forms.PasswordInput(
+                attrs={
+                    "placeholder": "Crea una contraseña",
+                    "class": "input-field",
+                }
+            ),
+            "password2": forms.PasswordInput(
+                attrs={
+                    "placeholder": "Confirma tu contraseña",
+                    "class": "input-field",
+                }
+            ),
         }
-
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if not username.isalnum():
-            raise forms.ValidationError("El nombre de usuario solo puede contener letras y números.")
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("El nombre de usuario ya está en uso.")
-        return username
-
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("El correo electrónico ya está en uso.")
-        return email
-
+    
     def save(self, commit=True):
         user = super().save(commit=commit)
-        cliente_data = {
-            "cliente": user,
-            "correo": self.cleaned_data.get("email"),
-        }
-        cliente = InformacionCliente.objects.create(**cliente_data)
-        cliente.generar_codigo_verificacion()
-        EmailService.enviar_codigo_verificacion(cliente)
+        InformacionCliente.objects.create(
+            cliente=user,
+            correo=self.cleaned_data.get("email"),
+        )
         return user
-
 
 class LoginForm(AuthenticationForm):
     class Meta:

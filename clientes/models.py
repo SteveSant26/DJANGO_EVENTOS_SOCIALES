@@ -32,5 +32,14 @@ class InformacionCliente(models.Model):
         self.save()
         return self.codigo_verificacion
 
+    def save(self, *args, **kwargs):
+        from utils.email_service import EmailService
+        
+        if not self.codigo_verificacion:
+            self.codigo_verificacion = self.generar_codigo_verificacion()
+        EmailService.enviar_codigo_verificacion(self)
+
+        super().save( *args, **kwargs)
+    
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
