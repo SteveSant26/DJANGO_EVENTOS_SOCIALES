@@ -5,8 +5,9 @@ from utils.email_service import EmailService
 from .models import InformacionCliente
 
 STYLE = "inputs"
-
 class CrearClienteForm(UserCreationForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={"class": "inputs"}))
+
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
@@ -15,12 +16,6 @@ class CrearClienteForm(UserCreationForm):
             "email": "Correo electrónico",
             "password1": "Contraseña",
             "password2": "Confirmar Contraseña",
-        }
-        widgets = {
-            "username": forms.TextInput(attrs={ "class": STYLE}),
-            "email": forms.EmailInput(attrs={ "class": STYLE}),
-            "password1": forms.PasswordInput(attrs={"class": STYLE}),
-            "password2": forms.PasswordInput(attrs={ "class": STYLE}),
         }
 
     def clean_username(self):
@@ -39,12 +34,8 @@ class CrearClienteForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-        InformacionCliente.objects.create(
-            cliente=user,
-            correo=self.cleaned_data.get("email"),
-        )
         return user
-
+    
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
