@@ -50,38 +50,25 @@ JAZZMIN_SETTINGS = {
     "site_title": "Django Sala de Eventos",
     "site_header": "Django Sala de Eventos",
     "site_brand": "Django Sala de Eventos",
-    "site_logo": None,  
+    "site_logo": None,
     "welcome_sign": "Bienvenido al panel de administración de Django Sala de Eventos",
     "search_model": "auth.User",
-
     "topmenu_links": [
         {"name": "Inicio", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Salir", "url": "admin:logout", "permissions": ["auth.view_user"]},
     ],
-
-
-
     "show_sidebar": True,
     "navigation_expanded": True,
-    "hide_apps": ["sessions",],
-    "hide_models": ["auth.Permission", "auth.Group", ],
-
-
+    "hide_apps": [
+        "sessions",
+    ],
+    "hide_models": [
+        "auth.Permission",
+        "auth.Group",
+    ],
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
-
     "related_modal_active": True,
-
-    "custom_links": {
-        "your_app": [
-            {
-                "name": "Generar Reportes",
-                "url": "your_app:generate_report",
-                "icon": "fas fa-file-pdf",
-                "permissions": ["your_app.view_report"],
-            },
-        ],
-    },
 
 }
 
@@ -113,9 +100,9 @@ JAZZMIN_UI_TWEAKS = {
         "info": "btn-outline-info",
         "warning": "btn-outline-warning",
         "danger": "btn-outline-danger",
-        "success": "btn-outline-success"
+        "success": "btn-outline-success",
     },
-    "actions_sticky_top": False
+    "actions_sticky_top": False,
 }
 
 
