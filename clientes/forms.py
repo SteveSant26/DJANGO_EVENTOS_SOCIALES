@@ -60,13 +60,12 @@ class LoginForm(AuthenticationForm):
         }
         widgets = {
             "username": forms.TextInput(attrs={"placeholder": "Ingrese su usuario"}),
-            "password": forms.PasswordInput(
-                attrs={"placeholder": "Ingrese su contraseña"}
-            ),
+            "password": forms.PasswordInput(attrs={"placeholder": "Ingrese su contraseña"}),
         }
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
+        # Verifica si el nombre de usuario existe en la base de datos
         if not User.objects.filter(username=username).exists():
             raise forms.ValidationError(
                 "El usuario no existe.", code="username_not_found"
@@ -76,12 +75,13 @@ class LoginForm(AuthenticationForm):
     def clean_password(self):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
-        if User.objects.filter(username=username).exists():
-            user = User.objects.get(username=username)
-            if not user.check_password(password):
-                raise forms.ValidationError(
-                    "La contraseña es incorrecta.", code="invalid_password"
-                )
+        
+        # Solo verifica la contraseña si el nombre de usuario es válido
+        user = User.objects.filter(username=username).first()
+        if user and not user.check_password(password):
+            raise forms.ValidationError(
+                "La contraseña es incorrecta.", code="invalid_password"
+            )
         return password
 
 

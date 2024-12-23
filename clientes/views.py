@@ -61,6 +61,7 @@ def login_view(request):
             messages.success(request, f"¡Bienvenido/a, {user.username}!")
             return redirect("main:home")
         else:
+            print(form.errors.as_data()) 
             messages.error(request, "Usuario o contraseña incorrectos.")
 
     else:
@@ -119,10 +120,10 @@ def verificar_correo(request):
 
 @login_required
 def reenvio_correo_validacion(request):
-    perfil_usuario = get_object_or_404(InformacionCliente, cliente=request.user)
+    informacion_cliente = get_object_or_404(InformacionCliente, cliente=request.user)
 
-    perfil_usuario.generar_codigo_verificacion()
-    perfil_usuario.save()
+    informacion_cliente.generar_codigo_verificacion()
+    informacion_cliente.save()
 
     EmailService.enviar_codigo_verificacion()
 
