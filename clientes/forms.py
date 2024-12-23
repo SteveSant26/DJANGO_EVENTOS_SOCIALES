@@ -76,7 +76,6 @@ class LoginForm(AuthenticationForm):
                 raise forms.ValidationError("La contraseña es incorrecta.", code="invalid_password")
         return password
 
-
 class VerificarCorreoForm(forms.Form):
     codigo_verificacion = forms.CharField(
         label="Código de verificación",

@@ -3,11 +3,17 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth.models import User
 
 
+class InformacionClienteManager(models.Manager):
+    def get_or_create(self, defaults = ..., **kwargs):
+        if self.filter(cliente=kwargs.get("cliente")).exists():
+            return self.get(cliente=kwargs.get("cliente"))
+        return self.create(**kwargs)
+
 class InformacionCliente(models.Model):
     cliente = models.OneToOneField(User, on_delete=models.CASCADE)
     numero_identificacion = models.CharField(max_length=50, unique=True, blank=True, null=True)
     nacionalidad = models.CharField(max_length=50,blank=True, null=True)
-    fecha_registro = models.DateField()
+    fecha_registro = models.DateField(auto_now_add=True)
     telefono = models.CharField(max_length=15,blank=True, null=True)
     nombres = models.CharField(max_length=100,blank=True, null=True)
     apellidos = models.CharField(max_length=100,blank=True, null=True)
