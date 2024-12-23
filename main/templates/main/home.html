@@ -1,6 +1,17 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
+
+<style>
+    .evento-imagen {
+        width: 300px; /* Ancho fijo */
+        height: 200px; /* Alto fijo */
+        object-fit: cover; /* Mantiene proporciones y recorta para llenar el espacio */
+        display: block; /* Evita espacios no deseados debajo de la imagen */
+    }
+    
+</style>
+
 {% if messages %}
     <div class="row">
         {% for message in messages %}
@@ -21,8 +32,7 @@
                         <figure>
                             <img src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
                                  alt="{{ evento.evento.nombre }}"
-                                 width="300"
-                                 height="200">
+                                 class="evento-imagen">
                             <figcaption>
                                 <h3>{{ evento.evento.nombre }}</h3>
                                 <p>{{ evento.evento.descripcion }}</p>
@@ -32,6 +42,7 @@
                     </div>
                 {% endfor %}
             </div>
+            
         </div>
     </div>
 {% endblock content %}
