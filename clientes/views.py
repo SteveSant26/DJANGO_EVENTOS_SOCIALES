@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from utils.email_service import EmailService
 from .forms import SignUpForm, VerificarCorreoForm, UpdateProfileForm, LoginForm
 from .models import InformacionCliente
 
@@ -20,12 +21,12 @@ def signup_view(request):
             info_cliente, created = InformacionCliente.objects.get_or_create(
                 cliente=user,
                 defaults={
-                    'correo': form.cleaned_data['email'],
-                    'nombres': form.cleaned_data.get('first_name', ''),
-                    'apellidos': form.cleaned_data.get('last_name', '')
-                }
+                    "correo": form.cleaned_data["email"],
+                    "nombres": form.cleaned_data.get("first_name", ""),
+                    "apellidos": form.cleaned_data.get("last_name", ""),
+                },
             )
-            
+
             if created:
                 info_cliente.generar_codigo_verificacion()
 
@@ -51,7 +52,7 @@ def login_view(request):
     if request.user.is_authenticated:
         messages.error(request, "Ya estás autenticado/a.")
         return redirect("clientes:profile")
-    
+
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -123,7 +124,7 @@ def reenvio_correo_validacion(request):
     perfil_usuario.generar_codigo_verificacion()
     perfil_usuario.save()
 
-    InformacionCliente.enviar_codigo_validar_email(perfil_usuario)
+    EmailService.enviar_codigo_verificacion()
 
     return JsonResponse(
         {"success": True, "message": "Correo de validación enviado nuevamente."}
