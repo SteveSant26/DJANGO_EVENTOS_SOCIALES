@@ -50,3 +50,20 @@ def listar_fotos_evento(request, evento_id):
     evento = Evento.objects.get(pk=evento_id)
     fotos = FotoEvento.objects.filter(evento=evento)
     return render(request, "negocio/listar_fotos_evento.html", {"fotos": fotos})
+
+
+def listar_tipos_eventos(request):
+    tipo_eventos = TipoEvento.objects.all()
+    return render(request, "negocio/eventos/tipo_eventos.html", {"tipo_eventos": tipo_eventos})
+
+def listar_eventos_por_tipo(request, tipo_evento_id):
+    tipo_evento = TipoEvento.objects.get(pk=tipo_evento_id)
+    eventos = Evento.objects.filter(tipo_evento=tipo_evento)
+    datos = []
+    for evento in eventos:
+        foto = FotoEvento.objects.filter(evento=evento).first()
+        datos.append({
+            "evento": evento,
+            "foto": foto
+        })
+    return render(request, "negocio/eventos/obtener_evento_por_tipo.html", {"eventos": datos, "tipo_evento_nombre": tipo_evento.nombre})

@@ -20,6 +20,9 @@ urlpatterns = [
         vistas.eventos.listar_fotos_evento,
         name="listar_fotos_evento",
     ),
+    path("eventos/tipos/", vistas.eventos.listar_tipos_eventos, name="listar_tipos_eventos"),
+    path("eventos/tipos/", vistas.eventos.listar_tipos_eventos, name="listar_tipos_eventos"),
+    path("eventos/tipos/<int:tipo_evento_id>/", vistas.eventos.listar_eventos_por_tipo, name="listar_eventos_por_tipo"),
     path("servicios/", vistas.servicios.listar_servicios, name="listar_servicios"),
     path(
         "servicios/<int:servicio_id>/",

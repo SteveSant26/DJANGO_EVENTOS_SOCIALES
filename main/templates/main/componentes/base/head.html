@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="">
       <meta name="author" content="">
-      <title>{{ configuracion.nombre_negocio }}</title>
+      <title>{{ configuracion.nombre_negocio|default:"Negocio" }}</title>
       <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
       <link rel="shortcut icon"
             type="image/x-icon"
