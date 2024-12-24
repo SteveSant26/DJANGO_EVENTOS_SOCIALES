@@ -63,7 +63,9 @@ class ReservaEvento(BaseModel):
     def costo_alquiler(self):
         costo = self.evento.valor_referencial
         for reserva_servicio in self.reservas_servicios.all():
-            costo += reserva_servicio.servicio.valor_por_unidad * reserva_servicio.cantidad
+            costo += reserva_servicio.costo_total
+        for promocion in self.promociones.all():
+            costo -= costo * (promocion.porcentaje_descuento / 100)
         return costo
     def crear_codigo_confirmacion(self):
         self.codigo_confirmacion_reserva = get_random_string(length=6)
@@ -135,8 +137,12 @@ class ReservaEventoServicio(BaseModel):
         if hasattr(self, "reserva") and self.reserva and self.servicio:
             if ReservaEventoServicio.objects.filter(
                 reserva=self.reserva, servicio=self.servicio
-            ).exists():
+            ).exists() and not self.pk:
                 raise ValidationError("El servicio ya ha sido reservado")
+    
+    @property
+    def costo_total(self):
+        return self.servicio.valor_por_unidad * self.cantidad
 
     def save(self, *args, **kwargs):
         self.full_clean()

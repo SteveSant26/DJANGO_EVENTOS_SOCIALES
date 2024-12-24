@@ -15,17 +15,18 @@
         <div class="container">
             <div class="row">
                 <ul class="grid cs-style-3">
-                    {% if reservas %}
-                        {% for reserva in reservas %}
+                    {% if reservas_items %}
+                        {% for item in reservas_items %}
                             <div class="col-md-4 col-sm-6">
                                 <figure>
                                     <img class="evento-imagen"
-                                         src="{% if reserva.foto %}{{ reserva.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
+                                         src="{% if item.foto %}{{ item.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
                                          alt="img04">
                                     <figcaption>
-                                        <h3>{{ reserva.evento.nombre }}</h3>
-                                        <span>{{ reserva.reserva.descripcion }}</span>
-                                        <a href="{% url 'reservas:reserva_detail' reserva.reserva.id %}">ver más</a>
+                                        <h3>{{ item.reserva.evento.nombre }}</h3>
+                                        <span style="display: block;">{{ item.reserva.fechalquiler }}</span>
+                                        <span style="display: block; ">Estado: {{ item.reserva.estado_alquiler }}</span>
+                                        <a href="{% url 'reservas:reserva_detail' item.reserva.id %}">ver más</a>
                                     </figcaption>
                                 </figure>
                             </div>

@@ -68,8 +68,7 @@ JAZZMIN_SETTINGS = {
     ],
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
-    "related_modal_active": True,
-    "show_ui_builder": True,
+
 }
 
 JAZZMIN_UI_TWEAKS = {
@@ -102,7 +101,6 @@ JAZZMIN_UI_TWEAKS = {
         "danger": "btn-outline-danger",
         "success": "btn-outline-success",
     },
-    "actions_sticky_top": False,
 }
 
 

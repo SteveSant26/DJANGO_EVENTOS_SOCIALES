@@ -35,7 +35,7 @@
                             {% csrf_token %}
                             <h4 class="text-center mb-3">Añadir Servicios</h4>
             
-                            {% for field in formReservaServicios %}
+                            {% for field in formEventoReservaServicios %}
                                 <div class="input-field">
                                     {{ field }}
                                     {{ field.label_tag }}

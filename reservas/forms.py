@@ -10,7 +10,7 @@ class ReservaEventoForm(forms.ModelForm):
             "fechalquiler",
             "hora_inicio_reserva_evento",
             "hora_fin_planificada",
-            "promociones"
+            "promociones",
         ]
         labels = {
             "fechalquiler": "Fecha de alquiler",
@@ -18,18 +18,10 @@ class ReservaEventoForm(forms.ModelForm):
             "hora_fin_planificada": "Hora de fin planificada",
         }
         widgets = {
-
             "hora_inicio_reserva_evento": forms.TimeInput(attrs={"type": "time"}),
             "hora_fin_planificada": forms.TimeInput(attrs={"type": "time"}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
         }
-
-    # def save(self, commit=True):
-    #     reserva = super().save(commit=False)
-    #     if commit:
-    #         reserva.save()
-
-    #     return reserva
 
 
 class ReservaEventoServicioForm(forms.ModelForm):

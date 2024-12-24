@@ -32,7 +32,7 @@ def reservas_view(request):
 
     reservas = reservas.select_related("evento", "cliente").prefetch_related("fotos")
 
-    queryset = [
+    todas_reservas = [
         {
             "reserva": reserva,
             "imagen_url": (
@@ -42,12 +42,11 @@ def reservas_view(request):
         for reserva in reservas
     ]
 
-    return render(request, "reservas/index.html", {"reservas": queryset})
+    return render(request, "reservas/index.html", {"reservas_items": todas_reservas})
 
 
 @login_required
 def reserva_new(request, evento_id):
-    # Obtiene la información del cliente y verifica si está verificado
     cliente_info = get_object_or_404(InformacionCliente, cliente=request.user)
     if not cliente_info.verificado:
         messages.warning(
@@ -56,23 +55,23 @@ def reserva_new(request, evento_id):
         )
         return redirect("clientes:profile")
 
-    # Obtiene el evento relacionado
     evento = get_object_or_404(Evento, id=evento_id)
     session_key = f"servicios_seleccionados_{evento_id}"
 
-    if request.method == "POST":
-        # Manejo de servicios seleccionados
-        if "add_service" in request.POST:
-            formReservaServicios = ReservaEventoServicioForm(request.POST)
-            if formReservaServicios.is_valid():
-                servicio = formReservaServicios.cleaned_data["servicio"]
-                cantidad = formReservaServicios.cleaned_data["cantidad"]
+    
+    formEventoReserva = None
+    formEventoReservaServicios = None
 
-                # Inicializa la sesión si no existe
+    if request.method == "POST":
+        if "add_service" in request.POST:
+            formEventoReservaServicios = ReservaEventoServicioForm(request.POST)
+            if formEventoReservaServicios.is_valid():
+                servicio = formEventoReservaServicios.cleaned_data["servicio"]
+                cantidad = formEventoReservaServicios.cleaned_data["cantidad"]
+
                 if session_key not in request.session:
                     request.session[session_key] = []
 
-                # Añade el servicio seleccionado
                 request.session[session_key].append(
                     {"id": servicio.id, "nombre": servicio.nombre, "cantidad": cantidad}
                 )
@@ -84,18 +83,17 @@ def reserva_new(request, evento_id):
 
             return redirect("reservas:reserva_new", evento_id=evento_id)
 
-        # Manejo del formulario principal de reserva
-        formulario = ReservaEventoForm(request.POST)
-        if formulario.is_valid():
-            reserva = formulario.save(commit=False)
+        formEventoReserva = ReservaEventoForm(request.POST)
+        if formEventoReserva.is_valid():
+            reserva = formEventoReserva.save(commit=False)
             reserva.cliente = request.user
-
             reserva.evento = evento
-
             reserva.save()
+
+            
             EmailService.enviar_codigo_reserva(reserva)
 
-            # Procesa los servicios seleccionados y los asocia con la reserva
+            
             servicios_seleccionados = request.session.pop(session_key, [])
             for servicio_data in servicios_seleccionados:
                 try:
@@ -114,21 +112,21 @@ def reserva_new(request, evento_id):
             return redirect("reservas:reserva_detail", id=reserva.id)
         else:
             messages.error(request, "Error al crear la reserva.")
-
     else:
-        # Inicializa los formularios para GET
-        formulario = ReservaEventoForm()
-        formReservaServicios = ReservaEventoServicioForm()
+        
+        formEventoReserva = ReservaEventoForm()
+        formEventoReservaServicios = ReservaEventoServicioForm()
 
-    # Obtiene los servicios seleccionados desde la sesión
+    
     servicios_seleccionados = request.session.get(session_key, [])
 
+    
     return render(
         request,
         "reservas/reserva_new.html",
         {
-            "formNewReserva": formulario,
-            "formReservaServicios": formReservaServicios,
+            "formNewReserva": formEventoReserva,
+            "formEventoReservaServicios": formEventoReservaServicios,
             "servicios_seleccionados": servicios_seleccionados,
         },
     )
