@@ -12,7 +12,6 @@ from .models import (
     ResenaServicio,
 )
 
-# Previsualización de la imagen
 class PrevisualizacionImagen:
     readonly_fields = ("previsualizacion_imagen",)
 
@@ -29,7 +28,6 @@ class PrevisualizacionImagen:
     previsualizacion_imagen.short_description = "Imagen"
 
 
-# Recursos para import_export
 class TipoEventoResource(resources.ModelResource):
     class Meta:
         model = TipoEvento

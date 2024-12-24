@@ -73,11 +73,6 @@ class ReservaEvento(BaseModel):
         self.save()
         return self.codigo_confirmacion_reserva
 
-    def clean(self):
-        if self.hora_inicio_reserva_evento >= self.hora_fin_planificada:
-            raise ValidationError(
-                "La hora de inicio de la reserva debe ser menor a la hora de fin planificada"
-            )
 
     def save(self, *args, **kwargs):
         if not self.codigo_confirmacion_reserva:

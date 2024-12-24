@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 from .models import (
@@ -9,6 +10,7 @@ from .models import (
     Eventualidad,
     FotoReservaEvento,
 )
+
 
 # Previsualización de la imagen
 class PrevisualizacionImagen:
@@ -31,28 +33,33 @@ class PrevisualizacionImagen:
 class FotoReservaEventoInline(admin.TabularInline, PrevisualizacionImagen):
     model = FotoReservaEvento
     extra = 1
-    fields = ['imagen', 'previsualizacion_imagen']
-    readonly_fields = ['previsualizacion_imagen']
+    fields = ["imagen", "previsualizacion_imagen"]
+    readonly_fields = ["previsualizacion_imagen"]
 
 
 # Eventualidad Inline
 class EventualidadInline(admin.TabularInline):
     model = Eventualidad
     extra = 1
-    fields = ['descripcion', 'fecha_eventualidad', 'alquiler']
+    fields = ["descripcion", "fecha_eventualidad", "alquiler"]
 
 
 # ReservaServicio Inline
 class ReservaServicioInline(admin.TabularInline):
     model = ReservaEventoServicio
     extra = 1
-    fields = ['servicio', 'cantidad']
+    fields = ["servicio", "cantidad"]
 
 
 # FotoReservaEvento Admin
 @admin.register(FotoReservaEvento)
-class FotoReservaEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
-    list_display = ("reserva_evento", "descripcion", "numero_likes", "previsualizacion_imagen")
+class FotoReservaEventoAdmin(ImportExportModelAdmin, PrevisualizacionImagen):
+    list_display = (
+        "reserva_evento",
+        "descripcion",
+        "numero_likes",
+        "previsualizacion_imagen",
+    )
     search_fields = ("reserva_evento__id",)
     ordering = ("reserva_evento",)
     list_per_page = 10
@@ -60,7 +67,7 @@ class FotoReservaEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
 
 # ReservaServicio Admin
 @admin.register(ReservaEventoServicio)
-class ReservaServicioAdmin(admin.ModelAdmin):
+class ReservaServicioAdmin(ImportExportModelAdmin):
     list_display = ("id", "reserva", "servicio", "cantidad")
     list_filter = ("reserva", "servicio")
     search_fields = ("reserva__cliente__username", "servicio__nombre")
@@ -69,7 +76,7 @@ class ReservaServicioAdmin(admin.ModelAdmin):
 
 # ReservaEvento Admin
 @admin.register(ReservaEvento)
-class ReservaEventoAdmin(admin.ModelAdmin):
+class ReservaEventoAdmin(ImportExportModelAdmin):
     list_display = (
         "id",
         "cliente",
@@ -91,7 +98,7 @@ class ReservaEventoAdmin(admin.ModelAdmin):
 
 # Promocion Admin
 @admin.register(Promocion)
-class PromocionAdmin(admin.ModelAdmin):
+class PromocionAdmin(ImportExportModelAdmin):
     list_display = (
         "id",
         "nombre",
@@ -107,7 +114,7 @@ class PromocionAdmin(admin.ModelAdmin):
 
 # Eventualidad Admin
 @admin.register(Eventualidad)
-class EventualidadAdmin(admin.ModelAdmin):
+class EventualidadAdmin(ImportExportModelAdmin):
     list_display = ("id", "descripcion", "fecha_eventualidad", "alquiler")
     list_filter = ("fecha_eventualidad",)
     search_fields = ("descripcion", "fecha_eventualidad", "alquiler__evento__nombre")

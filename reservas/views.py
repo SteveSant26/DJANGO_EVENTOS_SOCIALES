@@ -37,11 +37,14 @@ def reservas_view(request):
         {
             "reserva": reserva,
             "imagen_url": (
-                reserva.fotos.first().foto.url if reserva.fotos.exists() else None
+                reserva.fotos.first().imagen.url if reserva.fotos.exists() else None
             ),
         }
         for reserva in reservas
     ]
+    
+    for reserva in todas_reservas:
+        print(reserva)
 
     return render(request, "reservas/index.html", {"reservas_items": todas_reservas})
 

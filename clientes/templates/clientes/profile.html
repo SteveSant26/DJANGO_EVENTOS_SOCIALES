@@ -150,6 +150,11 @@
                                         <i>{{ cliente_info.fecha_nacimiento|default:"No disponible" }}</i>
                                     </div>
                                     <div class="media">
+                                        <label>Genero:</label>
+                                        <i>{{ cliente_info.genero|default:"No disponible" }}</i>
+                                        
+                                    </div>
+                                    <div class="media">
                                         <label>Esta verificado:</label>
                                         {% if cliente_info.verificado %}
                                             <i class="text-success">Sí</i>

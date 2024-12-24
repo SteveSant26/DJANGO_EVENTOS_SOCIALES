@@ -102,7 +102,7 @@
                             <div class="col-md-4 col-sm-6">
                                 <figure>
                                     <img class="evento-imagen"
-                                         src="{% if item.foto %}{{ item.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
+                                         src="{% if item.imagen_url %}{{ item.imagen_url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
                                          alt="img04">
                                     <figcaption>
                                         <h3>{{ item.reserva.evento.nombre }}</h3>
