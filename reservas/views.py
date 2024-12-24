@@ -58,7 +58,6 @@ def reserva_new(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
     session_key = f"servicios_seleccionados_{evento_id}"
 
-    
     formEventoReserva = None
     formEventoReservaServicios = None
 
@@ -83,6 +82,17 @@ def reserva_new(request, evento_id):
 
             return redirect("reservas:reserva_new", evento_id=evento_id)
 
+        if "delete_service" in request.POST:
+            service_id = int(request.POST.get("service_id", -1))
+            servicios_seleccionados = request.session.get(session_key, [])
+            servicios_seleccionados = [
+                s for s in servicios_seleccionados if s["id"] != service_id
+            ]
+            request.session[session_key] = servicios_seleccionados
+            request.session.modified = True
+            messages.success(request, "Servicio eliminado correctamente.")
+            return redirect("reservas:reserva_new", evento_id=evento_id)
+
         formEventoReserva = ReservaEventoForm(request.POST)
         if formEventoReserva.is_valid():
             reserva = formEventoReserva.save(commit=False)
@@ -90,10 +100,8 @@ def reserva_new(request, evento_id):
             reserva.evento = evento
             reserva.save()
 
-            
             EmailService.enviar_codigo_reserva(reserva)
 
-            
             servicios_seleccionados = request.session.pop(session_key, [])
             for servicio_data in servicios_seleccionados:
                 try:
@@ -113,14 +121,11 @@ def reserva_new(request, evento_id):
         else:
             messages.error(request, "Error al crear la reserva.")
     else:
-        
         formEventoReserva = ReservaEventoForm()
         formEventoReservaServicios = ReservaEventoServicioForm()
 
-    
     servicios_seleccionados = request.session.get(session_key, [])
 
-    
     return render(
         request,
         "reservas/reserva_new.html",
@@ -130,7 +135,6 @@ def reserva_new(request, evento_id):
             "servicios_seleccionados": servicios_seleccionados,
         },
     )
-
 
 @login_required
 def reserva_detail(request, id):
