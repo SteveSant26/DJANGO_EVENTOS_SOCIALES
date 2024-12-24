@@ -164,7 +164,6 @@
                                 {% if update_form.non_field_errors %}
                                     <div class="alert alert-danger">{{ update_form.non_field_errors }}</div>
                                 {% endif %}
-                                
                                 <div class="row">
                                     {% for field in update_form %}
                                         <div class="input-field col-md-4" style="margin: 2em;">
@@ -173,8 +172,6 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-
-
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">Actualizar</button>
                             </form>
                         </div>

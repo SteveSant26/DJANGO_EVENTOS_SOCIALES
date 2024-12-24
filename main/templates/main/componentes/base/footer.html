@@ -1,29 +1,42 @@
 {% load static %}
 <!-- Footer -->
+<style>
+    .footer {
+        padding: 20px 0;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
 <div class="footer">
     <div class="container">
         <div class="row">
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>Contacto</h3>
                 <p class="contact-us-details">
-                    <b>Address:</b> {{ configuracion.direccion_negocio }}<br/>
-                    <b>Teléfono:</b> {{ configuracion.telefono_negocio }}<br/>
-                    <b>Fax:</b> {{ configuracion.telefono_negocio }}<br/>
+                    <b>Address:</b> {{ configuracion.direccion_negocio }}
+                    <br />
+                    <b>Teléfono:</b> {{ configuracion.telefono_negocio }}
+                    <br />
+                    <b>Fax:</b> {{ configuracion.telefono_negocio }}
+                    <br />
                     <b>Correo electrónico:</b> <a href="mailto:{{ configuracion.correo_negocio }}">{{ configuracion.correo_negocio }}</a>
-            
                 </p>
-            </div>              
+            </div>
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>Redes sociales</h3>
                 <p>Siga a nuestra página en redes sociales para obtener más información.</p>
                 <div>
-                    <a href="{{ configuracion.red_social_facebook_negocio }}" target="_blank">
+                    <a href="{{ configuracion.red_social_facebook_negocio }}"
+                       target="_blank">
                         <img src="{% static 'img/icons/facebook.png' %}" width="32" alt="Facebook">
                     </a>
                     <a href="{{ configuracion.red_social_x_negocio }}" target="_blank">
                         <img src="{% static 'img/icons/twitter.png' %}" width="32" alt="Twitter">
                     </a>
-                    <a href="{{ configuracion.red_social_instagram_negocio }}" target="_blank">
+                    <a href="{{ configuracion.red_social_instagram_negocio }}"
+                       target="_blank">
                         <img src="{% static 'img/icons/linkedin.png' %}" width="32" alt="LinkedIn">
                     </a>
                     <a href="{{ configuracion.pagina_web_negocio }}" target="_blank">
@@ -33,21 +46,24 @@
             </div>
             <div class="col-footer col-md-4 col-xs-6">
                 <h3>About Our Company</h3>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.</p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.
+                </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="footer-copyright">&copy; 2014 <a href="http://www.vactualart.com/portfolio-item/basica-a-free-html5-template/">Basica</a> Bootstrap HTML Template. By <a href="http://www.vactualart.com">Vactual Art</a>.</div>
+                <div class="footer-copyright">
+                    &copy; 2014 <a href="http://www.vactualart.com/portfolio-item/basica-a-free-html5-template/">Basica</a> Bootstrap HTML Template. By <a href="http://www.vactualart.com">Vactual Art</a>.
+                </div>
             </div>
         </div>
     </div>
 </div>
-        <!-- Javascripts -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write(`<script src="{% static 'js/jquery-1.9.1.min.js' %}"><\/script>`)</script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-		
+<!-- Javascripts -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write(`<script src="{% static 'js/jquery-1.9.1.min.js' %}"><\/script>`)</script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 <!-- Scrolling Nav JavaScript -->
 <script src="{% static 'js/jquery.easing.min.js' %}"></script>
 <script src="{% static 'js/scrolling-nav.js' %}"></script>
