@@ -3,7 +3,7 @@
 {% block content %}
 
 {% include 'main/componentes/ui/title.html' with titulo="Reservas" %}
-
+<link rel="stylesheet" href="{% static 'css/form-register.css' %}">
 <div class="section">
     <div class="container">
         <div class="row">
@@ -13,7 +13,7 @@
                         <h3 class="card-title">Haz tu reservas</h3>
                     </div>
                     <div class="card-body">
-                        <form method="post" class="form-register">
+                        <form method="post" class="form-register" style="background: #222; border-radius: 20px;">
                             {% csrf_token %}
                             {% if formNewReserva.non_field_errors %}
                                 <div class="alert alert-danger">
@@ -22,18 +22,12 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
-                            <div class="input-field">
-                                {{ formNewReserva.evento }}
-                                {{ formNewReserva.evento.label_tag }}
-                            </div>
-                            <div class="input-field">
-                                {{ formNewReserva.cliente }}
-                                {{ formNewReserva.cliente.label_tag }}
-                            </div>
-                            <div class="input-field">
-                                {{ formNewReserva.servicios }}
-                                {{ formNewReserva.servicios.label_tag }}
-                            </div>
+                            {% for field in formNewReserva %}
+                                <div class="input-field">
+                                    {{ field }}
+                                    {{ field.label_tag }}
+                                </div>
+                            {% endfor %}
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Crear reserva</button>
                         </form>
                     </div>

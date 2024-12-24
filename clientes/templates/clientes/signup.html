@@ -1,6 +1,5 @@
 {% extends "main/base/base.html" %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/form-register.css' %}">
@@ -21,6 +20,7 @@
                                 {{ field }}
                                 {{ field.label_tag }}
                             </div>
+                            {{ field.errors }}
                             {% endfor %}
                             <button type="submit" class="btn btn-primary" style="width: 100%;">Registrar</button>
                         </form>

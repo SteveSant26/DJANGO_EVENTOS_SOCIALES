@@ -48,7 +48,6 @@ def reservas_view(request):
 @login_required
 def reserva_new(request, evento_id):
     cliente_info = get_object_or_404(InformacionCliente, cliente=request.user)
-
     if not cliente_info.verificado:
         messages.warning(
             request,
