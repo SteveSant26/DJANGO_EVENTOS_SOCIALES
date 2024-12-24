@@ -1,5 +1,5 @@
 from django import forms
-from .models import ReservaEvento, ReservaEventoServicio
+from .models import ReservaEvento, ReservaEventoServicio, Promocion
 from negocio.models import Evento, Servicio
 
 
@@ -16,11 +16,15 @@ class ReservaEventoForm(forms.ModelForm):
             "fechalquiler": "Fecha de alquiler",
             "hora_inicio_reserva_evento": "Hora de inicio de la reserva",
             "hora_fin_planificada": "Hora de fin planificada",
+            "promociones": "Promoción",
         }
         widgets = {
             "hora_inicio_reserva_evento": forms.TimeInput(attrs={"type": "time"}),
             "hora_fin_planificada": forms.TimeInput(attrs={"type": "time"}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
+            "promociones": forms.Select(
+                attrs={"queryset": Promocion.objects.all(), "required": False}
+            ),
         }
 
 
