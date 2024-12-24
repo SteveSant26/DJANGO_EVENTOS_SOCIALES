@@ -3,7 +3,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load custom_filters %}
-
 {% include 'main/componentes/ui/title.html' with titulo=nombreEvento %}
 
 <style>
@@ -159,8 +158,8 @@
             </form>
             <div class="col-md-12">
                 <div class="grid cs-style-3">
-                   {% if resenasServicio %}
-                   {% for resena in  resenasServicio %}
+                   {% if resenasEvento %}
+                   {% for resena in  resenasEvento %}
                     <div class="col-md-4 col-sm-6">
 
                         <div class="comentario-card">
