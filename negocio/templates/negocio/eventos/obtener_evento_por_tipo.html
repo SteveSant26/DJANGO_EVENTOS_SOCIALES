@@ -15,27 +15,36 @@
     </style>
     {% include 'main/componentes/ui/title.html' with titulo=tipo_evento_nombre %}
     <div class="section section-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="grid cs-style-3">
-                        {% for evento in eventos %}
-                            <div class="col-md-4 col-sm-6">
-                                <figure>
-                                    <img src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
-                                         alt="{{ evento.evento.nombre }}"
-                                         class="evento-imagen">
-                                    <figcaption>
-                                        <h3>{{ evento.evento.nombre }}</h3>
-                                        <p>{{ evento.evento.descripcion }}</p>
-                                        <a href="{% url 'negocio:obtener_evento' evento.evento.id %}">Ver más</a>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        {% endfor %}
+        {% if eventos %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="grid cs-style-3">
+                            {% for evento in eventos %}
+                                <div class="col-md-4 col-sm-6">
+                                    <figure>
+                                        <img src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
+                                             alt="{{ evento.evento.nombre }}"
+                                             class="evento-imagen">
+                                        <figcaption>
+                                            <h3>{{ evento.evento.nombre }}</h3>
+                                            <p>{{ evento.evento.descripcion }}</p>
+                                            <a href="{% url 'negocio:obtener_evento' evento.evento.id %}">Ver más</a>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">No hay eventos con este tipo</h4>
+                    <p>No se han creado eventos de este tipo.</p>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

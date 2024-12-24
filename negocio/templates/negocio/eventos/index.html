@@ -1,10 +1,8 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
-
-{% include 'main/componentes/ui/title.html' with titulo="Eventos" %}
-
-<style>
+    {% include 'main/componentes/ui/title.html' with titulo="Eventos" %}
+    <style>
     .evento-imagen {
         width: 300px; /* Ancho fijo */
         height: 200px; /* Alto fijo */
@@ -12,39 +10,38 @@
         display: block; /* Evita espacios no deseados debajo de la imagen */
     }
     
-</style>
-
-<div class="section section-white">
-    <div class="container">
-        <div class="row">
-            <ul class="grid cs-style-3">
-
-                {% if eventos %}
-                {% for evento in eventos %}
-                <div class="col-md-4 col-sm-6">
-                    <figure>
-                        <img class="evento-imagen" src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}" alt="img04">
-                        <figcaption>
-                            <h3>{{ evento.evento.nombre }}</h3>
-                            <span>{{ evento.evento.descripcion }}</span>
-                            <a href="{% url 'negocio:obtener_evento' evento.evento.id %}">ver más</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                {% endfor %}
-                {% else %}
-                <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">
-                        <h4 class="alert-heading">No hay eventos</h4>
-                        <p>No hay eventos disponibles en este momento.</p>
-                    </div>
-                </div>
-                {% endif %}
-
-            </ul>
+    </style>
+    <div class="section section-white">
+        <div class="container">
+            <div class="row">
+                <ul class="grid cs-style-3">
+                    {% if eventos %}
+                        {% for evento in eventos %}
+                            <div class="col-md-4 col-sm-6">
+                                <figure>
+                                    <img class="evento-imagen"
+                                         src="{% if evento.foto %}{{ evento.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
+                                         alt="img04">
+                                    <figcaption>
+                                        <h3>{{ evento.evento.nombre }}</h3>
+                                        <span>{{ evento.evento.descripcion }}</span>
+                                        <br>
+                                        <span>Precio: {{ evento.evento.valor_referencial }}</span>
+                                        <a href="{% url 'negocio:obtener_evento' evento.evento.id %}">ver más</a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">
+                                <h4 class="alert-heading">No hay eventos</h4>
+                                <p>No hay eventos disponibles en este momento.</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-
-
 {% endblock %}

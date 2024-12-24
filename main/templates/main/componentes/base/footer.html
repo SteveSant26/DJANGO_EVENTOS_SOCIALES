@@ -39,22 +39,22 @@
                        target="_blank">
                         <img src="{% static 'img/icons/linkedin.png' %}" width="32" alt="LinkedIn">
                     </a>
-                    <a href="{{ configuracion.pagina_web_negocio }}" target="_blank">
+                    {% comment %} <a href="{{ configuracion.pagina_web_negocio }}" target="_blank">
                         <img src="{% static 'img/icons/rss.png' %}" width="32" alt="RSS Feed">
-                    </a>
+                    </a> {% endcomment %}
                 </div>
             </div>
             <div class="col-footer col-md-4 col-xs-6">
-                <h3>About Our Company</h3>
+                <h3>Sobre Nuestra Empresa</h3>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.
+                    Somos una empresa dedicada a la organización de eventos sociales, ofreciendo servicios personalizados para hacer de cada evento una experiencia única e inolvidable. Nuestro equipo de profesionales se encarga de cada detalle, desde la planificación hasta la ejecución, asegurando la máxima satisfacción de nuestros clientes.
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="footer-copyright">
-                    &copy; 2014 <a href="http://www.vactualart.com/portfolio-item/basica-a-free-html5-template/">Basica</a> Bootstrap HTML Template. By <a href="http://www.vactualart.com">Vactual Art</a>.
+                    &copy; 2024 {{ configuracion.nombre_negocio }} . By <a href="{{ configuracion.pagina_web_negocio }}">{{ configuracion.nombre_negocio }}</a>.
                 </div>
             </div>
         </div>
