@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
-from ..models import Evento, FotoEvento, TipoEvento
+from ..models import Evento, FotoEvento, TipoEvento, ResenaEvento
 from ..forms import ResenaEventoForm
+from django.contrib import messages
 
 
 def listar_eventos(request):
@@ -17,12 +18,24 @@ def obtener_evento(request, evento_id):
     
     evento = get_object_or_404(Evento, pk=evento_id)
     fotos = FotoEvento.objects.filter(evento=evento)
-    
+    resenasEvento = ResenaEvento.objects.filter(evento=evento)
     nombreEvento = f"Evento #{evento.id}"
+
+    if request.method == "POST":
+        formresena = ResenaEventoForm(request.POST)
+        if formresena.is_valid():
+            
+            resena = formresena.save(commit=False)
+            resena.evento = evento
+            resena.autor = request.user
+            resena.save()
+            messages.success(request, "Reseña creada correctamente.")
+            return redirect("negocio:obtener_evento", evento_id)
+    formresena = ResenaEventoForm()
     return render(
         request,
         "negocio/eventos/obtener_evento.html",
-        {"evento": evento, "fotos": fotos, "nombreEvento": nombreEvento},
+        {"evento": evento, "fotos": fotos, "nombreEvento": nombreEvento, "resenasEvento": resenasEvento, "formresena": formresena},
     )
 
 

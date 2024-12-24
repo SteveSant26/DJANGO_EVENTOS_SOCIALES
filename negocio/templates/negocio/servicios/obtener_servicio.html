@@ -1,6 +1,8 @@
 {% extends "main/base/base.html" %}
 {% block content %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load custom_filters %}
 
 {% include 'main/componentes/ui/title.html' with titulo=nombreServicio %}
 <style>
@@ -90,6 +92,97 @@
                 </ul>
             </div>
             <!-- End Sidebar -->
+        </div>
+    </div>
+</div>
+
+<style>
+    .comentario-card {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        max-width: 450px;
+        margin: 20px auto;
+        padding: 25px;
+    }
+
+    .comentario-header {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .comentario-body {
+        font-size: 16px;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+    }
+
+    .calificacion {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    .estrella {
+        color: #f39c12;
+        margin-right: 5px;
+    }
+
+    .comentario-footer {
+        font-size: 14px;
+        color: #95a5a6;
+        text-align: right;
+    }
+</style>
+
+
+<div class="section section-white">
+    <div class="container">
+        <div class="row">
+            <h2>Reseñas del evento</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ formresena|crispy }}
+                <button type="submit" class="btn btn-primary">Enviar reseña</button>
+            </form>
+            <div class="col-md-12">
+                <div class="grid cs-style-3">
+                   {% if resenasEvento %}
+                   {% for resena in  resenasEvento %}
+                    <div class="col-md-4 col-sm-6">
+
+                        <div class="comentario-card">
+                            <div class="comentario-header">
+                                Autor: {{ resena.autor }}
+                            </div>
+                            <div class="comentario-body">
+                                <p>{{ resena.comentario }}</p>
+                            </div>
+                            <div class="calificacion">
+                                {% for i in resena.calificacion|to %}
+
+                                    <span class="estrella">★</span>
+                                {% endfor %}
+                                
+                                <span>({{resena.calificacion}}/5)</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">No hay reseñas</h4>
+                            <p>No se han creado reseñas para este evento.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
-from ..models import Servicio, FotoServicio
-
+from ..models import Servicio, FotoServicio, ResenaServicio
+from django.contrib import messages
 from ..forms import ResenaServicioForm
 
 # Vista para la página de inicio
@@ -19,8 +19,21 @@ def listar_servicios(request):
 def obtener_servicio(request, servicio_id):
     servicio = Servicio.objects.get(pk=servicio_id)
     fotos = FotoServicio.objects.filter(servicio=servicio)
-    nombreServicio = f"Servicio #{servicio.id}"
-    return render(request, "negocio/servicios/obtener_servicio.html", {"servicio": servicio, "fotos": fotos, "nombreServicio": nombreServicio})
+    resenasServicio = ResenaServicio.objects.filter(servicio=servicio)
+
+    if request.method == "POST":
+        formresena = ResenaServicioForm(request.POST)
+        if formresena.is_valid():
+            
+            resena = formresena.save(commit=False)
+            resena.servicio = servicio
+            resena.autor = request.user
+            resena.save()
+            messages.success(request, "Reseña creada correctamente.")
+            return redirect("negocio:obtener_servicio", servicio_id)
+        
+    formresena = ResenaServicioForm()
+    return render(request, "negocio/servicios/obtener_servicio.html", {"servicio": servicio, "fotos": fotos, "resenasServicio": resenasServicio, "formresena": formresena})
 
 
 def obtener_dar_calificacion(request, servicio_id):
