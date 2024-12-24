@@ -42,7 +42,7 @@ def reservas_view(request):
         for reserva in reservas
     ]
 
-    return render(request, "reservas/reservas_all.html", {"reservas": queryset})
+    return render(request, "reservas/index.html", {"reservas": queryset})
 
 
 @login_required
@@ -76,7 +76,6 @@ def reserva_new(request, evento_id):
 
             return redirect("reservas:reserva_new", evento_id=evento_id)
 
-        # Crear reserva
         formulario = ReservaEventoForm(request.POST)
         if formulario.is_valid():
             reserva = formulario.save(commit=False)
@@ -84,7 +83,6 @@ def reserva_new(request, evento_id):
             reserva.evento = evento
             reserva.save()
 
-            # Guardar servicios seleccionados
             servicios_seleccionados = request.session.pop(session_key, [])
             for servicio_data in servicios_seleccionados:
                 servicio = Servicio.objects.get(id=servicio_data["id"])

@@ -1,0 +1,50 @@
+{% extends "main/base/base.html" %}
+{% load static %}
+{% block content %}
+    {% include 'main/componentes/ui/title.html' with titulo="reservas" %}
+    <style>
+    .evento-imagen {
+        width: 300px; 
+        height: 200px; 
+        object-fit: cover; 
+        display: block; 
+    }
+    
+    </style>
+    <div class="section section-white">
+        <div class="container">
+            <div class="row">
+                <ul class="grid cs-style-3">
+                    {% if reservas %}
+                        {% for reserva in servicios %}
+                            <div class="col-md-4 col-sm-6">
+                                <figure>
+                                    <img class="evento-imagen"
+                                         src="{% if reserva.foto %}{{ reserva.foto.imagen.url }}{% else %}{% static 'img/404.jpg' %}{% endif %}"
+                                         alt="img04">
+                                    <figcaption>
+                                        <h3>{{ reserva.reserva.nombre }}</h3>
+                                        <span>{{ reserva.reserva.descripcion }}</span>
+                                        <a href="{% url 'negocio:obtener_servicio' reserva.reserva.id %}">ver más</a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">
+                                {% if request.user.is_superuser %}
+                                    <h4 class="alert-heading">No hay reservas</h4>
+                                    <p>No hay reservas disponibles en este momento.</p>
+                                {% else %}
+                                    <h4 class="alert-heading">No hay reserva</h4>
+                                    <p>No has hecho ninguna reserva aun.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
