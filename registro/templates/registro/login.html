@@ -28,7 +28,8 @@
                                         {{ field }}
                                         {{ field.label_tag }}
                                     </div>
-                                {% endfor %}
+                                    {{ field.errors }}
+                                    {% endfor %}
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">Iniciar sesion</button>
                             </form>
                         </div>

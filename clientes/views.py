@@ -39,7 +39,7 @@ def profile_view(request):
 def verificar_correo(request):
     print(request.method)
     if request.method == "POST":
-        print(request.POST.dict())
+        print(request.POST)
         user = request.user
         info_cliente = InformacionCliente.objects.get(cliente=user)
 

@@ -5,8 +5,6 @@ class ReservaEventoForm(forms.ModelForm):
     class Meta:
         model = ReservaEvento
         fields = [
-            "cliente",
-            "evento",
             "fechalquiler",
             "hora_inicio_reserva_evento",
             "hora_fin_planificada",
@@ -18,8 +16,6 @@ class ReservaEventoForm(forms.ModelForm):
             "estado_alquiler",
         ]
         labels = {
-            "cliente": "Cliente",
-            "evento": "Evento",
             "fechalquiler": "Fecha de alquiler",
             "hora_inicio_reserva_evento": "Hora de inicio de la reserva",
             "hora_fin_planificada": "Hora de fin planificada",
@@ -31,7 +27,7 @@ class ReservaEventoForm(forms.ModelForm):
             "estado_alquiler": "Estado del alquiler",
         }
         widgets = {
-            "observacion": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "observacion": forms.TextInput(attrs={"class": "form-control"}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
         }
         
