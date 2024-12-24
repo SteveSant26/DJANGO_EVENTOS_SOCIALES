@@ -1,8 +1,8 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
-{% load crispy_forms_tags %}
-<style>
+    {% load crispy_forms_tags %}
+    <style>
     /* From Uiverse.io by Rodrypaladin */
     .card_custom {
         font-size: 1.2em;
@@ -58,8 +58,8 @@
     .item:nth-child(even) {
         background: rgb(234, 235, 234);
     }
-</style>
-<style>
+    </style>
+    <style>
     .carousel-inner {
         position: relative;
         width: 100%;
@@ -127,168 +127,164 @@
     .modal-body {
         margin-bottom: 20px;
     }
-</style>
-{% include 'main/componentes/ui/title.html' with titulo="Reserva" %}
-<link rel="stylesheet" href="{% static 'css/form-register.css' %}">
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card row">
-                    <div class="card-header col-md-6">
-                        <h3 class="card-title" style="">
-                            Detalle de la
-                            reserva {{ reserva.id }}
-                        </h3>
-
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                {% if fotos %}
-                                {% for foto in fotos %}
-                                <div class="item {% if forloop.first %}active{% endif %}">
-                                    <div class="carousel-imagen-wrapper">
-                                        <img src="{{ foto.imagen.url }}" class="carousel-imagen"
-                                            alt="Slide {{ forloop.counter }}">
-                                    </div>
+    </style>
+    {% include 'main/componentes/ui/title.html' with titulo="Reserva" %}
+    <link rel="stylesheet" href="{% static 'css/form-register.css' %}">
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card row">
+                        <div class="card-header col-md-6">
+                            <h3 class="card-title" style="">
+                                Detalle de la
+                                reserva {{ reserva.id }}
+                            </h3>
+                            <div id="carousel-example-generic"
+                                 class="carousel slide"
+                                 data-ride="carousel">
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    {% if fotos %}
+                                        {% for foto in fotos %}
+                                            <div class="item {% if forloop.first %}active{% endif %}">
+                                                <div class="carousel-imagen-wrapper">
+                                                    <img src="{{ foto.imagen.url }}"
+                                                         class="carousel-imagen"
+                                                         alt="Slide {{ forloop.counter }}">
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="item active">
+                                            <div class="carousel-imagen-wrapper">
+                                                <img src="{% static 'img/404.jpg' %}"
+                                                     class="carousel-imagen"
+                                                     alt="Default slide">
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
-                                {% endfor %}
-                                {% else %}
-                                <div class="item active">
-                                    <div class="carousel-imagen-wrapper">
-                                        <img src="{% static 'img/404.jpg' %}" class="carousel-imagen"
-                                            alt="Default slide">
-                                    </div>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" role="button"
-                                data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" role="button"
-                                data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card-body col-md-6">
-                        {% if reserva.estado_alquiler == "Pendiente" %}
-                        <div class="alert alert-warning" role="alert">
-                            <h4 class="alert-heading">Estado de la reserva</h4>
-                            <p>La reserva está pendiente de confirmación. Verifica tu correo y confirma la reserva.</p>
-                            <button type="button" class="btn btn-primary" id="openModalBtn">
-                                Validar reserva
-                            </button>
-                        </div>
-
-                        <!-- Modal -->
-                        <div id="exampleModal" class="modal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" id="closeModalBtn">&times;</button>
-                                        <h4 class="modal-title">Validar Reserva</h4>
-                                    </div>
-                                    <div class="modal-body" id="form-verificar-correo">
-                                        <form method="post">
-                                            {% csrf_token %}
-                                            {{ formValidateReserva|crispy }}
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default"
-                                            id="closeModalBtn2">Cerrar</button>
-                                        <button id="btn-reenviar-correo" type="button" class="btn btn-primary">Reenviar
-                                            correo</button>
-                                    </div>
-                                </div>
+                                <!-- Controls -->
+                                <a class="left carousel-control"
+                                   href="#carousel-example-generic"
+                                   role="button"
+                                   data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control"
+                                   href="#carousel-example-generic"
+                                   role="button"
+                                   data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
                         </div>
-
-                        {% endif %}
-                        <div class="card_custom">
-                            <div class="card__title">{{ reserva.evento.nombre }}</div>
-                            <div class="card__data">
-                                <div class="card__right">
-                                    <div class="item">Fecha de alquiler</div>
-                                    <div class="item">Hora de inicio</div>
-                                    <div class="item">Hora de finalización</div>
-                                    <div class="item">Hora de finalización real</div>
-                                    <div class="item">Costo de alquiler</div>
-                                    <div class="item">Calificación del cliente</div>
-                                    <div class="item">Calificación del negocio</div>
-                                    <div class="item">Observaciones</div>
-                                    <div class="item">Estado de alquiler</div>
+                        <div class="card-body col-md-6">
+                            {% if not reserva.fue_confirmada %}
+                                <div class="alert alert-warning" role="alert">
+                                    <h4 class="alert-heading">Estado de la reserva</h4>
+                                    <p>La reserva está pendiente de confirmación. Verifica tu correo y confirma la reserva.</p>
+                                    <button type="button" class="btn btn-primary" id="openModalBtn">Validar reserva</button>
                                 </div>
-                                <div class="card__left">
-                                    <!-- Fecha del alquiler -->
-                                    <div class="item">{{ reserva.fechalquiler|default:"No disponible" }}</div>
-                                    <!-- Hora de inicio de la reserva -->
-                                    <div class="item">{{ reserva.hora_inicio_reserva_evento|default:"No disponible" }}
+                                <!-- Modal -->
+                                <div id="exampleModal" class="modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" id="closeModalBtn">&times;</button>
+                                                <h4 class="modal-title">Validar Reserva</h4>
+                                            </div>
+                                            <div class="modal-body" id="form-verificar-correo">
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    {{ formValidateReserva|crispy }}
+                                                    <button type="submit" class="btn btn-primary">Validar</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" id="closeModalBtn2">Cerrar</button>
+                                                <button id="btn-reenviar-correo" type="button" class="btn btn-primary">
+                                                    Reenviar
+                                                    correo
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- Hora fin planificada -->
-                                    <div class="item">{{ reserva.hora_fin_planificada|default:"No disponible" }}</div>
-                                    <!-- Hora fin real -->
-                                    <div class="item">{{ reserva.hora_fin_real_reserva_evento|default:"No disponible" }}
+                                </div>
+                            {% endif %}
+                            <div class="card_custom">
+                                <div class="card__title">{{ reserva.evento.nombre }}</div>
+                                <div class="card__data">
+                                    <div class="card__right">
+                                        <div class="item">Fecha de alquiler</div>
+                                        <div class="item">Hora de inicio</div>
+                                        <div class="item">Hora de finalización</div>
+                                        <div class="item">Hora de finalización real</div>
+                                        <div class="item">Costo de alquiler</div>
+                                        <div class="item">Calificación del cliente</div>
+                                        <div class="item">Calificación del negocio</div>
+                                        <div class="item">Observaciones</div>
+                                        <div class="item">Estado de alquiler</div>
                                     </div>
-                                    <!-- Costo del alquiler -->
-                                    <div class="item">{{ reserva.costo_alquiler|floatformat:2|default:"No disponible" }}
+                                    <div class="card__left">
+                                        <!-- Fecha del alquiler -->
+                                        <div class="item">{{ reserva.fechalquiler|default:"No disponible" }}</div>
+                                        <!-- Hora de inicio de la reserva -->
+                                        <div class="item">{{ reserva.hora_inicio_reserva_evento|default:"No disponible" }}</div>
+                                        <!-- Hora fin planificada -->
+                                        <div class="item">{{ reserva.hora_fin_planificada|default:"No disponible" }}</div>
+                                        <!-- Hora fin real -->
+                                        <div class="item">{{ reserva.hora_fin_real_reserva_evento|default:"No disponible" }}</div>
+                                        <!-- Costo del alquiler -->
+                                        <div class="item">{{ reserva.costo_alquiler|floatformat:2|default:"No disponible" }}</div>
+                                        <!-- Calificación del cliente -->
+                                        <div class="item">{{ reserva.calificacion_cliente|default:"No disponible" }}</div>
+                                        <!-- Calificación del negocio -->
+                                        <div class="item">{{ reserva.calificacion_negocio|default:"No disponible" }}</div>
+                                        <!-- Observaciones -->
+                                        <div class="item">{{ reserva.observacion|default:"No disponible" }}</div>
+                                        <!-- Estado del alquiler -->
+                                        <div class="item">{{ reserva.estado_alquiler|default:"No disponible" }}</div>
                                     </div>
-                                    <!-- Calificación del cliente -->
-                                    <div class="item">{{ reserva.calificacion_cliente|default:"No disponible" }}</div>
-                                    <!-- Calificación del negocio -->
-                                    <div class="item">{{ reserva.calificacion_negocio|default:"No disponible" }}</div>
-                                    <!-- Observaciones -->
-                                    <div class="item">{{ reserva.observacion|default:"No disponible" }}</div>
-                                    <!-- Estado del alquiler -->
-                                    <div class="item">{{ reserva.estado_alquiler|default:"No disponible" }}</div>
                                 </div>
-                            </div>
-                            {% if servicios_seleccionados %}
-                            <div class="card__title">Servicios seleccionados</div>
-                            <div class="card__data">
-                                <div class="card__right">
-                                    <div class="item">Nombre del servicio</div>
+                                {% if servicios_seleccionados %}
+                                    <div class="card__title">Servicios seleccionados</div>
+                                    <div class="card__data">
+                                        <div class="card__right">
+                                            <div class="item">Nombre del servicio</div>
+                                        </div>
+                                        <div class="card__right">
+                                            <div class="item">Cantidad</div>
+                                        </div>
+                                        <div class="card__left">
+                                            <div class="item">Precio total</div>
+                                        </div>
+                                    </div>
+                                    {% for servicio in servicios_seleccionados %}
+                                        <div class="card__data">
+                                            <div class="card__right">
+                                                <div class="item">{{ servicio.servicio.nombre|default:"No disponible" }}</div>
+                                            </div>
+                                            <div class="card__right">
+                                                <div class="item">{{ servicio.cantidad|default:"No disponible" }}</div>
+                                            </div>
+                                            <div class="card__left">
+                                                <div class="item">${{ servicio.costo_total|default:"No disponible" }}</div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="card__right">
-                                    <div class="item">Cantidad</div>
-                                </div>
-                                <div class="card__left">
-                                    <div class="item">Precio total</div>
-                                </div>
-                            </div>
-                            {% for servicio in servicios_seleccionados %}
-                            <div class="card__data">
-                                <div class="card__right">
-                                    <div class="item">{{ servicio.servicio.nombre|default:"No disponible" }}</div>
-                                </div>
-                                <div class="card__right">
-                                    <div class="item">{{ servicio.cantidad|default:"No disponible" }}</div>
-                                </div>
-                                <div class="card__left">
-                                    <div class="item">${{ servicio.costo_total|default:"No disponible" }}</div>
-                                </div>
-                            </div>
-                            {% endfor %}
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<script>
-
-
-
+    <script>
     const btnReenviarCorreo = document.querySelector("#btn-reenviar-correo");
     const reenviarCorreoFuncion = async () => {
         const response = await fetch("{% url 'reservas:reenvio_correo_validacion' reserva.id %}");
@@ -375,5 +371,5 @@
         }
     };
 
-</script>
+    </script>
 {% endblock %}
