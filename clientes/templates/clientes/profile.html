@@ -17,6 +17,21 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         margin: 0 auto 20px;
     }
+    .descripcion {
+        display: block;
+        text-align: center;
+        margin-bottom: 30px; 
+        font-style: italic; 
+        font-size: 1.1rem; 
+        color: #444; 
+        background: #f7f7f7; 
+        padding: 15px; 
+        border-radius: 8px; 
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    }
+    .descripcion span.text-muted {
+        color: #888; 
+    }
 
     .about-text h3 {
         font-size: 1.8rem;
@@ -93,7 +108,11 @@
                     <div class="about-text">
                         <div style="" id="read-user" class="">
                             <h6 class="dark-color theme-color lead">Información personal</h6>
-                            <i style="margin-bottom: 20px;">
+                            <i class="descripcion"
+                               style="margin-bottom: 30px;
+                                      font-style: italic;
+                                      color: #555;
+                                      font-size: 1.1rem">
                                 {% if not cliente_info.descripcion %}
                                     <span class="text-muted">No tienes ninguna descripción aún.</span>
                                 {% else %}
@@ -145,6 +164,7 @@
                                 {% if update_form.non_field_errors %}
                                     <div class="alert alert-danger">{{ update_form.non_field_errors }}</div>
                                 {% endif %}
+                                
                                 <div class="row">
                                     {% for field in update_form %}
                                         <div class="input-field col-md-4" style="margin: 2em;">
@@ -153,6 +173,8 @@
                                         </div>
                                     {% endfor %}
                                 </div>
+
+
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">Actualizar</button>
                             </form>
                         </div>

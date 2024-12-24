@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "import_export",
     # Custom apps
     "negocio",
+    "registro",
     "clientes",
     "main",
     "reservas",
@@ -68,6 +69,7 @@ JAZZMIN_SETTINGS = {
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
     "related_modal_active": True,
+    "show_ui_builder": True,
 }
 
 JAZZMIN_UI_TWEAKS = {
@@ -122,7 +124,7 @@ ROOT_URLCONF = "DjangoSalaEventos.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -183,7 +185,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Agrega una carpeta 'static' para archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]  # Agrega una carpeta 'static' para archivos estáticos
 
 # Archivos de medios
 MEDIA_URL = "/media/"
