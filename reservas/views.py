@@ -145,7 +145,7 @@ def reserva_detail(request, id):
         servicios_seleccionados = reserva.reservas_servicios.all()
         return render(
             request,
-            "reservas/detalle_reserva.html",
+            "reservas/reserva_detail.html",
             {
                 "reserva": reserva,
                 "fotos": fotos,
