@@ -2,58 +2,65 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-    {% include 'main/componentes/ui/title.html' with titulo="Reservas" %}
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Haz tu reservas</h3>
-                        </div>
-                        <div class="card-body">
-                            <form method="post"
-                                  class="form-register">
-                                {% csrf_token %}
-                                {% if formNewReserva.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        {% for error in formNewReserva.non_field_errors %}<p>{{ error }}</p>{% endfor %}
-                                    </div>
-                                {% endif %}
-                                {{ formNewReserva|crispy }}
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">Crear reserva</button>
-                            </form>
-                            <form method="post" class="form-group">
-                                {% csrf_token %}
-                                <h4 class="text-center mb-3">Añadir Servicios</h4>
-                                {{ formServicios.as_p }}
-                                {% if formServicios.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        {% for error in formServicios.non_field_errors %}<p>{{ error }}</p>{% endfor %}
-                                    </div>
-                                {% endif %}
-                                {{ formEventoReservaServicios|crispy }}
-                                <button type="submit" name="add_service" class="btn btn-success w-100 mt-3">Añadir servicio</button>
-                            </form>
-                            <div class="mt-4">
-                                <h5 class="text-center">Servicios Seleccionados:</h5>
-                                <ul class="list-group">
-                                    {% if servicios_seleccionados %}
-                                        {% for servicio in servicios_seleccionados %}
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                {{ servicio.nombre }}
-                                                <span class="badge bg-secondary">Cantidad: {{ servicio.cantidad }}</span>
-                                            </li>
-                                        {% endfor %}
-                                    {% else %}
-                                        <p class="text-center text-muted">No se han agregado servicios aún.</p>
-                                    {% endif %}
-                                </ul>
+{% include 'main/componentes/ui/title.html' with titulo="Reservas" %}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Haz tu reservas</h3>
+                    </div>
+                    <div class="card-body" style="max-width: 500px; margin: 0 auto;">
+                        <form method="post" class="form-register">
+                            {% csrf_token %}
+                            {% if formNewReserva.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in formNewReserva.non_field_errors %}<p>{{ error }}</p>{% endfor %}
                             </div>
+                            {% endif %}
+                            {{ formNewReserva|crispy }}
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Crear
+                                reserva</button>
+                        </form>
+                        <form method="post" class="form-group">
+                            {% csrf_token %}
+                            <h4 class="text-center mb-3"> Añadir Servicios</h4>
+                            {{ formServicios.as_p }}
+                            {% if formServicios.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in formServicios.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+                            </div>
+                            {% endif %}
+                            {{ formEventoReservaServicios|crispy }}
+                            <button type="submit" name="add_service" class="btn btn-success w-100 mt-3"
+                                style="width: 100%; margin-top: 20px;">Añadir servicio</button>
+                        </form>
+                        <div class="mt-4">
+                            <h5 class="text-center">Servicios Seleccionados:</h5>
+                            <ul class="list-group">
+                                {% if servicios_seleccionados %}
+                                {% for servicio in servicios_seleccionados %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ servicio.nombre }}
+                                    <span class="badge bg-secondary">Cantidad: {{ servicio.cantidad }}</span>
+                                </li>
+                                {% endfor %}
+                                <form method="post" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="service_id" value="{{ servicio.id }}">
+                                    <button type="submit" name="delete_service"
+                                        class="btn btn-danger btn-sm">Eliminar Servicios</button>
+                                </form>
+                                {% else %}
+                                <p class="text-center text-muted">No se han agregado servicios aún.</p>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
