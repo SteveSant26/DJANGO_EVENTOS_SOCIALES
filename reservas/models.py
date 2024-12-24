@@ -63,8 +63,8 @@ class ReservaEvento(BaseModel):
     def costo_alquiler(self):
         costo = self.evento.valor_referencial
         for reserva_servicio in self.reservas_servicios.all():
-            costo += reserva_servicio.servicio.precio * reserva_servicio.cantidad
-
+            costo += reserva_servicio.servicio.valor_por_unidad * reserva_servicio.cantidad
+        return costo
     def crear_codigo_confirmacion(self):
         self.codigo_confirmacion_reserva = get_random_string(length=6)
         self.save()
