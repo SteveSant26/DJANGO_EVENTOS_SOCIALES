@@ -22,14 +22,11 @@ class VerificarCorreoForm(forms.Form):
         cleaned_data = super().clean()
         codigo_verificacion = cleaned_data.get("codigo_verificacion_correo")
         
-        # Depuración para verificar que los datos se estén recibiendo correctamente
-        print(f"Cleaned Data: {cleaned_data}")
-        print(f"Codigo Verificacion: {codigo_verificacion}")
-        print(self.user)
+
         if not codigo_verificacion:
             raise forms.ValidationError("El código de verificación no puede estar vacío.")
         
-        user = self.user  # Acceder al usuario pasado al formulario
+        user = self.user
         perfil = InformacionCliente.objects.filter(cliente=user).first()
 
         if not perfil:
@@ -42,11 +39,6 @@ class VerificarCorreoForm(forms.Form):
 
         return cleaned_data
 
-    def save(self):
-        perfil = InformacionCliente.objects.get(cliente=self.user)
-        perfil.verificado = True
-        perfil.save()
-        return perfil
 
 
 class UpdateProfileForm(forms.ModelForm):

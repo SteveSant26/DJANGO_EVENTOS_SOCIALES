@@ -14,7 +14,6 @@ from .forms import (
 from utils.email_service import EmailService
 
 
-
 @login_required
 def reservas_view(request):
     parametro_busqueda = request.GET.get("query", "")
@@ -93,9 +92,8 @@ def reserva_new(request, evento_id):
 
             reserva.evento = evento
 
-            EmailService.enviar_codigo_reserva(reserva)
-
             reserva.save()
+            EmailService.enviar_codigo_reserva(reserva)
 
             # Procesa los servicios seleccionados y los asocia con la reserva
             servicios_seleccionados = request.session.pop(session_key, [])

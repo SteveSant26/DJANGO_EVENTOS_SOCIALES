@@ -49,7 +49,9 @@ def verificar_correo(request):
 
         form = VerificarCorreoForm(request.POST, user=user) 
         if form.is_valid():
-            form.save()
+            info_cliente.verificado = True
+            info_cliente.save()
+            EmailService.enviar_codigo_verificacion(info_cliente)
             return JsonResponse(
                 {"success": True, "message": "Correo electrónico verificado con éxito."}
             )
