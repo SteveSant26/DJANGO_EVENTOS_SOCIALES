@@ -143,6 +143,7 @@ def reserva_detail(request, id):
     if request.method == "GET":
         fotos = reserva.fotos.all()
         servicios_seleccionados = reserva.reservas_servicios.all()
+        formValidateReserva = ReservaEventoConfirmForm()
         return render(
             request,
             "reservas/reserva_detail.html",
@@ -150,6 +151,7 @@ def reserva_detail(request, id):
                 "reserva": reserva,
                 "fotos": fotos,
                 "servicios_seleccionados": servicios_seleccionados,
+                "formValidateReserva": formValidateReserva,
             },
         )
 

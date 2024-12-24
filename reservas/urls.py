@@ -12,4 +12,6 @@ urlpatterns = [
     path("create/<int:evento_id>/", views.reserva_new, name="reserva_new"),
     path("<int:id>/servicios/", views.servicios_reserva, name="servicios_reserva"),
     path("<int:id>/confirmar/", views.confirmar_reserva, name="confirmar_reserva"),
+    path("<int:id>/reenviar-correo/", views.enviar_correo_reserva, name="reenvio_correo_validacion"),
+    path("<int:id>/confirmar/", views.confirmar_reserva, name="confirmar_reserva"),
 ]
