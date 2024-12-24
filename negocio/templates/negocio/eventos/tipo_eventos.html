@@ -2,11 +2,11 @@
 {% load static %}
 {% block content %}
 
+{% include 'main/componentes/ui/title.html' with titulo="Tipos de eventos" %}
 
 <div class="section section-white">
     <div class="container">
         <div class="row">
-            <h2>Tipos de eventos</h2>
             <div class="col-md-12">
                 <div class="grid cs-style-3">
                     {% for tipo_evento in tipo_eventos %}

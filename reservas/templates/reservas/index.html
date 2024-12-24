@@ -1,16 +1,20 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
-    {% include 'main/componentes/ui/title.html' with titulo="reservas" %}
     <style>
-    .evento-imagen {
-        width: 300px; 
-        height: 200px; 
-        object-fit: cover; 
-        display: block; 
-    }
-    
+.evento-imagen {
+    width: 300px; 
+    height: 200px; 
+    object-fit: cover; 
+    display: block; 
+}
+
     </style>
+    {% if  request.user.is_superuser %}
+        {% include 'main/componentes/ui/title.html' with titulo="TODAS LAS RESERVAS" %}
+    {% else %}
+        {% include 'main/componentes/ui/title.html' with titulo="MIS RESERVAS" %}
+    {% endif %}
     <div class="section section-white">
         <div class="container">
             <div class="row">

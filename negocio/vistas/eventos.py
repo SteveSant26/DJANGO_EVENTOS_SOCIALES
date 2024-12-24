@@ -66,4 +66,5 @@ def listar_eventos_por_tipo(request, tipo_evento_id):
             "evento": evento,
             "foto": foto
         })
-    return render(request, "negocio/eventos/obtener_evento_por_tipo.html", {"eventos": datos, "tipo_evento_nombre": tipo_evento.nombre})
+    tipo_evento = f"Eventos de {tipo_evento.nombre}"
+    return render(request, "negocio/eventos/obtener_evento_por_tipo.html", {"eventos": datos, "tipo_evento_nombre": tipo_evento})
