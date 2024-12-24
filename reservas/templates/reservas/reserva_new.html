@@ -11,18 +11,12 @@
                         <div class="card-header">
                             <h3 class="card-title">Haz tu reservas</h3>
                         </div>
+                        {% if messages %}
+                            {% for messaege in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
+                        {% endif %}
                         <div class="card-body" style="max-width: 500px; margin: 0 auto;">
                             <form method="post" class="form-register">
                                 {% csrf_token %}
-                                {% if messages %}
-                                {% for messaege in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                                {% endfor %}
-                                {% endif %}
-
-
                                 {% if formNewReserva.non_field_errors %}
                                     <div class="alert alert-danger">
                                         {% for error in formNewReserva.non_field_errors %}<p>{{ error }}</p>{% endfor %}

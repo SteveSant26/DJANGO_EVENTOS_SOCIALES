@@ -22,8 +22,8 @@ class ReservaEventoForm(forms.ModelForm):
             "hora_inicio_reserva_evento": forms.TimeInput(attrs={"type": "time"}),
             "hora_fin_planificada": forms.TimeInput(attrs={"type": "time"}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
-            "promociones": forms.Select(
-                attrs={"queryset": Promocion.objects.all(), "required": False}
+            "promociones": forms.SelectMultiple(
+                attrs={"required": False}
             ),
         }
 

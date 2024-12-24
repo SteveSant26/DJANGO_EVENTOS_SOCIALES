@@ -119,6 +119,7 @@ def reserva_new(request, evento_id):
             messages.success(request, "Reserva creada con éxito.")
             return redirect("reservas:reserva_detail", id=reserva.id)
         else:
+            print(formEventoReserva.errors)
             messages.error(request, "Error al crear la reserva.")
     else:
         formEventoReserva = ReservaEventoForm()
