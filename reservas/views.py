@@ -204,13 +204,5 @@ def confirmar_reserva(request, id):
                 {"success": True, "message": "Reserva confirmada correctamente."}
             )
         else:
+            print(formulario.errors)  # Ver los errores en la consola del servidor
             return JsonResponse({"success": False, "errors": formulario.errors})
-
-    else:
-        formulario = ReservaEventoConfirmForm(reserva=reserva)
-
-    return render(
-        request,
-        "reservas/reserva_confirm.html",
-        {"formulario": formulario, "reserva": reserva},
-    )

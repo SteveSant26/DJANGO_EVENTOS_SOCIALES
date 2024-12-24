@@ -58,3 +58,14 @@ class ReservaEventoConfirmForm(forms.ModelForm):
         labels = {
             "codigo_confirmacion_reserva": "Código de Confirmación",
         }
+
+    def __init__(self, *args, **kwargs):
+        self.reserva = kwargs.pop('reserva', None)  # Recibir el objeto reserva
+        super().__init__(*args, **kwargs)
+
+    def clean_codigo_confirmacion_reserva(self):
+        codigo = self.cleaned_data.get('codigo_confirmacion_reserva')
+        # Puedes realizar validaciones adicionales con el objeto reserva
+        if self.reserva and self.reserva.codigo_confirmacion_reserva != codigo:
+            raise forms.ValidationError("El código de confirmación no coincide con la reserva.")
+        return codigo

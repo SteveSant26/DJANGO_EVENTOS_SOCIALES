@@ -198,13 +198,14 @@
                                         <form method="post">
                                             {% csrf_token %}
                                             {{ formValidateReserva|crispy }}
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default"
                                             id="closeModalBtn2">Cerrar</button>
-                                        <button id="btn-reenviar-correo" type="button" class="btn btn-primary">Reenviar correo</button>
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                        <button id="btn-reenviar-correo" type="button" class="btn btn-primary">Reenviar
+                                            correo</button>
                                     </div>
                                 </div>
                             </div>
@@ -309,34 +310,37 @@
 
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Obtener el token CSRF desde el formulario
         const formData = new FormData();
-        formData.append("codigo_verificacion_correo", document.getElementById("id_codigo_confirmacion_reserva").value);
-        
-        console.log(formData);
+        formData.append("codigo_confirmacion_reserva", document.getElementById("id_codigo_confirmacion_reserva").value);
+        try {
+            const response = await fetch("{% url 'reservas:confirmar_reserva' reserva.id %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,  // Incluir el token CSRF en la cabecera
+                },
+                body: formData,
+            });
 
-        const response = await fetch("{% url 'reservas:confirmar_reserva' reserva.id %}", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": csrfToken,  // Incluir el token CSRF en la cabecera
-            },
-            body: formData,
-        });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Error en la respuesta:", errorText);
+                return;
+            }
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Error en la respuesta:", errorText);
-            return;
+            const data = await response.json();
+            if (data.success) {
+                location.reload();
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error("Error de red o de la solicitud:", error);
+            alert("Hubo un error al enviar la solicitud. Por favor, inténtalo nuevamente.");
         }
 
-        const data = await response.json();
-        if (data.success) {
-            location.reload();
-            alert(data.message);
-        } else {
-            alert(data.message);
-        }
     });
 
-    
+
 
 
 
