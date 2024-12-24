@@ -1,5 +1,7 @@
 from django import forms
-from .models import ReservaEvento, Evento, Eventualidad, Promocion,ReservaEventoServicio
+from .models import ReservaEvento, ReservaEventoServicio
+from negocio.models import Evento, Servicio
+
 
 class ReservaEventoForm(forms.ModelForm):
     class Meta:
@@ -8,48 +10,49 @@ class ReservaEventoForm(forms.ModelForm):
             "fechalquiler",
             "hora_inicio_reserva_evento",
             "hora_fin_planificada",
-            "hora_fin_real_reserva_evento",
-            "costo_alquiler",
-            "calificacion_cliente",
-            "calificacion_negocio",
-            "observacion",
-            "estado_alquiler",
+            "promociones"
         ]
         labels = {
             "fechalquiler": "Fecha de alquiler",
             "hora_inicio_reserva_evento": "Hora de inicio de la reserva",
             "hora_fin_planificada": "Hora de fin planificada",
-            "hora_fin_real_reserva_evento": "Hora de fin real de la reserva",
-            "costo_alquiler": "Costo del alquiler",
-            "calificacion_cliente": "Calificación del cliente",
-            "calificacion_negocio": "Calificación del negocio",
-            "observacion": "Observación",
-            "estado_alquiler": "Estado del alquiler",
         }
         widgets = {
-            "observacion": forms.TextInput(attrs={"class": "form-control"}),
+
+            "hora_inicio_reserva_evento": forms.TimeInput(attrs={"type": "time"}),
+            "hora_fin_planificada": forms.TimeInput(attrs={"type": "time"}),
             "fechalquiler": forms.DateInput(attrs={"type": "date"}),
         }
-        
-    def save(self, commit=True):
-        reserva = super().save(commit=False)
-        if commit:
-            reserva.save()
-        from utils.email_service import EmailService
-        EmailService.enviar_codigo_confirmacion(reserva)
-        return reserva
 
+    # def save(self, commit=True):
+    #     reserva = super().save(commit=False)
+    #     if commit:
+    #         reserva.save()
+
+    #     return reserva
 
 
 class ReservaEventoServicioForm(forms.ModelForm):
+
     class Meta:
         model = ReservaEventoServicio
-        fields = ["reserva", "servicio", "cantidad"]
+        fields = ["servicio", "cantidad"]
         labels = {
-            "reserva": "Reserva del evento",
             "servicio": "Servicio",
             "cantidad": "Cantidad",
         }
+        widgets = {
+            "cantidad": forms.NumberInput(attrs={"required": False}),
+            "servicio": forms.Select(
+                attrs={"queryset": Servicio.objects.all(), "required": False}
+            ),
+        }
+
+    def clean_cantidad(self):
+        cantidad = self.cleaned_data.get("cantidad")
+        if not cantidad:
+            raise forms.ValidationError("Este campo es requerido al guardar.")
+        return cantidad
 
 
 class ReservaEventoConfirmForm(forms.ModelForm):

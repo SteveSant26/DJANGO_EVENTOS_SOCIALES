@@ -23,7 +23,7 @@ class ReservaEvento(BaseModel):
     cliente = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Cliente")
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE, verbose_name="Evento")
 
-    prmociones = models.ManyToManyField(
+    promociones = models.ManyToManyField(
         "Promocion",
         blank=True,
         verbose_name="Promociones",
@@ -36,9 +36,6 @@ class ReservaEvento(BaseModel):
     hora_fin_planificada = models.TimeField(verbose_name="Hora de fin planificada")
     hora_fin_real_reserva_evento = models.TimeField(
         blank=True, null=True, verbose_name="Hora de fin real de la reserva"
-    )
-    costo_alquiler = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Costo del alquiler"
     )
     calificacion_cliente = models.IntegerField(
         blank=True, null=True, verbose_name="Calificación del cliente"
@@ -61,6 +58,12 @@ class ReservaEvento(BaseModel):
         blank=True,
         null=True,
     )
+
+    @property
+    def costo_alquiler(self):
+        costo = self.evento.valor_referencial
+        for reserva_servicio in self.reservas_servicios.all():
+            costo += reserva_servicio.servicio.precio * reserva_servicio.cantidad
 
     def crear_codigo_confirmacion(self):
         self.codigo_confirmacion_reserva = get_random_string(length=6)
@@ -124,13 +127,16 @@ class ReservaEventoServicio(BaseModel):
     )
     cantidad = models.IntegerField(verbose_name="Cantidad")
 
+
     def clean(self):
         if self.cantidad <= 0:
             raise ValidationError("La cantidad debe ser mayor a 0")
-        if ReservaEventoServicio.objects.filter(
-            reserva=self.reserva, servicio=self.servicio
-        ).exists():
-            raise ValidationError("El servicio ya ha sido reservado")
+
+        if hasattr(self, "reserva") and self.reserva and self.servicio:
+            if ReservaEventoServicio.objects.filter(
+                reserva=self.reserva, servicio=self.servicio
+            ).exists():
+                raise ValidationError("El servicio ya ha sido reservado")
 
     def save(self, *args, **kwargs):
         self.full_clean()

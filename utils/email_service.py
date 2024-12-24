@@ -9,16 +9,17 @@ class EmailService:
 
     @staticmethod
     def enviar_email(subject, message, recipient_list):
-
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list)
 
     @staticmethod
     def enviar_codigo_verificacion(perfil: InformacionCliente):
-        subject = "Código de verificación"
+        subject = "Código de Verificación"
         message = (
             f"Hola {perfil.cliente.username},\n\n"
-            f"Gracias por registrarte. Tu código de verificación es: {perfil.codigo_verificacion}\n\n"
-            "Por favor, utiliza este código para verificar tu cuenta."
+            f"Gracias por registrarte en nuestra plataforma. Tu código de verificación es: {perfil.codigo_verificacion}\n\n"
+            "Por favor, utiliza este código para verificar tu cuenta. Si tienes alguna pregunta, no dudes en contactarnos.\n\n"
+            "Saludos cordiales,\n"
+            "El equipo de soporte"
         )
         recipient_list = [perfil.correo]
 
@@ -26,23 +27,16 @@ class EmailService:
 
     @staticmethod
     def enviar_codigo_reserva(reserva: ReservaEvento):
+        subject = "Confirmación de Reserva"
+        message = (
+            f"Estimado/a {reserva.cliente},\n\n"
+            f"Gracias por realizar una reserva para el evento \"{reserva.evento}\".\n\n"
+            "Por favor, utiliza el siguiente código para confirmar tu reserva:\n\n"
+            f"Código de confirmación: {reserva.codigo_confirmacion_reserva}\n\n"
+            "Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en contactarnos.\n\n"
+            "Saludos cordiales,\n"
+            "El equipo de Gestión de Alquileres"
+        )
+        recipient_list = [reserva.cliente.email]
 
-        
-        codigo_confirmacion = reserva.crear_codigo_confirmacion()
-        reserva.save()
-
-        asunto = "Confirmación de Alquiler"
-        mensaje = f"""
-        Estimado/a {reserva.cliente},
-        
-        Gracias por realizar su reserva para el evento "{reserva.evento}".
-        Por favor, use el siguiente código para confirmar su reserva:
-        
-        Código de confirmación: {codigo_confirmacion}
-        
-        Saludos,
-        Equipo de Gestión de Alquileres
-        """
-        destinatarios = [reserva.cliente.email]
-
-        EmailService.send_email(asunto, mensaje, destinatarios)
+        EmailService.enviar_email(subject, message, recipient_list)
