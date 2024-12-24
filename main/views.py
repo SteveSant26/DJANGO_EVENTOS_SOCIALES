@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db import models
-from negocio.models import Evento
+from negocio.models import Evento, TipoEvento
 
 
 def home_view(request):
@@ -16,6 +16,7 @@ def home_view(request):
             "foto": evento.fotoevento_set.first()
         })
 
+    tipo_eventos = TipoEvento.objects.all()[:6]
     return render(
-        request, "main/home.html", {"eventos_mas_populares": queryset}
+        request, "main/home.html", {"eventos_mas_populares": queryset, "tipo_eventos": tipo_eventos}
     )

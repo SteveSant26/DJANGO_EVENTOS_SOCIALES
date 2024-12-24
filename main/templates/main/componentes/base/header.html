@@ -29,6 +29,9 @@
                 <li class="{% if request.path == '/negocio/eventos/' %}active{% endif %}">
                     <a href="{% url 'negocio:listar_eventos' %}">Eventos</a>
                 </li>
+                <li class="{% if request.path == '/negocio/eventos/tipos/' %}active{% endif %}">
+                    <a href="{% url 'negocio:listar_tipos_eventos' %}">Tipos de eventos</a>
+                </li>
                 <li class="{% if request.path == '/negocio/servicios/' %}active{% endif %}">
                     <a href="{% url 'negocio:listar_servicios' %}">Servicios</a>
                 </li>
