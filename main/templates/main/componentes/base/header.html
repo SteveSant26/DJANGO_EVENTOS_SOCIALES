@@ -16,7 +16,8 @@
                 {% if configuracion.logo_negocio %}
                 <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="">
                 {% else %}
-                <span class="m-0" style="color: aliceblue; font-size: 2em;">{{ configuracion.nombre_negocio|default:"Negocio" }}</span>
+                <span class="m-0"
+                    style="color: aliceblue; font-size: 2em;">{{configuracion.nombre_negocio|default:"Negocio" }}</span>
                 {% endif %}
             </a>
         </div>
@@ -32,20 +33,19 @@
                     <a href="{% url 'negocio:listar_servicios' %}">Servicios</a>
                 </li>
 
-                
 
-
-                
+                {% if request.user.is_authenticated %}
                 <li class="{% if request.path == '/reservas/' %}active{% endif %}">
                     <a href="{% url 'reservas:listar_reservas' %}">
                         {% if request.user.is_superuser %}
-                            Reservas
+                        Reservas
                         {% else %}
-                            Mis reservas
+                        Mis reservas
                         {% endif %}
                     </a>
                 </li>
-
+                {% endif %}
+                {% if request.user.is_authenticated %}
                 <li class="dropdown {% if request.path == '/clientes/profile/' %}active{% endif %}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">Mis datos <i class="icon-angle-down"></i></a>
@@ -58,10 +58,7 @@
                         </li>
                     </ul>
                 </li>
-                {% if request.user.is_superuser %}
-                <li class="{% if request.path == '/admin/' %}active{% endif %}">
-                    <a href="{% url 'admin:index' %}">Panel de administrador</a>
-                </li>
+                {% else %}
                 <li class="{% if request.path == '/registro/signup/' %}active{% endif %}">
                     <a href="{% url 'registro:signup' %}">Crea tu cuenta</a>
                 </li>
@@ -69,6 +66,13 @@
                     <a href="{% url 'registro:login' %}">Inicia sesión</a>
                 </li>
                 {% endif %}
+                {% if request.user.is_superuser %}
+                <li class="{% if request.path == '/admin/' %}active{% endif %}">
+                    <a href="{% url 'admin:index' %}">Panel de administrador</a>
+                </li>
+                {% endif %}
+
+
             </ul>
         </div>
     </div>
