@@ -196,7 +196,7 @@ def enviar_correo_reserva(request, id):
 @login_required
 def confirmar_reserva(request, id):
     reserva = get_object_or_404(ReservaEvento, id=id)
-
+    
     if request.method == "POST":
         formulario = ReservaEventoConfirmForm(request.POST, reserva=reserva)
         if formulario.is_valid():
@@ -205,5 +205,5 @@ def confirmar_reserva(request, id):
                 {"success": True, "message": "Reserva confirmada correctamente."}
             )
         else:
-            print(formulario.errors)  # Ver los errores en la consola del servidor
+            print(formulario.errors)
             return JsonResponse({"success": False, "errors": formulario.errors})

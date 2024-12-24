@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from .models import (
     TipoEvento,
     Evento,
@@ -27,9 +29,46 @@ class PrevisualizacionImagen:
     previsualizacion_imagen.short_description = "Imagen"
 
 
-# Evento
+# Recursos para import_export
+class TipoEventoResource(resources.ModelResource):
+    class Meta:
+        model = TipoEvento
+
+
+class EventoResource(resources.ModelResource):
+    class Meta:
+        model = Evento
+
+
+class ServicioResource(resources.ModelResource):
+    class Meta:
+        model = Servicio
+
+
+class FotoEventoResource(resources.ModelResource):
+    class Meta:
+        model = FotoEvento
+
+
+class FotoServicioResource(resources.ModelResource):
+    class Meta:
+        model = FotoServicio
+
+
+class ResenaEventoResource(resources.ModelResource):
+    class Meta:
+        model = ResenaEvento
+
+
+class ResenaServicioResource(resources.ModelResource):
+    class Meta:
+        model = ResenaServicio
+
+
+# Registro de modelos con import_export
 @admin.register(TipoEvento)
-class TipoEventoAdmin(admin.ModelAdmin):
+class TipoEventoAdmin(ImportExportModelAdmin):
+    resource_class = TipoEventoResource
     list_display = ("nombre", "descripcion")
     search_fields = ("nombre", "descripcion")
     ordering = ("nombre",)
@@ -49,7 +88,8 @@ class ResenasEventoInline(admin.TabularInline):
 
 
 @admin.register(ResenaEvento)
-class ResenaEventoAdmin(admin.ModelAdmin):
+class ResenaEventoAdmin(ImportExportModelAdmin):
+    resource_class = ResenaEventoResource
     list_display = ("evento", "autor", "comentario", "calificacion")
     search_fields = (
         "evento__nombre",
@@ -60,7 +100,8 @@ class ResenaEventoAdmin(admin.ModelAdmin):
 
 
 @admin.register(FotoEvento)
-class FotoEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
+class FotoEventoAdmin(ImportExportModelAdmin, PrevisualizacionImagen):
+    resource_class = FotoEventoResource
     list_display = ("evento", "descripcion", "numero_likes", "previsualizacion_imagen")
     search_fields = ("evento__nombre",)
     ordering = ("evento",)
@@ -68,7 +109,8 @@ class FotoEventoAdmin(admin.ModelAdmin, PrevisualizacionImagen):
 
 
 @admin.register(Evento)
-class EventoAdmin(admin.ModelAdmin):
+class EventoAdmin(ImportExportModelAdmin):
+    resource_class = EventoResource
     list_display = (
         "nombre",
         "tipo_evento",
@@ -89,7 +131,6 @@ class EventoAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
-## Servicio
 class FotoServicioInline(admin.TabularInline, PrevisualizacionImagen):
     model = FotoServicio
     extra = 1
@@ -103,7 +144,8 @@ class ResenaServicioInline(admin.TabularInline):
 
 
 @admin.register(ResenaServicio)
-class ResenaServicioAdmin(admin.ModelAdmin):
+class ResenaServicioAdmin(ImportExportModelAdmin):
+    resource_class = ResenaServicioResource
     list_display = ("servicio", "autor", "comentario", "calificacion")
     search_fields = (
         "servicio__nombre",
@@ -114,7 +156,8 @@ class ResenaServicioAdmin(admin.ModelAdmin):
 
 
 @admin.register(Servicio)
-class ServicioAdmin(admin.ModelAdmin):
+class ServicioAdmin(ImportExportModelAdmin):
+    resource_class = ServicioResource
     list_display = ("nombre", "descripcion", "valor_por_unidad", "estado")
     search_fields = ("nombre", "descripcion")
     list_filter = ("estado", "valor_por_unidad")
@@ -124,7 +167,8 @@ class ServicioAdmin(admin.ModelAdmin):
 
 
 @admin.register(FotoServicio)
-class FotoServicioAdmin(admin.ModelAdmin, PrevisualizacionImagen):
+class FotoServicioAdmin(ImportExportModelAdmin, PrevisualizacionImagen):
+    resource_class = FotoServicioResource
     list_display = (
         "servicio",
         "descripcion",

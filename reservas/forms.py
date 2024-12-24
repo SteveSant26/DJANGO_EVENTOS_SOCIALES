@@ -51,21 +51,39 @@ class ReservaEventoServicioForm(forms.ModelForm):
         return cantidad
 
 
-class ReservaEventoConfirmForm(forms.ModelForm):
-    class Meta:
-        model = ReservaEvento
-        fields = ["codigo_confirmacion_reserva"]
-        labels = {
-            "codigo_confirmacion_reserva": "Código de Confirmación",
-        }
+class ReservaEventoConfirmForm(forms.Form):
+    codigo_confirmacion_reserva = forms.CharField(
+        label="Código de confirmación",
+        widget=forms.TextInput(attrs={"placeholder": "Ingrese el código de confirmación"}),
+    )
+
 
     def __init__(self, *args, **kwargs):
-        self.reserva = kwargs.pop('reserva', None)  # Recibir el objeto reserva
-        super().__init__(*args, **kwargs)
+        
+        self.reserva_evento = kwargs.pop('reserva', None)  
+        super().__init__(*args, **kwargs)  
 
-    def clean_codigo_confirmacion_reserva(self):
-        codigo = self.cleaned_data.get('codigo_confirmacion_reserva')
-        # Puedes realizar validaciones adicionales con el objeto reserva
-        if self.reserva and self.reserva.codigo_confirmacion_reserva != codigo:
-            raise forms.ValidationError("El código de confirmación no coincide con la reserva.")
-        return codigo
+    def clean(self):
+        cleaned_data = super().clean()
+        codigo_confirmacion_reserva = cleaned_data.get("codigo_confirmacion_reserva")
+
+        if not self.reserva_evento:
+            raise forms.ValidationError("No se encontró la reserva del evento")
+
+        
+        if str(self.reserva_evento.codigo_confirmacion_reserva) != str(codigo_confirmacion_reserva):
+            raise forms.ValidationError("El código de confirmación es incorrecto.")
+
+        
+        if self.reserva_evento.fue_confirmada:
+            raise forms.ValidationError("Este alquiler ya ha sido confirmado.")
+
+        return cleaned_data
+    
+    
+    def save(self):
+        
+        self.reserva_evento.fue_confirmada = True
+        self.reserva_evento.estado_reserva = ReservaEvento.ESTADOS_ALQUILER[2][0]
+        self.reserva_evento.save()
+        return self.reserva_evento

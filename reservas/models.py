@@ -13,7 +13,6 @@ class ReservaEvento(BaseModel):
         verbose_name_plural = "Reservas de eventos"
 
     ESTADOS_ALQUILER = [
-        ("Activo", "Activo"),
         ("Cancelado", "Cancelado"),
         ("Pendiente", "Pendiente"),
         ("Confirmado", "Confirmado"),
@@ -44,7 +43,7 @@ class ReservaEvento(BaseModel):
         blank=True, null=True, verbose_name="Calificación del negocio"
     )
     observacion = models.TextField(blank=True, null=True, verbose_name="Observación")
-    estado_alquiler = models.CharField(
+    estado_reserva = models.CharField(
         max_length=20,
         choices=ESTADOS_ALQUILER,
         default="Pendiente",
@@ -58,6 +57,8 @@ class ReservaEvento(BaseModel):
         blank=True,
         null=True,
     )
+    
+    fue_confirmada = models.BooleanField(default=False)
 
     @property
     def costo_alquiler(self):
