@@ -164,7 +164,6 @@
                                 {% if update_form.non_field_errors %}
                                     <div class="alert alert-danger">{{ update_form.non_field_errors }}</div>
                                 {% endif %}
-                                
                                 <div class="row">
                                     {% for field in update_form %}
                                         <div class="input-field col-md-4" style="margin: 2em;">
@@ -173,8 +172,6 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-
-
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">Actualizar</button>
                             </form>
                         </div>
@@ -288,16 +285,15 @@
 
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // Obtener el token CSRF desde el formulario
         console.log(JSON.stringify({
-            codigo_verificacion_correo: document.querySelector("#id_codigo_verificacion_correo").value,
+            codigo_verificacion: document.querySelector("#id_codigo_verificacion").value,
         }));
         const response = await fetch("{% url 'clientes:verificar_correo' %}", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "X-CSRFToken": csrfToken,  // Incluir el token CSRF en la cabecera
             },
             body: JSON.stringify({
-                codigo_verificacion_correo: document.querySelector("#id_codigo_verificacion_correo").value,
+                codigo_verificacion: document.querySelector("#id_codigo_verificacion_correo").value,
             }),
         });
 

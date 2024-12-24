@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import InformacionCliente
 
 STYLE = "inputs"
@@ -14,23 +15,21 @@ class VerificarCorreoForm(forms.Form):
         fields = ("codigo_verificacion_correo",)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop("user", None)  
+        self.user = kwargs.pop('user', None)  # Obtener el usuario pasado al formulario
         super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
         codigo_verificacion = cleaned_data.get("codigo_verificacion_correo")
-
         
+        # Depuración para verificar que los datos se estén recibiendo correctamente
         print(f"Cleaned Data: {cleaned_data}")
         print(f"Codigo Verificacion: {codigo_verificacion}")
         print(self.user)
         if not codigo_verificacion:
-            raise forms.ValidationError(
-                "El código de verificación no puede estar vacío."
-            )
-
-        user = self.user  
+            raise forms.ValidationError("El código de verificación no puede estar vacío.")
+        
+        user = self.user  # Acceder al usuario pasado al formulario
         perfil = InformacionCliente.objects.filter(cliente=user).first()
 
         if not perfil:
@@ -73,16 +72,14 @@ class UpdateProfileForm(forms.ModelForm):
         }
         widgets = {
             "nacionalidad": forms.TextInput(attrs={"required": "required"}),
-            "descripcion": forms.Textarea(
-                attrs={"rows": 4, "cols": 40, "required": "required"}
-            ),  # Usa un Textarea para Descripción
+            "descripcion": forms.TextInput(attrs={"required": "required"}),
             "telefono": forms.TextInput(attrs={"required": "required"}),
             "nombres": forms.TextInput(attrs={"required": "required"}),
             "apellidos": forms.TextInput(attrs={"required": "required"}),
             "genero": forms.Select(attrs={"required": "required"}),
             "fecha_nacimiento": forms.DateInput(
                 attrs={"type": "date", "required": "required"}
-            ), 
+            ),
         }
 
     def clean_identificacion_cliente(self):
