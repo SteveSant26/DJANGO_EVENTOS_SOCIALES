@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third party apps
+    "crispy_forms",
+    "crispy_bootstrap5",
     "cloudinary",
     "cloudinary_storage",
     "django_filters",
@@ -68,7 +70,6 @@ JAZZMIN_SETTINGS = {
     ],
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
-
 }
 
 JAZZMIN_UI_TWEAKS = {
