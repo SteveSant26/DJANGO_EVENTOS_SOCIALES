@@ -1,7 +1,7 @@
 {% extends "main/base/base.html" %}
 {% load static %}
 {% block content %}
-<style>
+    <style>
     .about-avatar {
         display: flex;
         justify-content: center;
@@ -68,126 +68,121 @@
         height: 100px;
         color: #222 !important;
     }
-</style>
-<link rel="stylesheet" href="{% static 'css/form-register.css' %}">
-{% include 'main/componentes/ui/title.html' with titulo="Actualizar cliente" %}
-<section class="section about-section gray-bg" id="about">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-3 text-center">
-                <div class="about-avatar" id="avatar-container"></div>
-                <button id="btn-toggle-user" class="btn btn-primary ">
-                    Actualizar perfil
-                </button>
-
-                {% if not cliente_info.verificado %}
-                <button id="btn-toggle-verify" class="btn btn-primary">
-                    Verificar
-                </button>
-                {% endif %}
-            </div>
-            <div class="col-lg-9">
-                <div class="about-text">
-
-                    <div style="" id="read-user" class="">
-                        <h6 class="dark-color theme-color lead">Información personal</h6>
-                        <i style="margin-bottom: 20px;">
-                            {% if not cliente_info.descripcion %}
-                            <span class="text-muted">No tienes ninguna descripción aún.</span>
-                            {% else %}
-                            {{ cliente_info.descripcion }}
-                            {% endif %}
-                        </i>
-                        <div class="row about-list">
-                            <div class="col-md-6">
-                                <div class="media" style="font-size: 20px;">
-                                    <label>Nombre de usuario:</label>
-                                    <i>{{ cliente_info.cliente.username }}</i>
+    </style>
+    <link rel="stylesheet" href="{% static 'css/form-register.css' %}">
+    {% include 'main/componentes/ui/title.html' with titulo="Actualizar cliente" %}
+    {% if messages %}
+        {% for message in messages %}<div class="alert {{ message.tags }}">{{ message }}</div>{% endfor %}
+    {% endif %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+    {% endif %}
+    <section class="section about-section gray-bg" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 text-center">
+                    <div class="about-avatar" id="avatar-container"></div>
+                    <button id="btn-toggle-user" class="btn btn-primary ">Actualizar perfil</button>
+                    {% if not cliente_info.verificado %}
+                        <button id="btn-toggle-verify" class="btn btn-primary">Verificar</button>
+                    {% endif %}
+                </div>
+                <div class="col-lg-9">
+                    <div class="about-text">
+                        <div style="" id="read-user" class="">
+                            <h6 class="dark-color theme-color lead">Información personal</h6>
+                            <i style="margin-bottom: 20px;">
+                                {% if not cliente_info.descripcion %}
+                                    <span class="text-muted">No tienes ninguna descripción aún.</span>
+                                {% else %}
+                                    {{ cliente_info.descripcion }}
+                                {% endif %}
+                            </i>
+                            <div class="row about-list">
+                                <div class="col-md-6">
+                                    <div class="media" style="font-size: 20px;">
+                                        <label>Nombre de usuario:</label>
+                                        <i>{{ cliente_info.cliente.username }}</i>
+                                    </div>
+                                    <div class="media">
+                                        <label>Nombre:</label>
+                                        <i>{{ cliente_info.nombres|default:"No disponible" }}</i>
+                                    </div>
+                                    <div class="media">
+                                        <label>Apellidos:</label>
+                                        <i>{{ cliente_info.apellidos|default:"No disponible" }}</i>
+                                    </div>
+                                    <div class="media">
+                                        <label>Teléfono:</label>
+                                        <i>{{ cliente_info.telefono|default:"No disponible" }}</i>
+                                    </div>
                                 </div>
-                                <div class="media">
-                                    <label>Nombre:</label>
-                                    <i>{{ cliente_info.nombres|default:"No disponible" }}</i>
-                                </div>
-                                <div class="media">
-                                    <label>Apellidos:</label>
-                                    <i>{{ cliente_info.apellidos|default:"No disponible" }}</i>
-                                </div>
-                                <div class="media">
-                                    <label>Teléfono:</label>
-                                    <i>{{ cliente_info.telefono|default:"No disponible" }}</i>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="media">
-                                    <label>Correo:</label>
-                                    <i>{{ cliente_info.correo|default:"No especificada" }}</i>
-                                </div>
-                                <div class="media">
-                                    <label>Fecha nacimiento:</label>
-                                    <i>{{ cliente_info.fecha_nacimiento|default:"No disponible" }}</i>
-                                </div>
-                                <div class="media">
-                                    <label>Esta verificado:</label>
-                                    {% if cliente_info.verificado %}
-                                    <i class="text-success">Sí</i>
-                                    {% else %}
-                                    <i class="text-danger">No</i>
-                                    {% endif %}
+                                <div class="col-md-6">
+                                    <div class="media">
+                                        <label>Correo:</label>
+                                        <i>{{ cliente_info.correo|default:"No especificada" }}</i>
+                                    </div>
+                                    <div class="media">
+                                        <label>Fecha nacimiento:</label>
+                                        <i>{{ cliente_info.fecha_nacimiento|default:"No disponible" }}</i>
+                                    </div>
+                                    <div class="media">
+                                        <label>Esta verificado:</label>
+                                        {% if cliente_info.verificado %}
+                                            <i class="text-success">Sí</i>
+                                        {% else %}
+                                            <i class="text-danger">No</i>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div id="update-user" class=" hidden">
-                        <form class="form-update" method="post">
-                            {% csrf_token %}
-                            {% if update_form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {{update_form.non_field_errors }}
-                            </div>
-                            {% endif %}
-                            <div class="row">
-                                {% for field in update_form %}
-                                <div class="input-field col-md-4" style="margin: 2em;">
-                                    {{ field }}
-                                    {{ field.label_tag }}
+                        <div id="update-user" class=" hidden">
+                            <form class="form-update" method="post">
+                                {% csrf_token %}
+                                {% if update_form.non_field_errors %}
+                                    <div class="alert alert-danger">{{ update_form.non_field_errors }}</div>
+                                {% endif %}
+                                <div class="row">
+                                    {% for field in update_form %}
+                                        <div class="input-field col-md-4" style="margin: 2em;">
+                                            {{ field }}
+                                            {{ field.label_tag }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Actualizar</button>
-                        </form>
-                    </div>
-
-                    <div id="verificar-correo" class=" hidden">
-                        <form id="form-verificar-correo" class="form-register" method="post">
-                            {% csrf_token %}
-                            {% if verificar_correo_form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {{verificar_correo_form.non_field_errors }}
-                            </div>
-                            {% endif %}
-                            <div class="row">
-                                {% for field in verificar_correo_form %}
-                                <div class="input-field" style="margin: 2em;">
-                                    {{ field }}
-                                    {{ field.label_tag }}
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Actualizar</button>
+                            </form>
+                        </div>
+                        <div id="verificar-correo" class=" hidden">
+                            <form id="form-verificar-correo" class="form-register" method="post">
+                                {% csrf_token %}
+                                {% if verificar_correo_form.non_field_errors %}
+                                    <div class="alert alert-danger">{{ verificar_correo_form.non_field_errors }}</div>
+                                {% endif %}
+                                <div class="row">
+                                    {% for field in verificar_correo_form %}
+                                        <div class="input-field" style="margin: 2em;">
+                                            {{ field }}
+                                            {{ field.label_tag }}
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Verificar</button>
-
-                            <p class="btn btn-primary" id="btn-reenviar-correo" style="width: 100%; margin-top: 1em;">
-                                Reenviar correo de verificación
-                            </p>
-                        </form>
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Verificar</button>
+                                <p class="btn btn-primary"
+                                   id="btn-reenviar-correo"
+                                   style="width: 100%;
+                                          margin-top: 1em">Reenviar correo de verificación</p>
+                            </form>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<script>
+    </section>
+    <script>
     const user = {
         firstName: "{{ cliente_info.nombres|default:'' }}",
         lastName: "{{ cliente_info.apellidos|default:'' }}",
@@ -300,5 +295,5 @@
 
 
 
-</script>
+    </script>
 {% endblock %}

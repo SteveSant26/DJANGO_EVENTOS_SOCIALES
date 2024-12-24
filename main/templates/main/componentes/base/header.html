@@ -1,15 +1,8 @@
 {% load static %}
-<header class="navbar navbar-inverse"
-        style="position: sticky;
-               top: 0;
-               z-index: 1000;
-               margin-bottom: 0">
+<header class="navbar navbar-inverse" style="position: sticky; top: 0; z-index: 1000; margin-bottom: 0;">
     <div class="container">
         <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -17,15 +10,11 @@
             </button>
             <a class="navbar-brand" href="{% url 'main:home' %}">
                 {% if configuracion.logo_negocio %}
-                    <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="Basica">
+                    <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="">
                 {% else %}
-                    <p class="m-0" style="color: aliceblue; font-size: 2em;">
-                        {% if configuracion.nombre_negocio %}
-                            {{ configuracion.nombre_negocio }}
-                        {% else %}
-                            negocio
-                        {% endif %}
-                    </p>
+                    <span class="m-0" style="color: aliceblue; font-size: 2em;">
+                        {{ configuracion.nombre_negocio|default:"Negocio" }}
+                    </span>
                 {% endif %}
             </a>
         </div>
@@ -34,33 +23,27 @@
                 <li class="{% if request.path == '/' %}active{% endif %}">
                     <a href="{% url 'main:home' %}">Home</a>
                 </li>
-                <li class="{% if request.path == '/eventos/' %}active{% endif %}">
+                <li class="{% if request.path == '/negocio/eventos/' %}active{% endif %}">
                     <a href="{% url 'negocio:listar_eventos' %}">Eventos</a>
                 </li>
-                <li class="{% if request.path == '/servicios/' %}active{% endif %}">
+                <li class="{% if request.path == '/negocio/servicios/' %}active{% endif %}">
                     <a href="{% url 'negocio:listar_servicios' %}">Servicios</a>
                 </li>
                 {% if request.user.is_superuser %}
                     <li class="{% if request.path == '/reservas/' %}active{% endif %}">
-                        <a href="{% url 'reservas:listar_reservas' %}">Servicios</a>
+                        <a href="{% url 'reservas:listar_reservas' %}">Reservas</a>
                     </li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mis datos <i class="icon-angle-down"></i></a>
+                    <li class="dropdown {% if request.path == '/clientes/profile/' %}active{% endif %}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mis datos <i class="icon-angle-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li class="{% if request.path == '/mis_datos/' %}active{% endif %}">
-                                <a href="{% url 'clientes:profile' %}">Mis datos</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'clientes:logout' %}">Cerrar sesión</a>
-                            </li>
+                            <li><a href="{% url 'clientes:profile' %}">Perfil</a></li>
+                            <li><a href="{% url 'clientes:logout' %}">Cerrar sesión</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li>
-                        <a href="{% url 'clientes:signup' %}">Crea tu cuenta</a>
-                    </li>
+                    <li><a href="{% url 'clientes:signup' %}">Crea tu cuenta</a></li>
                     <li class="{% if request.path == '/clientes/login/' %}active{% endif %}">
                         <a href="{% url 'clientes:login' %}">Inicia sesión</a>
                     </li>
