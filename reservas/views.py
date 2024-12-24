@@ -119,7 +119,7 @@ def reserva_detail(request, id):
 
     if request.method == "GET":
         fotos = reserva.fotos.all()
-        servicios_seleccionados = reserva.servicios_reserva.all()
+        servicios_seleccionados = reserva.reservas_servicios.all()
         return render(
             request,
             "reservas/detalle_reserva.html",

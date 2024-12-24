@@ -1,16 +1,12 @@
 {% load static %}
-<header class="navbar navbar-inverse"
-        style="position: sticky;
+<header class="navbar navbar-inverse" style="position: sticky;
                top: 0;
                z-index: 1000;
                margin-bottom: 0">
     <div class="container">
         <div class="navbar-header">
-            <button type="button"
-                    class="navbar-toggle"
-                    data-toggle="collapse"
-                    data-target=".navbar-collapse"
-                    aria-label="Toggle navigation">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
+                aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -18,9 +14,9 @@
             </button>
             <a class="navbar-brand" href="{% url 'main:home' %}">
                 {% if configuracion.logo_negocio %}
-                    <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="">
+                <img width="100" src="{{ configuracion.logo_negocio.url }}" alt="">
                 {% else %}
-                    <span class="m-0" style="color: aliceblue; font-size: 2em;">{{ configuracion.nombre_negocio|default:"Negocio" }}</span>
+                <span class="m-0" style="color: aliceblue; font-size: 2em;">{{ configuracion.nombre_negocio|default:"Negocio" }}</span>
                 {% endif %}
             </a>
         </div>
@@ -35,37 +31,43 @@
                 <li class="{% if request.path == '/negocio/servicios/' %}active{% endif %}">
                     <a href="{% url 'negocio:listar_servicios' %}">Servicios</a>
                 </li>
-                {% if request.user.is_authenticated %}
-                    <li class="{% if request.path == '/reservas/' %}active{% endif %}">
-                        <a href="{% url 'reservas:listar_reservas' %}">Reservas</a>
-                    </li>
-                    <li class="dropdown {% if request.path == '/clientes/profile/' %}active{% endif %}">
-                        <a href="#"
-                           class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="false">Mis datos <i class="icon-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{% url 'clientes:profile' %}">Perfil</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'registro:logout' %}">Cerrar sesión</a>
-                            </li>
-                        </ul>
-                    </li>
-                    {% if request.user.is_superuser %}
-                        <li class="{% if request.path == '/admin/' %}active{% endif %}">
-                            <a href="{% url 'admin:index' %}">Panel de administrador</a>
+
+                
+
+
+                
+                <li class="{% if request.path == '/reservas/' %}active{% endif %}">
+                    <a href="{% url 'reservas:listar_reservas' %}">
+                        {% if request.user.is_superuser %}
+                            Reservas
+                        {% else %}
+                            Mis reservas
+                        {% endif %}
+                    </a>
+                </li>
+
+                <li class="dropdown {% if request.path == '/clientes/profile/' %}active{% endif %}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">Mis datos <i class="icon-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'clientes:profile' %}">Perfil</a>
                         </li>
-                    {% endif %}
-                {% else %}
-                    <li class="{% if request.path == '/registro/signup/' %}active{% endif %}">
-                        <a href="{% url 'registro:signup' %}">Crea tu cuenta</a>
-                    </li>
-                    <li class="{% if request.path == '/registro/login/' %}active{% endif %}">
-                        <a href="{% url 'registro:login' %}">Inicia sesión</a>
-                    </li>
+                        <li>
+                            <a href="{% url 'registro:logout' %}">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </li>
+                {% if request.user.is_superuser %}
+                <li class="{% if request.path == '/admin/' %}active{% endif %}">
+                    <a href="{% url 'admin:index' %}">Panel de administrador</a>
+                </li>
+                <li class="{% if request.path == '/registro/signup/' %}active{% endif %}">
+                    <a href="{% url 'registro:signup' %}">Crea tu cuenta</a>
+                </li>
+                <li class="{% if request.path == '/registro/login/' %}active{% endif %}">
+                    <a href="{% url 'registro:login' %}">Inicia sesión</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
