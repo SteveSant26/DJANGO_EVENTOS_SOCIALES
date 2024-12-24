@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="{% static 'css/form-register.css' %}">
 
-{% include 'main/componentes/ui/title.html' with titulo="Registro de cliente" %}
+{% include 'main/componentes/ui/title.html' with titulo="Crear cuenta" %}
 <div class="section">
     <div class="container">
         <div class="row">
@@ -13,6 +13,9 @@
                     <div class="card-body">
                         <form method="post" class="form-register">
                             {% csrf_token %}
+                            <div class="card-header">
+                                <h3 class="card-title" style="color: white;">Sign Up</h3>
+                            </div>
                             {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}
                             </div>{% endif %}
                             {% for field in form %}

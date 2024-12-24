@@ -29,16 +29,16 @@ class Negocio(models.Model):
         max_length=15, verbose_name="Teléfono del Negocio", blank=True, null=True, default="1234567890"
     )
     pagina_web_negocio = models.URLField(
-        blank=True, null=True, verbose_name="Página Web del Negocio"
+        blank=True, null=True, verbose_name="Página Web del Negocio", default="localhost:8000"
     )
     red_social_facebook_negocio = models.URLField(
-        blank=True, null=True, verbose_name="Facebook del Negocio"
+        blank=True, null=True, verbose_name="Facebook del Negocio", default="https://www.facebook.com/"
     )
     red_social_x_negocio = models.URLField(
-        blank=True, null=True, verbose_name="X del Negocio"
+        blank=True, null=True, verbose_name="X del Negocio", default="https://www.x.com/"
     )
     red_social_instagram_negocio = models.URLField(
-        blank=True, null=True, verbose_name="Instagram del Negocio"
+        blank=True, null=True, verbose_name="Instagram del Negocio", default="https://www.instagram.com/"
     )
     nombre_banco = models.CharField(max_length=100, verbose_name="Nombre del Banco")
     numero_cuenta_banco = models.CharField(

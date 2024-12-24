@@ -27,6 +27,8 @@
                         <figcaption>
                             <h3>{{ servicio.servicio.nombre }}</h3>
                             <span>{{ servicio.servicio.descripcion }}</span>
+                            <br>
+                            <span>Valor unitario {{servicio.servicio.valor_por_unidad}}</span>
                             <a href="{% url 'negocio:obtener_servicio' servicio.servicio.id %}">ver más</a>
                         </figcaption>
                     </figure>
