@@ -92,7 +92,7 @@ def profile_view(request):
 
 @login_required
 def verificar_correo(request):
-    
+    print(request.method)
     if request.method == "POST":
         print(request.POST)
         user = request.user
@@ -102,7 +102,7 @@ def verificar_correo(request):
             messages.warning(request, "Ya te has validado")
             return redirect("clientes:profile")
 
-        form = VerificarCorreoForm(request.POST, user=user)  # Pasar user al formulario
+        form = VerificarCorreoForm(request.POST, user=user) 
         if form.is_valid():
             form.save()
             return JsonResponse(
