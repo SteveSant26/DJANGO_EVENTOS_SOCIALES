@@ -1,53 +1,73 @@
+{% load static %}
 <section id="main-slider" class="no-margin">
-    <div class="carousel slide">
+    <div class="carousel slide" id="main-slider">
         <ol class="carousel-indicators">
             <li data-target="#main-slider" data-slide-to="0" class="active"></li>
             <li data-target="#main-slider" data-slide-to="1"></li>
             <li data-target="#main-slider" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-            <div class="item active" style="background-image: url(img/slides/1.jpg)">
+            <!-- Slide 1: Introducción a Tinocoloco -->
+            <div class="item active"
+                 style="background-image: url('{% static 'img/slides/1.jpg' %}')">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="carousel-content centered">
-                                <h2 class="animation animated-item-1">Welcome to BASICA! A Bootstrap3 Template</h2>
-                                <p class="animation animated-item-2">Sed mattis enim in nulla blandit tincidunt. Phasellus vel sem convallis, mattis est id, interdum augue. Integer luctus massa in arcu euismod venenatis. </p>
+                                <h2 class="animation animated-item-1">Bienvenido a {{ configuracion.nombre_negocio }}</h2>
+                                <p class="animation animated-item-2">El lugar ideal para tus eventos. ¡Haz que cada momento sea único con nosotros!</p>
+                                <br>
+                                <!-- Enlace de anclaje hacia la sección "información" -->
+                                <a class="btn btn-md animation animated-item-3" href="#informacion">Ver Más</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!--/.item-->
-            <div class="item" style="background-image: url(img/slides/2.jpg)">
+            </div>
+            <!--/.item-->
+            <!-- Slide 2: Capacidades del local -->
+            <div class="item"
+                 style="background-image: url('{% static 'img/slides/2.jpg' %}')">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="carousel-content center centered">
-                                <h2 class="animation animated-item-1">Powerful and Responsive HTML Template</h2>
-                                <p class="animation animated-item-2">Phasellus adipiscing felis a dictum dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at ligula risus. </p>
+                                <h2 class="animation animated-item-1">Espacios amplios y modernos</h2>
+                                <p class="animation animated-item-2">
+                                    Contamos con varias áreas adaptadas a tus necesidades: salas para reuniones, banquetes, y más.
+                                </p>
                                 <br>
-                                <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
+                                <a class="btn btn-md animation animated-item-3"
+                                   href="{% url 'negocio:listar_eventos' %}">Descubre los eventos que ofrecemos</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!--/.item-->
-            <div class="item" style="background-image: url(img/slides/3.jpg)">
+            </div>
+            <!--/.item-->
+            <!-- Slide 3: Testimonios de clientes -->
+            <div class="item"
+                 style="background-image: url('{% static 'img/slides/3.jpg' %}')">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="carousel-content centered">
-                                <h2 class="animation animated-item-1">Works Seamlessly Well on All Devices</h2>
-                                <p class="animation animated-item-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae euismod lacus. Maecenas in tempor lectus. Nam mattis, odio ut dapibus ornare, libero. </p>
+                                <h2 class="animation animated-item-1">Servicios que Ofrecemos</h2>
+                                <p class="animation animated-item-2">
+                                    Ofrecemos una amplia gama de servicios para hacer de tu evento una experiencia inolvidable: catering, decoración, música en vivo, y más.
+                                </p>
                                 <br>
-                                <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
+                                <a class="btn btn-md animation animated-item-3" href="{% url 'negocio:listar_servicios'%}">Conoce Nuestros Servicios</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!--/.item-->
-        </div><!--/.carousel-inner-->
-    </div><!--/.carousel-->
+            </div>
+            <!--/.item-->
+        </div>
+        <!--/.carousel-inner-->
+    </div>
+    <!--/.carousel-->
     <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
         <i class="icon-angle-left"></i>
     </a>
@@ -55,3 +75,6 @@
         <i class="icon-angle-right"></i>
     </a>
 </section>
+
+<!-- Información de la página abajo del slider -->
+<section id="informacion" ></section>
