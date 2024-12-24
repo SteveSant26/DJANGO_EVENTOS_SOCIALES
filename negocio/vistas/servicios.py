@@ -8,11 +8,17 @@ from ..forms import ResenaServicioForm
 
 
 def listar_servicios(request):
-    servicios = Servicio.objects.all()
+    query = request.GET.get('q', '')
+    servicios = Servicio.objects.filter(nombre__icontains=query) | Servicio.objects.filter(descripcion__icontains=query)
 
     datos = []
     for servicio in servicios:
-        datos.append({"servicio": servicio, "foto": FotoServicio.objects.filter(servicio=servicio).first()})
+        datos.append(
+            {
+                "servicio": servicio,
+                "foto": FotoServicio.objects.filter(servicio=servicio).first(),
+            }
+        )
     return render(request, "negocio/servicios/index.html", {"servicios": datos})
 
 
@@ -24,16 +30,27 @@ def obtener_servicio(request, servicio_id):
     if request.method == "POST":
         formresena = ResenaServicioForm(request.POST)
         if formresena.is_valid():
-            
+
             resena = formresena.save(commit=False)
             resena.servicio = servicio
             resena.autor = request.user
             resena.save()
             messages.success(request, "Reseña creada correctamente.")
             return redirect("negocio:obtener_servicio", servicio_id)
-        
+
     formresena = ResenaServicioForm()
-    return render(request, "negocio/servicios/obtener_servicio.html", {"servicio": servicio, "fotos": fotos, "resenasServicio": resenasServicio, "formresena": formresena})
+    nombreServicio = f"Servicio #{servicio_id}"
+    return render(
+        request,
+        "negocio/servicios/obtener_servicio.html",
+        {
+            "servicio": servicio,
+            "fotos": fotos,
+            "resenasServicio": resenasServicio,
+            "formresena": formresena,
+            "nombreServicio": nombreServicio,
+        },
+    )
 
 
 def obtener_dar_calificacion(request, servicio_id):
@@ -54,9 +71,3 @@ def obtener_dar_calificacion(request, servicio_id):
     else:
         form = ResenaServicioForm()
     return render(request, "negocio/dar_calificacion.html", {"form": form})
-
-
-def listar_fotos_servicio(request, servicio_id):
-    servicio = Servicio.objects.get(pk=servicio_id)
-    fotos = FotoServicio.objects.filter(servicio=servicio)
-    return render(request, "negocio/listar_fotos_servicio.html", {"fotos": fotos})

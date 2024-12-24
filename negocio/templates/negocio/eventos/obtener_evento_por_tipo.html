@@ -2,19 +2,92 @@
 {% load static %}
 {% block content %}
     <style>
-    .evento-imagen {
-        width: 300px;
-        /* Ancho fijo */
-        height: 200px;
-        /* Alto fijo */
-        object-fit: cover;
-        /* Mantiene proporciones y recorta para llenar el espacio */
-        display: block;
-        /* Evita espacios no deseados debajo de la imagen */
-    }
+        .search-bar-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .search-bar input[type="text"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            font-size: 18px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            color: #0056b3;
+        }
+
+        .close-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #aec62c;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-button:hover {
+            background-color: #c82333;
+        }
+
+        .evento-imagen {
+            width: 300px; 
+            height: 200px; 
+            object-fit: cover; 
+            display: block;
+        }
     </style>
     {% include 'main/componentes/ui/title.html' with titulo=tipo_evento_nombre %}
     <div class="section section-white">
+        <!-- Barra de búsqueda -->
+        <div class="search-bar-container">
+            <form method="GET" class="search-bar" action="">
+                <input type="text"
+                       name="query"
+                       placeholder="Busca un evento por nombre o descripción...">
+                <button type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+            <a href="{% url 'negocio:listar_eventos_por_tipo' tipo_evento_id %}"
+               class="close-button">Cerrar</a>
+        </div>
         {% if eventos %}
             <div class="container">
                 <div class="row">

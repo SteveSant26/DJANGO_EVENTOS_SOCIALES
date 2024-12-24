@@ -28,6 +28,7 @@ def reservas_view(request):
         reservas = reservas.filter(
             Q(evento__nombre__icontains=parametro_busqueda)
             | Q(cliente__username__icontains=parametro_busqueda)
+            | Q(estado_reserva__icontains=parametro_busqueda)
         )
 
     reservas = reservas.select_related("evento", "cliente").prefetch_related("fotos")

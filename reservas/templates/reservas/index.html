@@ -2,21 +2,99 @@
 {% load static %}
 {% block content %}
     <style>
-.evento-imagen {
-    width: 300px; 
-    height: 200px; 
-    object-fit: cover; 
-    display: block; 
-}
+        .search-bar-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .search-bar input[type="text"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            font-size: 18px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            color: #0056b3;
+        }
+
+        .close-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #aec62c;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-button:hover {
+            background-color: #c82333;
+        }
+
+        .evento-imagen {
+            width: 300px; 
+            height: 200px; 
+            object-fit: cover; 
+            display: block;
+        }
     </style>
-    {% if  request.user.is_superuser %}
+
+    {% if request.user.is_superuser %}
         {% include 'main/componentes/ui/title.html' with titulo="TODAS LAS RESERVAS" %}
     {% else %}
         {% include 'main/componentes/ui/title.html' with titulo="MIS RESERVAS" %}
     {% endif %}
+
     <div class="section section-white">
         <div class="container">
+            <!-- Barra de búsqueda -->
+            <div class="search-bar-container">
+                <form method="GET" class="search-bar" action="">
+                    <input type="text"
+                           name="query"
+                           placeholder="Busca una reserva por evento, fecha o estado...">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+                <a href="{% url 'reservas:listar_reservas' %}" class="close-button">Cerrar</a>
+            </div>
+
             <div class="row">
                 <ul class="grid cs-style-3">
                     {% if reservas_items %}
@@ -29,7 +107,7 @@
                                     <figcaption>
                                         <h3>{{ item.reserva.evento.nombre }}</h3>
                                         <span style="display: block;">{{ item.reserva.fechalquiler }}</span>
-                                        <span style="display: block; ">Estado: {{ item.reserva.estado_alquiler }}</span>
+                                        <span style="display: block;">Estado: {{ item.reserva.estado_alquiler }}</span>
                                         <a href="{% url 'reservas:reserva_detail' item.reserva.id %}">ver más</a>
                                     </figcaption>
                                 </figure>

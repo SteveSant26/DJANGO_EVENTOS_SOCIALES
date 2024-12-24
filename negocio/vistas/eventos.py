@@ -6,16 +6,25 @@ from django.contrib import messages
 
 
 def listar_eventos(request):
-    eventos = Evento.objects.all()
+    query = request.GET.get("query", "")
+    eventos = Evento.objects.filter(nombre__icontains=query) | Evento.objects.filter(
+        descripcion__icontains=query
+    )
     datos = [
         {"evento": evento, "foto": FotoEvento.objects.filter(evento=evento).first()}
         for evento in eventos
     ]
-    return render(request, "negocio/eventos/index.html", {"eventos": datos})
+    return render(
+        request,
+        "negocio/eventos/index.html",
+        {
+            "eventos": datos,
+        },
+    )
 
 
 def obtener_evento(request, evento_id):
-    
+
     evento = get_object_or_404(Evento, pk=evento_id)
     fotos = FotoEvento.objects.filter(evento=evento)
     resenasEvento = ResenaEvento.objects.filter(evento=evento)
@@ -24,7 +33,7 @@ def obtener_evento(request, evento_id):
     if request.method == "POST":
         formresena = ResenaEventoForm(request.POST)
         if formresena.is_valid():
-            
+
             resena = formresena.save(commit=False)
             resena.evento = evento
             resena.autor = request.user
@@ -35,7 +44,13 @@ def obtener_evento(request, evento_id):
     return render(
         request,
         "negocio/eventos/obtener_evento.html",
-        {"evento": evento, "fotos": fotos, "nombreEvento": nombreEvento, "resenasEvento": resenasEvento, "formresena": formresena},
+        {
+            "evento": evento,
+            "fotos": fotos,
+            "nombreEvento": nombreEvento,
+            "resenasEvento": resenasEvento,
+            "formresena": formresena,
+        },
     )
 
 
@@ -48,18 +63,16 @@ def obtener_dar_calificacion(request, evento_id):
             resena = form.save(commit=False)
             resena.evento = evento
             resena.save()
-            
-            return render(request, "negocio/eventos/obtener_evento.html", {"evento": evento})
+
+            return render(
+                request, "negocio/eventos/obtener_evento.html", {"evento": evento}
+            )
     else:
         form = ResenaEventoForm()
 
-    return render(request, "negocio/dar_calificacion.html", {"form": form, "evento": evento})
-
-
-def listar_fotos_evento(request, evento_id):
-    evento = get_object_or_404(Evento, pk=evento_id)
-    fotos = FotoEvento.objects.filter(evento=evento)
-    return render(request, "negocio/listar_fotos_evento.html", {"fotos": fotos})
+    return render(
+        request, "negocio/dar_calificacion.html", {"form": form, "evento": evento}
+    )
 
 
 def listar_tipos_eventos(request):
@@ -71,16 +84,22 @@ def listar_tipos_eventos(request):
 
 def listar_eventos_por_tipo(request, tipo_evento_id):
     tipo_evento = get_object_or_404(TipoEvento, pk=tipo_evento_id)
-    eventos = Evento.objects.filter(tipo_evento=tipo_evento)
-    
+    query = request.GET.get("query", "")
+    eventos = Evento.objects.filter(tipo_evento=tipo_evento).filter(
+        nombre__icontains=query
+    ) | Evento.objects.filter(tipo_evento=tipo_evento).filter(
+        descripcion__icontains=query
+    )
+
     datos = [
         {"evento": evento, "foto": FotoEvento.objects.filter(evento=evento).first()}
         for evento in eventos
     ]
-    
+
     tipo_evento_nombre = f"Eventos de {tipo_evento.nombre}"
     return render(
         request,
         "negocio/eventos/obtener_evento_por_tipo.html",
-        {"eventos": datos, "tipo_evento_nombre": tipo_evento_nombre},
+        {"eventos": datos, "tipo_evento_nombre": tipo_evento_nombre,
+         "tipo_evento_id": tipo_evento.id},
     )

@@ -16,13 +16,15 @@ urlpatterns = [
         name="obtener_dar_calificacion",
     ),
     path(
-        "eventos/<int:evento_id>/fotos/",
-        vistas.eventos.listar_fotos_evento,
-        name="listar_fotos_evento",
+        "eventos/tipos/",
+        vistas.eventos.listar_tipos_eventos,
+        name="listar_tipos_eventos",
     ),
-    path("eventos/tipos/", vistas.eventos.listar_tipos_eventos, name="listar_tipos_eventos"),
-    path("eventos/tipos/", vistas.eventos.listar_tipos_eventos, name="listar_tipos_eventos"),
-    path("eventos/tipos/<int:tipo_evento_id>/", vistas.eventos.listar_eventos_por_tipo, name="listar_eventos_por_tipo"),
+    path(
+        "eventos/tipos/<int:tipo_evento_id>/",
+        vistas.eventos.listar_eventos_por_tipo,
+        name="listar_eventos_por_tipo",
+    ),
     path("servicios/", vistas.servicios.listar_servicios, name="listar_servicios"),
     path(
         "servicios/<int:servicio_id>/",
@@ -33,10 +35,5 @@ urlpatterns = [
         "servicios/<int:servicio_id>/calificacion/",
         vistas.servicios.obtener_dar_calificacion,
         name="obtener_dar_calificacion_servicio",
-    ),
-    path(
-        "servicios/<int:servicio_id>/fotos/",
-        vistas.servicios.listar_fotos_servicio,
-        name="listar_fotos_servicio",
-    ),
+    )
 ]

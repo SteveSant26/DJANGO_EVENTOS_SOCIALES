@@ -5,20 +5,95 @@
 {% include 'main/componentes/ui/title.html' with titulo="Servicios" %}
 
 <style>
+    .search-bar-container {
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Centra verticalmente el botón con la barra de búsqueda */
+    }
+
+    .search-bar {
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        margin-right: 10px; /* Espacio entre la barra de búsqueda y el botón */
+    }
+
+    .search-bar input[type="text"] {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        outline: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .search-bar input[type="text"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+    }
+
+    .search-bar button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: none;
+        font-size: 18px;
+        color: #007bff;
+        cursor: pointer;
+    }
+
+    .search-bar button:hover {
+        color: #0056b3;
+    }
+
+    .close-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #aec62c; /* Color rojo */
+        border: none;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-button:hover {
+        background-color: #c82333; /* Color rojo más oscuro */
+    }
+
     .evento-imagen {
         width: 300px; /* Ancho fijo */
         height: 200px; /* Alto fijo */
         object-fit: cover; /* Mantiene proporciones y recorta para llenar el espacio */
         display: block; /* Evita espacios no deseados debajo de la imagen */
     }
-    
 </style>
 
 <div class="section section-white">
     <div class="container">
+        <!-- Barra de búsqueda -->
+        <div class="search-bar-container">
+            <form method="GET" class="search-bar" action="">
+                <input type="text"
+                       name="query"
+                       placeholder="Busca un servicio por nombre o descripción...">
+                <button type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+            <a href="{% url 'negocio:listar_servicios' %}" class="close-button">Cerrar</a>
+        </div>
+
         <div class="row">
             <ul class="grid cs-style-3">
-
                 {% if servicios %}
                 {% for servicio in servicios %}
                 <div class="col-md-4 col-sm-6">
@@ -28,7 +103,7 @@
                             <h3>{{ servicio.servicio.nombre }}</h3>
                             <span>{{ servicio.servicio.descripcion }}</span>
                             <br>
-                            <span>Valor unitario {{servicio.servicio.valor_por_unidad}}</span>
+                            <span>Valor unitario {{ servicio.servicio.valor_por_unidad }}</span>
                             <a href="{% url 'negocio:obtener_servicio' servicio.servicio.id %}">ver más</a>
                         </figcaption>
                     </figure>
@@ -37,16 +112,14 @@
                 {% else %}
                 <div class="col-md-12">
                     <div class="alert alert-info" role="alert">
-                        <h4 class="alert-heading">No hay eventos</h4>
-                        <p>No hay eventos disponibles en este momento.</p>
+                        <h4 class="alert-heading">No hay servicios</h4>
+                        <p>No hay servicios disponibles en este momento.</p>
                     </div>
                 </div>
                 {% endif %}
-
             </ul>
         </div>
     </div>
 </div>
-
 
 {% endblock %}
