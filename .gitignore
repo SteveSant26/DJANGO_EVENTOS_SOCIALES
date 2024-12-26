@@ -13,7 +13,7 @@ migrations/
 # VS Code
 .vscode/
 
-
+staticfiles/
 
 # Byte-compiled / optimized / DLL files
 *.py[cod]
