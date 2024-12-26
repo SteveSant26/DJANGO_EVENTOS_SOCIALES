@@ -161,9 +161,7 @@ DEFAULT_FROM_EMAIL = entorno("DEFAULT_FROM_EMAIL")
 
 # Database settings
 DATABASES = {
-    "default": dj_database_url.parse(
-        "postgresql://django_reserva_eventos_user:1D2ZXeKIzko8rVEQOBEaKynw3cqsD30M@dpg-ctmotptumphs73c0oqq0-a.oregon-postgres.render.com/django_reserva_eventos"
-    )
+    "default": dj_database_url.parse(entorno("DATABASE_URL"))
 }
 
 # Password validation
