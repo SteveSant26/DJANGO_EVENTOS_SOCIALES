@@ -3,6 +3,8 @@ import environ
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,11 +161,9 @@ DEFAULT_FROM_EMAIL = entorno("DEFAULT_FROM_EMAIL")
 
 # Database settings
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",  # Use SQLite for development
-        "NAME": BASE_DIR
-        / "db.sqlite3",  # Ensure the database file is placed in the BASE_DIR
-    }
+    "default": dj_database_url.parse(
+        "postgresql://django_reserva_eventos_user:1D2ZXeKIzko8rVEQOBEaKynw3cqsD30M@dpg-ctmotptumphs73c0oqq0-a.oregon-postgres.render.com/django_reserva_eventos"
+    )
 }
 
 # Password validation
@@ -184,9 +184,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-] 
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Archivos de medios
